@@ -1074,6 +1074,29 @@ collections:
             label: Text
             name: '-48afe6de'
             widget: string
+          - hint: 'Original text: Message received, key: 739525fa'
+            label: Text
+            name: 739525fa
+            widget: string
+          - hint: >-
+              Original text: Thank you for reaching out. One of our crew members
+              will be in contact with you shortly. If you need more immediate or
+              urgent correspondence, please use the email below. , key: -3c2bec7
+            label: Text
+            name: '-3c2bec7'
+            widget: text
+          - hint: 'Original text: Thank you for your patience. , key: 5c1e142'
+            label: Text
+            name: 5c1e142
+            widget: string
+          - hint: 'Original text: First Tone Productions, key: -3a032344'
+            label: Text
+            name: '-3a032344'
+            widget: string
+          - hint: 'Original text: ← Take me back home , key: 4ecdcb07'
+            label: Text
+            name: 4ecdcb07
+            widget: string
       - label: Links
         name: links
         file: cms/_data/links.json
