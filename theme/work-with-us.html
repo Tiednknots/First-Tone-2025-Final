@@ -390,6 +390,32 @@ setTimeout(removeUdeslyBanner, 500);
 setTimeout(removeUdeslyBanner, 1500);
 setInterval(removeUdeslyBanner, 3000); // Last resort: catch any sneaky re-adds
 </script>
+  <style>
+  div.spoken-word,
+  .spoken-word-playback-controls {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    position: absolute !important;
+    top: -9999px !important;
+  }
+</style>
+  <script>
+  function removeSpokenWordPopup() {
+    const popup = document.querySelector('.spoken-word');
+    if (popup) {
+      popup.remove();
+      console.log('🧹 Removed spoken-word popup');
+    }
+  }
+  // Remove it on page load and check again later in case it’s delayed
+  document.addEventListener('DOMContentLoaded', removeSpokenWordPopup);
+  setTimeout(removeSpokenWordPopup, 500);
+  setTimeout(removeSpokenWordPopup, 1500);
+  setInterval(removeSpokenWordPopup, 3000); // Last line of defense
+</script>
   
   
   
