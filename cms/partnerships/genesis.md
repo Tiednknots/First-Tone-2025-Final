@@ -6,7 +6,7 @@ f_image:
 slug: genesis
 updated-on: '2024-08-24T19:25:32.772Z'
 created-on: '2024-08-22T16:16:41.240Z'
-published-on: '2025-04-08T02:48:51.535Z'
+published-on: '2025-04-08T04:15:49.741Z'
 layout: '[partnerships].html'
 tags: partnerships
 ---

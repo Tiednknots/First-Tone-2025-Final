@@ -19,7 +19,7 @@ f_video-url: >-
 slug: ecomaat-2024
 updated-on: '2025-02-22T18:26:33.071Z'
 created-on: '2025-02-05T23:17:22.659Z'
-published-on: '2025-04-08T02:48:51.535Z'
+published-on: '2025-04-08T04:15:49.741Z'
 f_short-desc: >-
   A stunning ECOMAAT campaign showcasing Bulgarian rose fields under a tight
   deadline.

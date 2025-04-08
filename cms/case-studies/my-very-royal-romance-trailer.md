@@ -133,7 +133,7 @@ title: 'My Very Royal Romance '
 slug: my-very-royal-romance-trailer
 updated-on: '2025-02-22T18:23:46.730Z'
 created-on: '2024-12-17T04:19:06.109Z'
-published-on: '2025-04-08T02:48:51.535Z'
+published-on: '2025-04-08T04:15:49.741Z'
 f_client-details: |-
   **Client:** KalosTV and Minishorts
 

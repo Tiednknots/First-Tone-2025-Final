@@ -11,7 +11,7 @@ f_project-overview: "Commissioned by Genesis & Esquire to fuse fashion and autom
 slug: genesis-x-esquire
 updated-on: '2025-02-25T17:13:30.814Z'
 created-on: '2025-02-12T00:02:47.643Z'
-published-on: '2025-04-08T02:48:51.535Z'
+published-on: '2025-04-08T04:15:49.741Z'
 f_home-video-order: 7
 f_link-to-video: '750912177'
 f_video-url: >-

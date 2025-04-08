@@ -31,7 +31,7 @@ title: ECOMAAT Commercial
 slug: ecomaat-2023
 updated-on: '2025-02-22T19:08:10.998Z'
 created-on: '2024-12-17T04:21:22.781Z'
-published-on: '2025-04-08T02:48:51.535Z'
+published-on: '2025-04-08T04:15:49.741Z'
 f_video-url: >-
   https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3c5a82662bdd7093ab1f2_Ecomaat-transcode.mp4
 f_challenge: >-
