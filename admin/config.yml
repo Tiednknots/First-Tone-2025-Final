@@ -1,0 +1,1208 @@
+backend:
+  name: git-gateway
+  accept_roles:
+    - admin
+    - editor
+  branch: master
+media_folder: theme/assets/images
+public_folder: /assets/images
+collections:
+  - name: pages
+    label: Pages
+    identifier_field: title
+    extension: md
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    folder: cms/pages
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '{{slug}}.html'
+      - &ref_0
+        label: Seo
+        name: seo
+        widget: object
+        collapsed: true
+        fields:
+          - label: Title
+            name: title
+            widget: string
+            required: false
+          - label: Description
+            name: description
+            widget: string
+            required: false
+          - label: No index
+            name: noindex
+            widget: boolean
+            default: false
+            required: false
+          - label: Open Graph Title
+            name: og:title
+            widget: string
+            required: false
+          - label: Open Graph Image
+            name: og:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
+          - label: Twitter Title
+            name: twitter:title
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Card
+            name: twitter:card
+            widget: string
+            default: summary
+            required: false
+          - label: Twitter Site
+            name: twitter:site
+            widget: string
+            required: false
+          - label: Twitter Creator
+            name: twitter:creator
+            widget: string
+            required: false
+          - label: Twitter Image
+            name: twitter:image
+            widget: image
+            required: false
+            media_library:
+              config:
+                multiple: false
+          - label: Additional HTML tags
+            name: additional_tags
+            widget: text
+            required: false
+  - name: services
+    label: Services
+    folder: cms/services
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - label: Description
+        name: body
+        widget: markdown
+        required: false
+      - hint: ''
+        name: f_image
+        label: Image
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_short-description
+        label: Short Description
+        widget: string
+        required: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: services
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[services].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - name: case_studies
+    label: Case Studies
+    folder: cms/case-studies
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - label: html embed code
+        name: body
+        widget: markdown
+        required: false
+      - hint: ''
+        name: f_client-details
+        label: Client Details
+        widget: markdown
+        required: false
+      - hint: ''
+        name: f_challenge
+        label: Challenge
+        widget: markdown
+        required: false
+      - hint: ''
+        name: f_short-desc
+        label: Short Desc
+        widget: string
+        required: false
+      - hint: ''
+        name: f_project-overview
+        label: Project Overview
+        widget: markdown
+        required: false
+      - hint: ''
+        name: f_project-description
+        label: project description
+        widget: markdown
+        required: false
+      - hint: ''
+        name: f_link-to-video
+        label: Link to video
+        widget: string
+        required: false
+      - hint: ''
+        name: f_video-url
+        label: Video URL
+        widget: string
+        required: false
+      - hint: ''
+        name: f_video-embed-rich-text
+        label: video embed rich text
+        widget: text
+        required: false
+      - hint: ''
+        name: f_main-image
+        label: Main Image
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_gallery-images
+        label: Gallery Images
+        widget: list
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_mobile-image
+        label: Mobile image
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - hint: ''
+        name: f_home-video-order
+        label: Home Video Order
+        widget: number
+        required: false
+      - hint: ''
+        name: f_link-to-service
+        label: Link to service
+        widget: relation
+        required: false
+        collection: services
+        value_field: cms/services/{{slug}}.md
+        search_fields:
+          - slug
+          - name
+        display_fields:
+          - title
+        multiple: true
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: case-studies
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[case-studies].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - name: partnerships
+    label: Partnerships
+    folder: cms/partnerships
+    create: true
+    identifier_field: name
+    extension: md
+    slug: '{{slug}}'
+    fields:
+      - hint: ''
+        name: title
+        label: Name
+        widget: string
+        required: true
+      - hint: ''
+        name: created-on
+        label: Created On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: updated-on
+        label: Updated On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: published-on
+        label: Published On
+        widget: datetime
+        required: false
+      - hint: ''
+        name: f_image
+        label: Image
+        widget: object
+        required: false
+        fields:
+          - hint: ''
+            name: url
+            label: Image
+            widget: image
+            required: false
+            allow_multiple: false
+          - hint: Image Alt
+            name: alt
+            label: alt
+            widget: string
+            required: false
+      - label: Tags
+        widget: hidden
+        name: tags
+        default: partnerships
+      - label: Layout
+        widget: hidden
+        name: layout
+        default: '[partnerships].html'
+      - label: Publish Date
+        name: date
+        widget: datetime
+      - *ref_0
+  - label: Theme Settings
+    name: settings
+    identifier_field: title
+    extension: json
+    create: false
+    delete: false
+    slug: '{{slug}}'
+    editor:
+      preview: false
+    files:
+      - label: General
+        name: site
+        file: cms/_data/settings/site.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: General
+          - hint: Full domain url (needed for a correct sitemap file)
+            name: domain
+            label: Domain
+            widget: string
+            required: false
+          - name: favicon
+            label: Favicon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: apple_touch_icon
+            label: Apple Touch Icon
+            widget: image
+            allow_multiple: false
+            required: false
+          - name: header_additional_content
+            label: Additional Content Header
+            hint: Content here will be placed before </head> tag
+            widget: text
+            required: false
+          - name: footer_additional_content
+            label: Additional Content Footer
+            hint: Content here will be placed before </body> tag
+            widget: text
+            required: false
+          - name: images_optimization
+            label: Images Optimization
+            widget: object
+            collapsed: false
+            fields:
+              - label: Image Formats
+                name: formats
+                widget: select
+                multiple: true
+                options:
+                  - label: Avif
+                    value: avif
+                  - label: Webp
+                    value: webp
+              - label: Image Dimensions
+                name: dimensions
+                widget: select
+                multiple: true
+                options:
+                  - label: '500'
+                    value: 500
+                  - label: '800'
+                    value: 800
+                  - label: '1080'
+                    value: 1080
+                  - label: '1600'
+                    value: 1600
+                  - label: '2000'
+                    value: 2000
+                  - label: '2600'
+                    value: 2600
+      - label: Colors
+        name: colors
+        file: cms/_data/colors.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Colors
+      - label: Texts
+        name: texts
+        file: cms/_data/texts.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Texts
+          - hint: 'Original text: Home, key: 2268ff'
+            label: Text
+            name: 2268ff
+            widget: string
+          - hint: 'Original text: Case studies, key: 3647cb57'
+            label: Text
+            name: 3647cb57
+            widget: string
+          - hint: 'Original text: Services, key: 560f747e'
+            label: Text
+            name: 560f747e
+            widget: string
+          - hint: 'Original text: Who are we, key: -6bd89d24'
+            label: Text
+            name: '-6bd89d24'
+            widget: string
+          - hint: 'Original text: Work with us, key: 3ac1ee49'
+            label: Text
+            name: 3ac1ee49
+            widget: string
+          - hint: 'Original text: Case Studies, key: -667f9cc9'
+            label: Text
+            name: '-667f9cc9'
+            widget: string
+          - hint: 'Original text: Who We Are , key: -3a25c024'
+            label: Text
+            name: '-3a25c024'
+            widget: string
+          - hint: "Original text: Contact Us \_, key: 52710bde"
+            label: Text
+            name: 52710bde
+            widget: string
+          - hint: 'Original text: Follow our socials, key: 4dc0b803'
+            label: Text
+            name: 4dc0b803
+            widget: string
+          - hint: 'Original text: Connecting , key: -35caffb8'
+            label: Text
+            name: '-35caffb8'
+            widget: string
+          - hint: 'Original text: China , key: 783fa1c9'
+            label: Text
+            name: 783fa1c9
+            widget: string
+          - hint: 'Original text: and the UK, key: 41d29f0e'
+            label: Text
+            name: 41d29f0e
+            widget: string
+          - hint: 'Original text:  through moving images, key: 5b92444f'
+            label: Text
+            name: 5b92444f
+            widget: string
+          - hint: >-
+              Original text: We are your premier China-UK and global video
+              production partner. We craft films, ads, and vertical series
+              through , key: -53713b45
+            label: Text
+            name: '-53713b45'
+            widget: text
+          - hint: 'Original text: Expertise, key: 7f8f21f1'
+            label: Text
+            name: 7f8f21f1
+            widget: string
+          - hint: 'Original text: , , key: 574'
+            label: Text
+            name: '574'
+            widget: string
+          - hint: 'Original text: Cultural Insight, key: 3a26f17a'
+            label: Text
+            name: 3a26f17a
+            widget: string
+          - hint: 'Original text: , and , key: 4d05ec9d'
+            label: Text
+            name: 4d05ec9d
+            widget: string
+          - hint: 'Original text: Worldwide Collaboration, key: -3ca2ed76'
+            label: Text
+            name: '-3ca2ed76'
+            widget: string
+          - hint: >-
+              Original text:  – transforming visionary stories into
+              unforgettable screen experiences. Bridging cultures, frame by
+              frame., key: -4275b267
+            label: Text
+            name: '-4275b267'
+            widget: text
+          - hint: 'Original text: our case studies, key: 7127d38b'
+            label: Text
+            name: 7127d38b
+            widget: string
+          - hint: 'Original text: Contact us, key: 7f274abe'
+            label: Text
+            name: 7f274abe
+            widget: string
+          - hint: 'Original text: EXPERTISE | CONNECT | INSPIRE, key: -4c4e5413'
+            label: Text
+            name: '-4c4e5413'
+            widget: string
+          - hint: 'Original text: Two cultures,, key: -22fca8ad'
+            label: Text
+            name: '-22fca8ad'
+            widget: string
+          - hint: 'Original text: One frame, key: 7f22a713'
+            label: Text
+            name: 7f22a713
+            widget: string
+          - hint: 'Original text: Two Cultures,, key: 54757733'
+            label: Text
+            name: '54757733'
+            widget: string
+          - hint: 'Original text: Bridging Cultures with , key: 31f08219'
+            label: Text
+            name: 31f08219
+            widget: string
+          - hint: 'Original text: High-Quality Video Services, key: -655a1f91'
+            label: Text
+            name: '-655a1f91'
+            widget: string
+          - hint: >-
+              Original text: At First Tone, BAFTA-recognised craft meets
+              seamless China-UK execution. Our , key: 1abff7ea
+            label: Text
+            name: 1abff7ea
+            widget: string
+          - hint: 'Original text: bilingual team, key: 79e5beda'
+            label: Text
+            name: 79e5beda
+            widget: string
+          - hint: 'Original text:  and , key: 1f0b149'
+            label: Text
+            name: 1f0b149
+            widget: string
+          - hint: 'Original text: dual-market, key: -24277d53'
+            label: Text
+            name: '-24277d53'
+            widget: string
+          - hint: >-
+              Original text:  networks handle logistics, regulations, and
+              narratives that captivate , key: 110a2193
+            label: Text
+            name: 110a2193
+            widget: string
+          - hint: 'Original text: locally, key: 142bbe38'
+            label: Text
+            name: 142bbe38
+            widget: string
+          - hint: 'Original text: globally, key: -20494b90'
+            label: Text
+            name: '-20494b90'
+            widget: string
+          - hint: >-
+              Original text:  – stories that work from London to Shanghai., key:
+              23223320
+            label: Text
+            name: '23223320'
+            widget: string
+          - hint: 'Original text: about us, key: 60849c11'
+            label: Text
+            name: 60849c11
+            widget: string
+          - hint: 'Original text: case studies, key: 2c7c7737'
+            label: Text
+            name: 2c7c7737
+            widget: string
+          - hint: 'Original text: Watch Tutorial, key: 8b86fcf'
+            label: Text
+            name: 8b86fcf
+            widget: string
+          - hint: 'Original text: At First Tone, we offer , key: -25eb5e8d'
+            label: Text
+            name: '-25eb5e8d'
+            widget: string
+          - hint: 'Original text: tailored cross-border services, key: 1e10dab7'
+            label: Text
+            name: 1e10dab7
+            widget: string
+          - hint: >-
+              Original text:  to meet diverse client needs. Big ideas or tight
+              budgets, First Tone delivers with , key: 58465041
+            label: Text
+            name: '58465041'
+            widget: string
+          - hint: 'Original text: flexibility, key: -db4aae7'
+            label: Text
+            name: '-db4aae7'
+            widget: string
+          - hint: 'Original text: ingenuity,, key: 544cd608'
+            label: Text
+            name: 544cd608
+            widget: string
+          - hint: 'Original text: dedication, key: -1f6f2f48'
+            label: Text
+            name: '-1f6f2f48'
+            widget: string
+          - hint: 'Original text: ., key: 2e'
+            label: Text
+            name: 2e
+            widget: string
+          - hint: 'Original text: View Work, key: 162aefac'
+            label: Text
+            name: 162aefac
+            widget: string
+          - hint: 'Original text: No items found., key: 3d503d2b'
+            label: Text
+            name: 3d503d2b
+            widget: string
+          - hint: 'Original text: view Work, key: -61473034'
+            label: Text
+            name: '-61473034'
+            widget: string
+          - hint: 'Original text: view case studies, key: 21a740d2'
+            label: Text
+            name: 21a740d2
+            widget: string
+          - hint: 'Original text: Our services, key: fcf0ad2'
+            label: Text
+            name: fcf0ad2
+            widget: string
+          - hint: >-
+              Original text: At First Tone, we connect China and the UK through
+              cross-border video production, offering tailored services to meet
+              diverse client needs. Big ideas or tight budgets, First Tone
+              delivers with flexibility, ingenuity, and dedication., key:
+              5f129695
+            label: Text
+            name: 5f129695
+            widget: text
+          - hint: 'Original text: Vertical Shorts, key: -4579809f'
+            label: Text
+            name: '-4579809f'
+            widget: string
+          - hint: 'Original text: Commercials, key: -1947a9b7'
+            label: Text
+            name: '-1947a9b7'
+            widget: string
+          - hint: 'Original text: Documentaries, key: -71c3d755'
+            label: Text
+            name: '-71c3d755'
+            widget: string
+          - hint: 'Original text: Customisable Solutions, key: 5183c3ef'
+            label: Text
+            name: 5183c3ef
+            widget: string
+          - hint: 'Original text: Moving Images, key: -787ef576'
+            label: Text
+            name: '-787ef576'
+            widget: string
+          - hint: 'Original text: Vertical Short Series, key: -129698db'
+            label: Text
+            name: '-129698db'
+            widget: string
+          - hint: >-
+              Original text: The first company to ever deliver a vertical series
+              in the UK. Efficient, reliable, and resourceful – we set the
+              standard for seamless productions. Let the drama stay on screen,
+              not in the production., key: 15b57bd
+            label: Text
+            name: 15b57bd
+            widget: text
+          - hint: 'Original text: Read more, key: 31997f7f'
+            label: Text
+            name: 31997f7f
+            widget: string
+          - hint: >-
+              Original text: Meticulously crafted videos created with expertise
+              and an unwavering focus on quality. Imaginative, polished, and
+              striking – we bring your vision to life with style and precision.,
+              key: 576db4e8
+            label: Text
+            name: 576db4e8
+            widget: text
+          - hint: >-
+              Original text: Crafted with cultural insight and a passion for
+              storytelling. Authentic, thoughtful, and resonant – from
+              multilingual interviews to capturing unheard stories, we create
+              films that connect with global audiences., key: 5c3468ad
+            label: Text
+            name: 5c3468ad
+            widget: text
+          - hint: >-
+              Original text: From full production support to local crew, our
+              flexibility sets us apart. Adaptable, collaborative, and
+              dependable – we provide the resources and expertise to bring your
+              vision to life., key: 4fa07f77
+            label: Text
+            name: 4fa07f77
+            widget: text
+          - hint: 'Original text: Moving Images Without Borders, key: -21d5d767'
+            label: Text
+            name: '-21d5d767'
+            widget: string
+          - hint: >-
+              Original text: End-to-end support tailored to the demands of
+              cross-border filmmaking. Organised, dynamic, and detail driven –
+              we unite creativity and logistics to deliver productions that
+              exceed expectations., key: -26e57e7a
+            label: Text
+            name: '-26e57e7a'
+            widget: text
+          - hint: 'Original text: ABOUT US, key: -70d4fbcf'
+            label: Text
+            name: '-70d4fbcf'
+            widget: string
+          - hint: >-
+              Original text: Your China-UK and Global Creative Production
+              Partner, key: 30496645
+            label: Text
+            name: '30496645'
+            widget: string
+          - hint: >-
+              Original text: We handle permits, casting, and cultural nuance so
+              you don’t have to. Whether it’s a UK ad campaign requiring China
+              shoots, a Chinese brand expanding to Europe, or a documentary
+              bridging both markets – we deliver on time, on budget, and without
+              lost-in-translation moments., key: -1ae33c44
+            label: Text
+            name: '-1ae33c44'
+            widget: text
+          - hint: 'Original text: Let’s Talk, key: -311e78a9'
+            label: Text
+            name: '-311e78a9'
+            widget: string
+          - hint: >-
+              Original text: Whether you would like our services, or you would
+              like to work with us as a collaborator. You can also simply email
+              , key: -11df96cf
+            label: Text
+            name: '-11df96cf'
+            widget: text
+          - hint: 'Original text: info@firsttone.co.uk, key: 75b036fa'
+            label: Text
+            name: 75b036fa
+            widget: string
+          - hint: 'Original text: First Name, key: 69b3163b'
+            label: Text
+            name: 69b3163b
+            widget: string
+          - hint: 'Original text: Last Name, key: -1416662b'
+            label: Text
+            name: '-1416662b'
+            widget: string
+          - hint: 'Original text: Email address, key: 71575750'
+            label: Text
+            name: '71575750'
+            widget: string
+          - hint: 'Original text: Company, key: -64202ba3'
+            label: Text
+            name: '-64202ba3'
+            widget: string
+          - hint: 'Original text: (if any), key: -6263ac48'
+            label: Text
+            name: '-6263ac48'
+            widget: string
+          - hint: 'Original text: Additional Message, key: -6b1d2ef2'
+            label: Text
+            name: '-6b1d2ef2'
+            widget: string
+          - hint: 'Original text: 0/300, key: 2ba8b14'
+            label: Text
+            name: 2ba8b14
+            widget: string
+          - hint: >-
+              Original text: By pressing the submit button, I agree to
+              Designership comtacting me by email and/or phone to share
+              opportunities exclusively available to Select or Enterprise
+              customes. I also understand that any information I’ve shared in
+              this form is subject to Designership Privacy Policy., key: 36c5eb8
+            label: Text
+            name: 36c5eb8
+            widget: text
+          - hint: >-
+              Original text: Thank you! Your submission has been received!, key:
+              5a0ea5a1
+            label: Text
+            name: 5a0ea5a1
+            widget: string
+          - hint: >-
+              Original text: Oops! Something went wrong while submitting the
+              form., key: -7c112e99
+            label: Text
+            name: '-7c112e99'
+            widget: string
+          - hint: 'Original text: First Tone productions, key: 629334dc'
+            label: Text
+            name: 629334dc
+            widget: string
+          - hint: 'Original text: Venture X , key: -7242e6b'
+            label: Text
+            name: '-7242e6b'
+            widget: string
+          - hint: 'Original text: 1 Ariel Way, key: 556412df'
+            label: Text
+            name: 556412df
+            widget: string
+          - hint: 'Original text: White City, key: -7d52c0be'
+            label: Text
+            name: '-7d52c0be'
+            widget: string
+          - hint: 'Original text: London W12 7SL, key: -219c8080'
+            label: Text
+            name: '-219c8080'
+            widget: string
+          - hint: 'Original text: about us , key: -4ff119d1'
+            label: Text
+            name: '-4ff119d1'
+            widget: string
+          - hint: 'Original text: services, key: 5235105e'
+            label: Text
+            name: 5235105e
+            widget: string
+          - hint: 'Original text: Whatsapp, key: 772ccdb2'
+            label: Text
+            name: 772ccdb2
+            widget: string
+          - hint: 'Original text: Instagram, key: 792b2792'
+            label: Text
+            name: 792b2792
+            widget: string
+          - hint: 'Original text: Vimeo, key: 4ed4624'
+            label: Text
+            name: 4ed4624
+            widget: string
+          - hint: 'Original text: Leave us a message!, key: -1adce92e'
+            label: Text
+            name: '-1adce92e'
+            widget: string
+          - hint: 'Original text: Slick Carousel Example, key: 30899c52'
+            label: Text
+            name: 30899c52
+            widget: string
+          - hint: 'Original text: ←, key: 2190'
+            label: Text
+            name: '2190'
+            widget: string
+          - hint: 'Original text: →, key: 2192'
+            label: Text
+            name: '2192'
+            widget: string
+          - hint: 'Original text: Link to Vimeo, key: -2e53e67b'
+            label: Text
+            name: '-2e53e67b'
+            widget: string
+          - hint: 'Original text: Challenge, key: -34f363bd'
+            label: Text
+            name: '-34f363bd'
+            widget: string
+          - hint: 'Original text: Project Overview, key: 2d8596e0'
+            label: Text
+            name: 2d8596e0
+            widget: string
+          - hint: 'Original text: Project Description, key: cb0d35'
+            label: Text
+            name: cb0d35
+            widget: string
+          - hint: 'Original text: case studies , key: 63126fc9'
+            label: Text
+            name: 63126fc9
+            widget: string
+          - hint: 'Original text: Read More, key: 318af39f'
+            label: Text
+            name: 318af39f
+            widget: string
+          - hint: >-
+              Original text: From the UK’s first 3M-view vertical series to
+              unearthing Chinese archives for documentaries, we thrive on
+              creative challenges – big budgets, lean ones, and everything in
+              between. Whether streamlining UK government campaigns or
+              amplifying indie visions, we adapt to deliver., key: -3463687a
+            label: Text
+            name: '-3463687a'
+            widget: text
+          - hint: 'Original text: View Project →, key: -4110f170'
+            label: Text
+            name: '-4110f170'
+            widget: string
+          - hint: 'Original text: work with us, key: 30f69a29'
+            label: Text
+            name: 30f69a29
+            widget: string
+          - hint: 'Original text: other Services, key: -77bf3872'
+            label: Text
+            name: '-77bf3872'
+            widget: string
+          - hint: 'Original text: What does it mean,, key: 5374a35d'
+            label: Text
+            name: 5374a35d
+            widget: string
+          - hint: 'Original text: “First Tone”?, key: 4b71fe80'
+            label: Text
+            name: 4b71fe80
+            widget: string
+          - hint: "Original text:  \_There are four tones in mandarin Chinese. The high and flat first tone is the starting point of learning this language – whether you are a native speaker or a foreign learner. , key: 91233f1"
+            label: Text
+            name: 91233f1
+            widget: text
+          - hint: "Original text: Its elegant simplicity provides an easy yet satisfactory entrance to a rich culture. First Tone aims to unlock barriers to easier, smoother, \_more accessible communication between the video production and film industries in China and the UK., key: 4e321cfd"
+            label: Text
+            name: 4e321cfd
+            widget: text
+          - hint: 'Original text: Founders, key: 254a0ec4'
+            label: Text
+            name: 254a0ec4
+            widget: string
+          - hint: >-
+              Original text: Hui and Hao both have wealth of experience in both
+              China and the UK’s film industries. This provides them with the
+              essential insight to go on and create First Tone., key: -7cc3b6db
+            label: Text
+            name: '-7cc3b6db'
+            widget: text
+          - hint: 'Original text: Hui Zhang, key: 1b571f88'
+            label: Text
+            name: 1b571f88
+            widget: string
+          - hint: 'Original text: Founder, director, key: 113a21cf'
+            label: Text
+            name: 113a21cf
+            widget: string
+          - hint: >-
+              Original text: Hui Zhang graduated from London Film School with
+              distinction in 2021. She then worked as a freelance production
+              designer before the launch of First Tone. , key: 4be8d22e
+            label: Text
+            name: 4be8d22e
+            widget: text
+          - hint: >-
+              Original text: Before moving to the UK, Hui worked for seven years
+              in China as a producer-director. As well as sharpening her skills
+              to communicate and plan, such experience also trained her to
+              become a detail-oriented person., key: -b7e30f1
+            label: Text
+            name: '-b7e30f1'
+            widget: text
+          - hint: >-
+              Original text: With a creative problem-solving mind, Hui has
+              managed to produce lots of high-quality output while working
+              within challenging circumstances, which includes short films,
+              HETV, commercials and documentaries. , key: 29cc49c4
+            label: Text
+            name: 29cc49c4
+            widget: text
+          - hint: >-
+              Original text: Hui loves travelling and exploring other cultures
+              when not at work, which always sparks inspiration for her., key:
+              -73d9e17a
+            label: Text
+            name: '-73d9e17a'
+            widget: text
+          - hint: 'Original text: Connect with Hui, key: 281b9918'
+            label: Text
+            name: 281b9918
+            widget: string
+          - hint: 'Original text: Zhizi Hao, key: -2401eb60'
+            label: Text
+            name: '-2401eb60'
+            widget: string
+          - hint: >-
+              Original text: Zhizi Hao is a Chinese writer/director based in
+              London. In 2017, thanks to the BAFTA China-UK Scholarship, he
+              moved to London to pursue an MA in filmmaking at London Film
+              School. There, he refined his voice as a storyteller and sharpened
+              his skills as a writer/director., key: -5d4bbac2
+            label: Text
+            name: '-5d4bbac2'
+            widget: text
+          - hint: >-
+              Original text: Born into a military family as an only gay son,
+              raised in a place where neither of his parents came from, and now
+              living abroad, Hao is familiar with the feeling of being an
+              outsider. This rootlessness defines his perspective and has become
+              a motif in the stories he tells., key: 603f372d
+            label: Text
+            name: 603f372d
+            widget: text
+          - hint: >-
+              Original text: His previous works have been included in and
+              awarded by various international film festivals, including
+              Shanghai International Film Festival (2021), London Short Film
+              Festival (2019) and Scottish Queer Film Festival (2019)., key:
+              19857190
+            label: Text
+            name: '19857190'
+            widget: text
+          - hint: >-
+              Original text: Hao is experienced as an assistant director and a
+              sound person. , key: -19db48e5
+            label: Text
+            name: '-19db48e5'
+            widget: string
+          - hint: 'Original text: Connect with Hao, key: 281b96b2'
+            label: Text
+            name: 281b96b2
+            widget: string
+          - hint: "Original text:  \_Whether you are looking for a Chinese-speaking team to carry out your film shoot in the UK, professional help with landing your commercial idea in China, or simply someone to translate your videos, First Tone has you covered., key: -66fec729"
+            label: Text
+            name: '-66fec729'
+            widget: text
+          - hint: >-
+              Original text: We enable this with our knowledge, insight and
+              expertise in both industries, our international collaborators
+              based in both countries, and our dedication to bringing these two
+              cultures closer together. , key: -3f24a8f1
+            label: Text
+            name: '-3f24a8f1'
+            widget: text
+          - hint: 'Original text: Read more about us, key: 1326fb92'
+            label: Text
+            name: 1326fb92
+            widget: string
+          - hint: 'Original text: A worldwide network, key: -74be77ac'
+            label: Text
+            name: '-74be77ac'
+            widget: string
+          - hint: 'Original text: 404, key: c938'
+            label: Text
+            name: c938
+            widget: string
+          - hint: 'Original text: sorry, this page cannot be found, key: -48afe6de'
+            label: Text
+            name: '-48afe6de'
+            widget: string
+      - label: Links
+        name: links
+        file: cms/_data/links.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Links
+          - hint: 'Original link: /, key: 2f'
+            label: Link
+            name: 2f
+            widget: string
+          - hint: 'Original link: /our-work/, key: 7f22fa2e'
+            label: Link
+            name: 7f22fa2e
+            widget: string
+          - hint: 'Original link: /our-services/, key: -661a1d7f'
+            label: Link
+            name: '-661a1d7f'
+            widget: string
+          - hint: 'Original link: /about-us/, key: -766f6c3e'
+            label: Link
+            name: '-766f6c3e'
+            widget: string
+          - hint: 'Original link: https://wa.me/447761921122, key: 125cfbd6'
+            label: Link
+            name: 125cfbd6
+            widget: string
+          - hint: >-
+              Original link: https://www.instagram.com/firsttone_productions/,
+              key: 16fe6362
+            label: Link
+            name: 16fe6362
+            widget: string
+          - hint: 'Original link: https://vimeo.com/firsttone, key: 142013bb'
+            label: Link
+            name: 142013bb
+            widget: string
+          - hint: 'Original link: /work-with-us/, key: -12ebc4c9'
+            label: Link
+            name: '-12ebc4c9'
+            widget: string
+          - hint: >-
+              Original link: https://www.youtube.com/watch?v=AG_REG9p61E, key:
+              -7252aede
+            label: Link
+            name: '-7252aede'
+            widget: string
+          - hint: 'Original link: #form-section, key: -2248b181'
+            label: Link
+            name: '-2248b181'
+            widget: string
+          - hint: 'Original link: mailto:info@firsttone.co.uk, key: -19de50fe'
+            label: Link
+            name: '-19de50fe'
+            widget: string
+          - hint: 'Original link: #, key: 23'
+            label: Link
+            name: '23'
+            widget: string
+          - hint: 'Original link: http://instagram.com/messyh.z, key: 79af8d6f'
+            label: Link
+            name: 79af8d6f
+            widget: string
+          - hint: >-
+              Original link: https://www.instagram.com/haochonger, key:
+              -668041b6
+            label: Link
+            name: '-668041b6'
+            widget: string
+      - label: Images
+        name: images
+        file: cms/_data/images.json
+        fields:
+          - label: Title
+            name: title
+            widget: hidden
+            default: Images
+          - label: Image
+            name: i63ad4c8e
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: '34718693'
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: i35d2dc00
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+          - label: Image
+            name: 7bd1c037
+            widget: object
+            fields:
+              - name: url
+                label: Image Url
+                widget: image
+                allow_multiple: false
+                required: false
+              - name: alt
+                label: Image Alt
+                widget: string
+                required: false
+local_backend: true
+publish_mode: editorial_workflow
