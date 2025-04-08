@@ -19,7 +19,7 @@ f_project-overview: >-
 slug: hsbc-x-zhou-guanyu
 updated-on: '2025-02-25T17:13:17.976Z'
 created-on: '2025-02-11T20:34:54.138Z'
-published-on: '2025-02-25T17:13:17.976Z'
+published-on: '2025-04-08T02:48:51.535Z'
 f_gallery-images:
   - url: >-
       /assets/external/67abf17b8a73686e0cf53ba0_cmhsbc-c397-zhou-guanyu-screengrab-1-no-video-so-has-to-be-images.avif

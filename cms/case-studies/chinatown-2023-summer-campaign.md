@@ -13,7 +13,7 @@ title: Chinatown 2023 Summer Campaign
 slug: chinatown-2023-summer-campaign
 updated-on: '2025-02-22T18:52:28.756Z'
 created-on: '2024-12-17T04:14:37.733Z'
-published-on: '2025-02-22T18:52:28.756Z'
+published-on: '2025-04-08T02:48:51.535Z'
 f_video-url: >-
   https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a2e7d633509650a29124cc_Chinatown-transcode.mp4
 f_video-embed-rich-text: >-

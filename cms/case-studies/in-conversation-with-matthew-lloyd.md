@@ -5,7 +5,7 @@ title: In conversation with Matthew Lloyd - Xiaomi Promo
 slug: in-conversation-with-matthew-lloyd
 updated-on: '2025-02-22T18:35:41.193Z'
 created-on: '2024-12-17T04:22:20.722Z'
-published-on: '2025-02-22T18:35:41.193Z'
+published-on: '2025-04-08T02:48:51.535Z'
 f_video-url: >-
   https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ed6d024a1fe0f5d5650d_Matthew%20Lloyd%20Export-transcode.mp4
 f_short-desc: Mini Documentary for XIAOMI IMAGERY AWARDS 2022
