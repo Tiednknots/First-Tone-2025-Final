@@ -592,7 +592,7 @@ a {
                     </div>
                     <div data-w-id="6a85c4e6-5897-e328-870f-1bc9997ed492" style="opacity:0" class="tabs-content w-tab-content">
                       <div data-w-tab="Tab 7" class="tab-pane-tab-5 w-tab-pane w--tab-active">
-                        <div class="div-block-27"><img sizes="100vw" srcset="/assets/images/services-vertical_1services-vertical.avif 500w, /assets/images/services-vertical_1services-vertical.avif 800w, /assets/images/services-vertical_1.avif 1500w" alt="" src="/assets/images/services-vertical_1.avif" loading="lazy" class="image-3">
+                        <div class="div-block-27"><img sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px" srcset="/assets/images/services-vertical_1services-vertical.avif 500w, /assets/images/services-vertical_1services-vertical.avif 800w, /assets/images/services-vertical_1.avif 1500w" alt="" src="/assets/images/services-vertical_1.avif" loading="lazy" class="image-3">
                           <div class="div-block-52">
                             <div class="div-block-53">
                               <h3 class="heading-12 label"><strong class="bold-text">{{ texts.-129698db }}</strong></h3>
@@ -724,8 +724,8 @@ a {
                   <p class="udesly-paragraph-large">{{ texts.-11df96cf }}<a href="{{ links.-19de50fe }}">{{ texts.75b036fa }}</a>
                   </p>
                 </div>
-                <div class="form-block-2 w-form">
-                  <form id="wf-form-Contact-Us-2" name="wf-form-Contact-Us-2" data-name="contact_us" method="get" data-wf-page-id="66c4a134a354bbdf9cd9c3c2" data-wf-element-id="fc4c506f-61a2-81ad-cb5b-09c90d18b0df" data-netlify="true" data-ajax="true" data-content-type="application/x-www-form-urlencoded">
+                <div id="Contact-Us-First-Tone-Production" data-netlify="True" class="form-block-2 w-form">
+                  <form id="wf-form-Contact-Us-First-Tone-Production" name="wf-form-Contact-Us-First-Tone-Production" data-name="contact_us_first_tone_production" action="/message-received" method="post" data-wf-page-id="66c4a134a354bbdf9cd9c3c2" data-wf-element-id="fc4c506f-61a2-81ad-cb5b-09c90d18b0df" data-ajax="true">
                     <div class="udesly-form-flex">
                       <div class="udesly-column"><label for="name-3" class="udesly-field-label">{{ texts.69b3163b }}</label><input class="udesly-text-fiel-contact w-input" maxlength="256" name="name-3" data-name="Name 3" placeholder="e.g John" type="text" id="name-3"></div>
                       <div class="udesly-column"><label for="Surname-2" class="udesly-field-label">{{ texts.-1416662b }}</label><input class="udesly-text-fiel-contact w-input" maxlength="256" name="Surname-2" data-name="Surname 2" placeholder="e.g. Dowry" type="text" id="Surname-2"></div>
@@ -782,8 +782,8 @@ a {
                     <div class="div-block-16">
                       <div class="div-block-28">
                         <div class="text-block-15">{{ texts.-1adce92e }}</div>
-                        <div class="form-block w-form">
-                          <form id="email-form" name="email-form" data-name="email" method="get" data-wf-page-id="66c4a134a354bbdf9cd9c3c2" data-wf-element-id="88fdcdf1-866b-f29e-d532-7a43971bc531" data-netlify="true" data-ajax="true" data-content-type="application/x-www-form-urlencoded"><input class="text-field-2 w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="Name " type="text" id="name-2" required=""><input class="text-field w-input" maxlength="256" name="email-2" data-name="Email 2" placeholder="Email" type="email" id="email-2" required=""><textarea placeholder="Message" maxlength="5000" id="field-2" name="field-2" data-name="Field 2" class="textarea w-input"></textarea><input type="submit" data-wait="Please wait..." class="submit-button w-button" value="Submit"></form>
+                        <div id="Newsletter-First-Tone-Production" data-netlify="True" class="form-block w-form">
+                          <form id="wf-form-Newsletter-First-Tone-Production" name="wf-form-Newsletter-First-Tone-Production" data-name="newsletter_first_tone_production" method="post" data-wf-page-id="66c4a134a354bbdf9cd9c3c2" data-wf-element-id="88fdcdf1-866b-f29e-d532-7a43971bc531" data-netlify="true" data-ajax="true" data-content-type="application/x-www-form-urlencoded"><input class="text-field-2 w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="Name " type="text" id="name-2" required=""><input class="text-field w-input" maxlength="256" name="email-2" data-name="Email 2" placeholder="Email" type="email" id="email-2" required=""><textarea id="field-2" name="field-2" maxlength="5000" data-name="Field 2" placeholder="Message" class="textarea w-input"></textarea><input type="submit" data-wait="Please wait..." class="submit-button w-button" value="Submit"></form>
                           <div class="w-form-done">
                             <div>{{ texts.5a0ea5a1 }}</div>
                           </div>
@@ -804,58 +804,6 @@ a {
   </div>
   <script src="/assets/external/jquery-3.5.1.min.dc5e7f18c8.js" type="text/javascript" crossorigin="anonymous"></script>
   <script src="/assets/js/webflow.js" type="text/javascript"></script>
-  <style>
-  udesly-banner {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-    position: absolute !important;
-    top: -9999px !important;
-  }
-</style>
-  <script>
-// Kill it on load
-function removeUdeslyBanner() {
-  const banner = document.querySelector('udesly-banner');
-  if (banner) {
-    banner.remove();
-    console.log("🔥 udesly-banner removed");
-  }
-}
-// Run multiple times to catch late injection
-document.addEventListener("DOMContentLoaded", removeUdeslyBanner);
-setTimeout(removeUdeslyBanner, 500);
-setTimeout(removeUdeslyBanner, 1500);
-setInterval(removeUdeslyBanner, 3000); // Last resort: catch any sneaky re-adds
-</script>
-  <style>
-  div.spoken-word,
-  .spoken-word-playback-controls {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    height: 0 !important;
-    opacity: 0 !important;
-    position: absolute !important;
-    top: -9999px !important;
-  }
-</style>
-  <script>
-  function removeSpokenWordPopup() {
-    const popup = document.querySelector('.spoken-word');
-    if (popup) {
-      popup.remove();
-      console.log('🧹 Removed spoken-word popup');
-    }
-  }
-  // Remove it on page load and check again later in case it’s delayed
-  document.addEventListener('DOMContentLoaded', removeSpokenWordPopup);
-  setTimeout(removeSpokenWordPopup, 500);
-  setTimeout(removeSpokenWordPopup, 1500);
-  setInterval(removeSpokenWordPopup, 3000); // Last line of defense
-</script>
   
   
   

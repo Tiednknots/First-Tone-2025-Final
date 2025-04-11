@@ -6,7 +6,7 @@ title: Vertical Series
 slug: vertical-series
 updated-on: '2025-02-06T08:47:26.692Z'
 created-on: '2025-01-02T22:19:27.867Z'
-published-on: '2025-04-08T04:15:49.741Z'
+published-on: '2025-04-11T05:06:43.588Z'
 f_image:
   url: /assets/external/67a475d6bb75f193f3f82b9f_services20e2809320vertical.avif
   alt: null

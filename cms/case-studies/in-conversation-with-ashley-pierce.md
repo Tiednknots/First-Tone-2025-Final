@@ -11,7 +11,7 @@ title: In Conversation with Ashley Pierce ‒ Xiaomi Promo
 slug: in-conversation-with-ashley-pierce
 updated-on: '2025-02-22T18:35:14.803Z'
 created-on: '2024-12-17T04:23:03.076Z'
-published-on: '2025-04-08T04:15:49.741Z'
+published-on: '2025-04-11T05:06:43.588Z'
 f_video-url: >-
   https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a2d5444cb50ce92b3a73aa_Ashley%20Pierce-transcode.mp4
 f_short-desc: Mini Documentary for XIAOMI IMAGERY AWARDS 2022

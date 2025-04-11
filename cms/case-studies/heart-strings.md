@@ -7,7 +7,7 @@ title: Heart & Strings
 slug: heart-strings
 updated-on: '2025-02-22T18:19:16.890Z'
 created-on: '2024-12-17T04:17:47.481Z'
-published-on: '2025-04-08T04:15:49.741Z'
+published-on: '2025-04-11T05:06:43.588Z'
 f_video-url: >-
   https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ed4e1db799d19bfa32e5_Heart%20%26%20Strings-transcode.mp4
 f_client-details: "**Client**: KalosTV and Minishorts\_\n\n**Production Country**: UK\_\n\n**Project Type**: Vertical Short Series\_\n\n**Service Type**: Full Production"
