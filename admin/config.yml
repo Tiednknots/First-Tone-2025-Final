@@ -936,6 +936,22 @@ collections:
             label: Text
             name: '-77bf3872'
             widget: string
+          - hint: "Original text:  \_Whether you are looking for a Chinese-speaking team to carry out your film shoot in the UK, professional help with landing your commercial idea in China, or simply someone to translate your videos, First Tone has you covered., key: -66fec729"
+            label: Text
+            name: '-66fec729'
+            widget: text
+          - hint: >-
+              Original text: We enable this with our knowledge, insight and
+              expertise in both industries, our international collaborators
+              based in both countries, and our dedication to bringing these two
+              cultures closer together. , key: -3f24a8f1
+            label: Text
+            name: '-3f24a8f1'
+            widget: text
+          - hint: 'Original text: Read more about us, key: 1326fb92'
+            label: Text
+            name: 1326fb92
+            widget: string
           - hint: 'Original text: What does it mean,, key: 5374a35d'
             label: Text
             name: 5374a35d
@@ -1046,22 +1062,6 @@ collections:
             label: Text
             name: 281b96b2
             widget: string
-          - hint: "Original text:  \_Whether you are looking for a Chinese-speaking team to carry out your film shoot in the UK, professional help with landing your commercial idea in China, or simply someone to translate your videos, First Tone has you covered., key: -66fec729"
-            label: Text
-            name: '-66fec729'
-            widget: text
-          - hint: >-
-              Original text: We enable this with our knowledge, insight and
-              expertise in both industries, our international collaborators
-              based in both countries, and our dedication to bringing these two
-              cultures closer together. , key: -3f24a8f1
-            label: Text
-            name: '-3f24a8f1'
-            widget: text
-          - hint: 'Original text: Read more about us, key: 1326fb92'
-            label: Text
-            name: 1326fb92
-            widget: string
           - hint: 'Original text: A worldwide network, key: -74be77ac'
             label: Text
             name: '-74be77ac'
@@ -1073,29 +1073,6 @@ collections:
           - hint: 'Original text: sorry, this page cannot be found, key: -48afe6de'
             label: Text
             name: '-48afe6de'
-            widget: string
-          - hint: 'Original text: Message received, key: 739525fa'
-            label: Text
-            name: 739525fa
-            widget: string
-          - hint: >-
-              Original text: Thank you for reaching out. One of our crew members
-              will be in contact with you shortly. If you need more immediate or
-              urgent correspondence, please use the email below. , key: -3c2bec7
-            label: Text
-            name: '-3c2bec7'
-            widget: text
-          - hint: 'Original text: Thank you for your patience. , key: 5c1e142'
-            label: Text
-            name: 5c1e142
-            widget: string
-          - hint: 'Original text: First Tone Productions, key: -3a032344'
-            label: Text
-            name: '-3a032344'
-            widget: string
-          - hint: 'Original text: ← Take me back home , key: 4ecdcb07'
-            label: Text
-            name: 4ecdcb07
             widget: string
       - label: Links
         name: links
