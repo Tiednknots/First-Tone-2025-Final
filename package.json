@@ -12,7 +12,8 @@
     "gray-matter": "^4.0.3",
     "lodash.chunk": "^4.2.0",
     "lodash.get": "^4.4.2",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "sharp": "^0.35.3"
   },
   "scripts": {
     "optimize": "node ./_utils/scripts/optimize-assets.js",
