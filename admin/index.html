@@ -142,14 +142,6 @@
   <!-- ================= AUTH GATE ================= -->
   <div id="auth-gate" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md">
     <div class="glass w-full max-w-md p-8 rounded-2xl shadow-2xl border border-zinc-800">
-      <div id="demo-banner" class="mb-6 p-3 bg-amber-500/10 border border-amber-500/20 text-amber-500 rounded-xl text-xs leading-relaxed flex gap-2.5 items-start hidden">
-        <i class="fa-solid fa-triangle-exclamation text-sm mt-0.5"></i>
-        <div>
-          <span class="font-bold">Offline Demo Mode Active</span><br>
-          Supabase keys not detected in environment. Logging in will launch an interactive mock database. Use any password to log in.
-        </div>
-      </div>
-
       <div class="text-center mb-8">
         <div class="h-16 w-16 bg-brand-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-brand-500/20">
           <i class="fa-solid fa-sliders text-brand-500 text-3xl"></i>
@@ -1011,7 +1003,6 @@
       } catch (err) {
         console.warn("API config missing or error. Falling back to Demo/Mock Mode:", err.message);
         isDemo = true;
-        document.getElementById('demo-banner').classList.remove('hidden');
         document.getElementById('connection-status').innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span> Demo Mode';
         document.getElementById('connection-status').className = "text-xs text-amber-400 flex items-center gap-1 font-semibold";
         showAuthGate();
