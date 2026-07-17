@@ -22,8 +22,18 @@ document.addEventListener('DOMContentLoaded', () => {
       };
       
       // Determine form type
-      const formName = form.getAttribute('data-name') || form.getAttribute('name') || 'contact';
-      payload.form_type = formName.toLowerCase().includes('newsletter') ? 'newsletter' : 'contact';
+      const formName = (form.getAttribute('data-name') || form.getAttribute('name') || 'contact').toLowerCase();
+      const messageText = payload.message ? payload.message.trim() : '';
+      
+      if (messageText.length > 0) {
+        // If they typed an actual message, it is a contact communication, regardless of the footer name
+        payload.form_type = 'contact';
+      } else if (formName.includes('newsletter')) {
+        // If the form name matches newsletter and has no message content, it is a subscriber signup
+        payload.form_type = 'newsletter';
+      } else {
+        payload.form_type = 'contact';
+      }
       
       // Show "Please wait..." state
       const submitBtn = form.querySelector('[type="submit"]');
