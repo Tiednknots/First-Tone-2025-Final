@@ -139,6 +139,14 @@
 </head>
 <body class="h-full flex flex-col font-sans antialiased overflow-hidden">
 
+  <!-- ================= LOADING OVERLAY ================= -->
+  <div id="loading-overlay" class="fixed inset-0 z-[60] flex items-center justify-center bg-zinc-950">
+    <div class="text-center">
+      <i class="fa-solid fa-spinner animate-spin text-4xl text-brand-500 mb-4"></i>
+      <p class="text-zinc-400 text-sm font-semibold">Loading Admin Dashboard...</p>
+    </div>
+  </div>
+
   <!-- ================= AUTH GATE ================= -->
   <div id="auth-gate" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md">
     <div class="glass w-full max-w-md p-8 rounded-2xl shadow-2xl border border-zinc-800">
@@ -987,8 +995,14 @@
         SUPABASE_URL = config.supabaseUrl;
         SUPABASE_ANON_KEY = config.supabaseAnonKey;
         
-        // Initialize Supabase Client using the window namespace
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // Initialize Supabase Client using the window namespace with explicit session persistence config
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+          }
+        });
         
         // Check session
         const { data: { session } } = await supabaseClient.auth.getSession();
@@ -1006,6 +1020,10 @@
         document.getElementById('connection-status').innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span> Demo Mode';
         document.getElementById('connection-status').className = "text-xs text-amber-400 flex items-center gap-1 font-semibold";
         showAuthGate();
+      } finally {
+        // Dismiss loading screen after routing is decided
+        const loader = document.getElementById('loading-overlay');
+        if (loader) loader.classList.add('hidden');
       }
     }
 
