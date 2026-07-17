@@ -36,8 +36,12 @@ function stringifyYAML(obj) {
           }
         }
       }
-    } else if (typeof val === 'string' && (val.includes('\n') || val.includes(':'))) {
-      yaml += `${key}: |-\n  ${val.replace(/\n/g, '\n  ')}\n`;
+    } else if (typeof val === 'string' && (val.includes('\n') || val.includes(':') || val.includes('[') || val.includes(']'))) {
+      if (val.includes('\n')) {
+        yaml += `${key}: |-\n  ${val.replace(/\n/g, '\n  ')}\n`;
+      } else {
+        yaml += `${key}: "${val.replace(/"/g, '\\"')}"\n`;
+      }
     } else {
       yaml += `${key}: ${val}\n`;
     }
