@@ -1,1 +1,103 @@
 <style>:root {--image-i63ad4c8e: url('{{images.i63ad4c8e.url}}');--image-7b40fadb: url('{{images.7b40fadb.url}}');--image-34718693: url('{{images.34718693.url}}');--image-i35d2dc00: url('{{images.i35d2dc00.url}}');--image-7bd1c037: url('{{images.7bd1c037.url}}');}</style>
+<script>
+  // Site Preview in-place visual editor script
+  // Executes only when loaded inside the admin portal iframe.
+  if (window.self !== window.top) {
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Add visual editor styling overrides
+      const style = document.createElement('style');
+      style.innerHTML = `
+        [data-edit-text] {
+          cursor: text !important;
+        }
+        [data-edit-link] {
+          cursor: pointer !important;
+        }
+        [data-edit-text], [data-edit-link] {
+          transition: outline 0.15s ease-in-out, background-color 0.15s !important;
+        }
+        [data-edit-text]:hover, [data-edit-link]:hover {
+          outline: 2px solid #cd0025 !important;
+          outline-offset: 2px !important;
+        }
+        .FT-editing-selected {
+          outline: 2px solid #cd0025 !important;
+          outline-offset: 2px !important;
+          background-color: rgba(205, 0, 37, 0.08) !important;
+        }
+      `;
+      document.head.appendChild(style);
+
+      // 2. Dynamic DOM Scanner (Matches text/link blocks dynamically with loaded CMS memory)
+      const textsDict = window.parent.texts || {};
+      const linksDict = window.parent.links || {};
+
+      // Tag Text Nodes
+      const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+      let node;
+      while (node = walk.nextNode()) {
+        const text = node.nodeValue.trim();
+        if (text.length > 2) {
+          for (const [key, val] of Object.entries(textsDict)) {
+            if (val && val.trim() === text) {
+              node.parentElement.setAttribute('data-edit-text', key);
+              break;
+            }
+          }
+        }
+      }
+
+      // Tag Links
+      document.querySelectorAll('a').forEach(a => {
+        const href = a.getAttribute('href');
+        if (href) {
+          for (const [key, val] of Object.entries(linksDict)) {
+            if (val && (val === href || href.endsWith(val))) {
+              a.setAttribute('data-edit-link', key);
+              break;
+            }
+          }
+        }
+      });
+
+      // 3. Click handler inside iframe to select element in parent sidebar
+      document.body.addEventListener('click', (e) => {
+        const textTarget = e.target.closest('[data-edit-text]');
+        const linkTarget = e.target.closest('[data-edit-link]');
+
+        if (textTarget || linkTarget) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          // Clear previous highlights
+          document.querySelectorAll('.FT-editing-selected').forEach(el => el.classList.remove('FT-editing-selected'));
+
+          if (textTarget) {
+            textTarget.classList.add('FT-editing-selected');
+            const key = textTarget.getAttribute('data-edit-text');
+            window.parent.postMessage({ type: 'FT_SELECT_TEXT', key: key }, '*');
+          } else if (linkTarget) {
+            linkTarget.classList.add('FT-editing-selected');
+            const key = linkTarget.getAttribute('data-edit-link');
+            window.parent.postMessage({ type: 'FT_SELECT_LINK', key: key }, '*');
+          }
+        }
+      }, true);
+
+      // 4. Live update listener to apply typing updates in-place
+      window.addEventListener('message', (e) => {
+        if (e.data && e.data.type === 'FT_UPDATE_TEXT') {
+          const els = document.querySelectorAll(`[data-edit-text="${e.data.key}"]`);
+          els.forEach(el => {
+            el.innerText = e.data.value;
+          });
+        } else if (e.data && e.data.type === 'FT_UPDATE_LINK') {
+          const els = document.querySelectorAll(`[data-edit-link="${e.data.key}"]`);
+          els.forEach(el => {
+            el.setAttribute('href', e.data.value);
+          });
+        }
+      });
+    });
+  }
+</script>

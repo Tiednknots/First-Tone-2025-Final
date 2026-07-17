@@ -1,5 +1,6 @@
 {
   "domain": "",
+  "footer_additional_content": "<script src=\"/assets/js/site-custom.js\" defer></script>",
   "images_optimization": {
     "formats": [
       "webp"

@@ -3,20 +3,23 @@
   "dependencies": {
     "@11ty/eleventy": "2.0.1",
     "@11ty/eleventy-img": "2.0.0",
+    "@supabase/supabase-js": "^2.110.7",
     "archiver": "^5.2.0",
+    "dotenv": "^17.4.2",
     "extract-zip": "^2.0.1",
-    "lodash.chunk": "^4.2.0",
-    "lodash.get": "^4.4.2",
     "fs-extra": "^9.1.0",
     "fuse.js": "^6.4.6",
+    "gray-matter": "^4.0.3",
+    "lodash.chunk": "^4.2.0",
+    "lodash.get": "^4.4.2",
     "node-fetch": "^2.6.1"
   },
   "scripts": {
     "optimize": "node ./_utils/scripts/optimize-assets.js",
     "preserve": "npm run optimize",
-    "prebuild": "npm run optimize",
-    "serve": "npx @11ty/eleventy --serve",
-    "build": "npx @11ty/eleventy",
+    "prebuild": "node ./_utils/scripts/fetch-from-supabase.js && npm run optimize",
+    "serve": "node ./_utils/scripts/fetch-from-supabase.js && npx @11ty/eleventy --serve",
+    "build": "node ./_utils/scripts/fetch-from-supabase.js && npx @11ty/eleventy",
     "local-backend": "npx netlify-cms-proxy-server"
   },
   "devDependencies": {
