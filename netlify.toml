@@ -8,3 +8,6 @@ functions = "functions"
   to = "/.netlify/functions/:splat"
   status = 200
   force = true
+
+[functions."supabase-heartbeat"]
+  schedule = "0 5 * * 1,4"
