@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>Partnerships </title>
+    <description>Partnerships  Feed</description>
+    <link></link>
+    <pubDate>Thu, 16 Jul 2026 19:19:44 GMT</pubDate>
+    <atom:link href="/partnerships/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title>Xiaomi</title>
+            
+            <media:content url="/assets/external/66ca33c561f75b074d8bacc3_uuhartboard209.avif" medium="image"/>
+            
+            <link>/partnerships/xiaomi/</link>
+            <pubDate>Thu, 16 Jul 2026 19:19:44 GMT</pubDate>
+            <guid>/partnerships/xiaomi/</guid>
+            
+            <content type="html"></content>
+            
+        </item>
+        <item>
+            <title>Ping Pong Digital </title>
+            
+            <media:content url="/assets/external/66ca33b6acee61aab77b7df1_uuhartboard208.avif" medium="image"/>
+            
+            <link>/partnerships/ping-pong-digital/</link>
+            <pubDate>Thu, 16 Jul 2026 19:19:44 GMT</pubDate>
+            <guid>/partnerships/ping-pong-digital/</guid>
+            
+            <content type="html"></content>
+            
+        </item>
+        <item>
+            <title>Genesis</title>
+            
+            <media:content url="/assets/external/66ca33a25b68dbd4f50bb521_uuhartboard2011.avif" medium="image"/>
+            
+            <link>/partnerships/genesis/</link>
+            <pubDate>Thu, 16 Jul 2026 19:19:44 GMT</pubDate>
+            <guid>/partnerships/genesis/</guid>
+            
+            <content type="html"></content>
+            
+        </item>
+        <item>
+            <title>Esquire </title>
+            
+            <media:content url="/assets/external/66ca33e5dcb5b7160d9dc7a8_uuhartboard2010.avif" medium="image"/>
+            
+            <link>/partnerships/esquire/</link>
+            <pubDate>Thu, 16 Jul 2026 19:19:44 GMT</pubDate>
+            <guid>/partnerships/esquire/</guid>
+            
+            <content type="html"></content>
+            
+        </item>
+  </channel>
+</rss>

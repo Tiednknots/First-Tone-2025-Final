@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>Services </title>
+    <description>Services  Feed</description>
+    <link></link>
+    <pubDate>Thu, 16 Jul 2026 19:19:44 GMT</pubDate>
+    <atom:link href="/services/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title>Vertical Series</title>
+            
+            <media:content url="/assets/external/67a475d6bb75f193f3f82b9f_services20e2809320vertical.avif" medium="image"/>
+            
+            <link>/services/vertical-series/</link>
+            <pubDate>Thu, 16 Jul 2026 19:19:44 GMT</pubDate>
+            <guid>/services/vertical-series/</guid>
+            
+            <content type="html">&lt;p&gt;As the first company to deliver a vertical series in the UK, we set the standard for innovative and seamless productions. Known for being efficient, reliable, and resourceful, we ensure that every project is executed flawlessly—so the drama stays on screen, not in the production process.&lt;/p&gt;
+</content>
+            
+        </item>
+        <item>
+            <title>Moving Image</title>
+            
+            <media:content url="/assets/external/67a478465b00b963b0e59f7a_services20e2809320borders.avif" medium="image"/>
+            
+            <link>/services/moving-images/</link>
+            <pubDate>Thu, 16 Jul 2026 19:19:44 GMT</pubDate>
+            <guid>/services/moving-images/</guid>
+            
+            <content type="html">&lt;p&gt;We offer end-to-end support tailored to the unique demands of cross-border filmmaking. Organised, dynamic, and detail-driven, we combine creativity with logistics to deliver productions that consistently exceed expectations.&lt;/p&gt;
+</content>
+            
+        </item>
+        <item>
+            <title>Documentaries</title>
+            
+            <media:content url="/assets/external/67a477bf2fa417ff4d3b98be_67a4776fbaf63b83ec0fd92d_services20e2809320documentaries201.avif" medium="image"/>
+            
+            <link>/services/documentaries/</link>
+            <pubDate>Thu, 16 Jul 2026 19:19:44 GMT</pubDate>
+            <guid>/services/documentaries/</guid>
+            
+            <content type="html">&lt;p&gt;Our documentaries are crafted with deep cultural insight and a passion for storytelling. Authentic, thoughtful, and resonant, we bring unheard stories to life through multilingual interviews and compelling narratives, creating films that truly connect with audiences around the world.&lt;/p&gt;
+</content>
+            
+        </item>
+        <item>
+            <title>Customisable Solutions</title>
+            
+            <media:content url="/assets/external/67a47805af5544b0e98ec850_services20e2809320customisable.avif" medium="image"/>
+            
+            <link>/services/customisable-solutions/</link>
+            <pubDate>Thu, 16 Jul 2026 19:19:44 GMT</pubDate>
+            <guid>/services/customisable-solutions/</guid>
+            
+            <content type="html">&lt;p&gt;We offer fully customizable solutions, from complete production support to assembling local crews. Adaptable, collaborative, and dependable, we provide the resources and expertise necessary to bring your vision to life, no matter the challenge.&lt;/p&gt;
+</content>
+            
+        </item>
+        <item>
+            <title>Commercial</title>
+            
+            <media:content url="/assets/external/67a4765e1ec35523f88e5c04_services20e2809320commercial.avif" medium="image"/>
+            
+            <link>/services/commercials/</link>
+            <pubDate>Thu, 16 Jul 2026 19:19:44 GMT</pubDate>
+            <guid>/services/commercials/</guid>
+            
+            <content type="html">&lt;p&gt;We specialize in meticulously crafted commercials, created with expertise and an unwavering focus on quality. Imaginative, polished, and striking, we bring your vision to life with precision and style, ensuring every detail stands out.&lt;/p&gt;
+</content>
+            
+        </item>
+  </channel>
+</rss>
