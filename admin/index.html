@@ -302,6 +302,9 @@
         <div class="pt-4 pb-2 px-4 sidebar-text">
           <span class="text-xs font-semibold uppercase tracking-wider text-zinc-500">Site Settings</span>
         </div>
+        <a href="#" onclick="window.loadTab('home-gallery'); return false;" data-tab="home-gallery" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
+          <i class="fa-solid fa-images w-5 text-center shrink-0"></i> <span class="sidebar-text">Home Gallery</span>
+        </a>
         <a href="#" onclick="window.loadTab('settings'); return false;" data-tab="settings" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
           <i class="fa-solid fa-gear w-5 text-center shrink-0"></i> <span class="sidebar-text">Customization</span>
         </a>
@@ -508,152 +511,169 @@
               
               <div class="p-8 space-y-6 flex-1">
                 <!-- Editor Inputs -->
-                <form id="project-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <form id="project-form" class="space-y-8">
                   <input type="hidden" id="project-id">
                   
-                  <div class="md:col-span-2">
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Project Name (Title)</label>
-                    <input type="text" id="project-title" required class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="e.g. Genesis Commercial Campaign" oninput="updateProjectPreview()">
-                  </div>
-                  
-                  <div>
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Slug</label>
-                    <input type="text" id="project-slug" required class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="e.g. genesis-campaign">
-                  </div>
-                  
-                  <div>
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Home Page Display Order</label>
-                    <input type="number" id="project-video-order" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="e.g. 1 (1 = First on Home Page)">
-                  </div>
-
-                  <div>
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Our Work Page Display Order</label>
-                    <input type="number" id="project-work-video-order" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="e.g. 1 (1 = First on Our Work Page)">
-                  </div>
-
-                  <div>
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Vimeo Video ID</label>
-                    <input type="text" id="project-link-video" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="e.g. 997670994">
-                  </div>
-
-                  <div>
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Direct Video File URL (.mp4 / .webm)</label>
-                    <input type="text" id="project-video-url" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="https://cdn.prod.website-files.com/...">
-                  </div>
-
-                  <!-- Project Video Drop Zone -->
-                  <div class="md:col-span-2">
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Upload Project Video File (.mp4, .webm, .mov)</label>
-                    <div class="drop-zone border-2 border-dashed border-zinc-800 hover:border-brand-500/50 rounded-2xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center bg-black/40 relative min-h-[140px]" data-field="project-video-file">
-                      <input type="file" class="hidden file-input" accept="video/mp4,video/webm,video/quicktime">
-                      <div class="drop-zone-content flex flex-col items-center">
-                        <i class="fa-solid fa-file-video text-brand-500 text-3xl mb-3"></i>
-                        <span class="text-sm font-semibold text-zinc-200">Drag & Drop or Click to Upload Video</span>
-                        <span class="text-xs text-zinc-500 mt-1">Upload preview video file for card & header playback</span>
+                  <!-- SECTION 1: BASIC INFORMATION -->
+                  <div class="border border-zinc-800/80 rounded-2xl p-6 bg-black/40 space-y-4">
+                    <h5 class="text-xs font-bold text-brand-500 uppercase tracking-widest flex items-center gap-2 border-b border-zinc-800 pb-3">
+                      <i class="fa-solid fa-circle-info"></i> 1. Basic Information
+                    </h5>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div class="md:col-span-2">
+                        <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Project Name (Title)</label>
+                        <input type="text" id="project-title" required class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="e.g. Genesis Commercial Campaign" oninput="updateProjectPreview()">
                       </div>
-                      <div class="preview-img-container hidden absolute inset-0 rounded-2xl overflow-hidden bg-zinc-950 flex items-center justify-center">
-                        <video src="" class="h-full w-full object-cover" muted loop playsinline></video>
-                        <button type="button" onclick="clearDropZone(event)" class="absolute top-2 right-2 bg-black/80 hover:bg-red-500 p-2 rounded-full text-white transition"><i class="fa-solid fa-trash-can text-sm"></i></button>
+                      <div>
+                        <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Slug (URL Identifier)</label>
+                        <input type="text" id="project-slug" required class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="e.g. genesis-campaign">
+                      </div>
+                      <div>
+                        <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Short Summary Description</label>
+                        <input type="text" id="project-short-desc" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="Brief summary displayed in list cards." oninput="updateProjectPreview()">
                       </div>
                     </div>
                   </div>
 
-                  <div class="md:col-span-2">
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Short Summary Description</label>
-                    <input type="text" id="project-short-desc" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="Brief summary displayed in list view cards." oninput="updateProjectPreview()">
-                  </div>
-
-                  <!-- Upload Image Drop Zones with Explicit Labels -->
-                  <div>
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-1">Desktop / Default Featured Image</label>
-                    <span class="block text-[11px] text-zinc-500 mb-2">Used as the primary poster & desktop view thumbnail.</span>
-                    <div class="drop-zone border-2 border-dashed border-zinc-800 hover:border-brand-500/50 rounded-2xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center bg-black/40 relative min-h-[160px]" data-field="main-image">
-                      <input type="file" class="hidden file-input" accept="image/*">
-                      <div class="drop-zone-content flex flex-col items-center">
-                        <i class="fa-solid fa-desktop text-brand-500 text-3xl mb-3"></i>
-                        <span class="text-sm font-semibold text-zinc-200">Drag & Drop or Click</span>
-                        <span class="text-xs text-zinc-500 mt-1">Desktop Thumbnail Image (16:9)</span>
+                  <!-- SECTION 2: PAGE DISPLAY ORDERING -->
+                  <div class="border border-zinc-800/80 rounded-2xl p-6 bg-black/40 space-y-4">
+                    <h5 class="text-xs font-bold text-brand-500 uppercase tracking-widest flex items-center gap-2 border-b border-zinc-800 pb-3">
+                      <i class="fa-solid fa-arrow-down-short-wide"></i> 2. Page Display Ordering
+                    </h5>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Home Page Display Order</label>
+                        <input type="number" id="project-video-order" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="e.g. 1 (1 = First on Home Page)" oninput="updateProjectPreview()">
                       </div>
-                      <div class="preview-img-container hidden absolute inset-0 rounded-2xl overflow-hidden bg-zinc-950 flex items-center justify-center">
-                        <img src="" class="h-full w-full object-cover">
-                        <button type="button" onclick="clearDropZone(event)" class="absolute top-2 right-2 bg-black/80 hover:bg-red-500 p-2 rounded-full text-white transition"><i class="fa-solid fa-trash-can text-sm"></i></button>
+                      <div>
+                        <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Our Work Page Display Order</label>
+                        <input type="number" id="project-work-video-order" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="e.g. 1 (1 = First on Our Work Page)" oninput="updateProjectPreview()">
                       </div>
                     </div>
                   </div>
 
-                  <div>
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-1">Mobile Viewport Image</label>
-                    <span class="block text-[11px] text-zinc-500 mb-2">Optimized vertical/portrait image for mobile phones.</span>
-                    <div class="drop-zone border-2 border-dashed border-zinc-800 hover:border-brand-500/50 rounded-2xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center bg-black/40 relative min-h-[160px]" data-field="mobile-image">
-                      <input type="file" class="hidden file-input" accept="image/*">
-                      <div class="drop-zone-content flex flex-col items-center">
-                        <i class="fa-solid fa-mobile-screen-button text-brand-500 text-3xl mb-3"></i>
-                        <span class="text-sm font-semibold text-zinc-200">Drag & Drop or Click</span>
-                        <span class="text-xs text-zinc-500 mt-1">Mobile Viewport Image (9:16 or 3:4)</span>
+                  <!-- SECTION 3: MEDIA & VIDEO ASSETS -->
+                  <div class="border border-zinc-800/80 rounded-2xl p-6 bg-black/40 space-y-4">
+                    <h5 class="text-xs font-bold text-brand-500 uppercase tracking-widest flex items-center gap-2 border-b border-zinc-800 pb-3">
+                      <i class="fa-solid fa-photo-film"></i> 3. Media & Video Assets
+                    </h5>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Vimeo Video ID</label>
+                        <input type="text" id="project-link-video" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="e.g. 997670994">
                       </div>
-                      <div class="preview-img-container hidden absolute inset-0 rounded-2xl overflow-hidden bg-zinc-950 flex items-center justify-center">
-                        <img src="" class="h-full w-full object-cover">
-                        <button type="button" onclick="clearDropZone(event)" class="absolute top-2 right-2 bg-black/80 hover:bg-red-500 p-2 rounded-full text-white transition"><i class="fa-solid fa-trash-can text-sm"></i></button>
+                      <div>
+                        <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Direct Video File URL (.mp4 / .webm)</label>
+                        <input type="text" id="project-video-url" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="https://cdn.prod.website-files.com/..." oninput="updateProjectPreview()">
+                      </div>
+
+                      <!-- Video File Upload Zone -->
+                      <div class="md:col-span-2">
+                        <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Upload Project Video File (.mp4, .webm, .mov)</label>
+                        <div class="drop-zone border-2 border-dashed border-zinc-800 hover:border-brand-500/50 rounded-2xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center bg-black/40 relative min-h-[140px]" data-field="project-video-file">
+                          <input type="file" class="hidden file-input" accept="video/mp4,video/webm,video/quicktime">
+                          <div class="drop-zone-content flex flex-col items-center">
+                            <i class="fa-solid fa-file-video text-brand-500 text-3xl mb-3"></i>
+                            <span class="text-sm font-semibold text-zinc-200">Drag & Drop or Click to Upload Video</span>
+                            <span class="text-xs text-zinc-500 mt-1">Upload preview video clip for cards & header video playback</span>
+                          </div>
+                          <div class="preview-img-container hidden absolute inset-0 rounded-2xl overflow-hidden bg-zinc-950 flex items-center justify-center">
+                            <video src="" class="h-full w-full object-cover" muted loop playsinline></video>
+                            <button type="button" onclick="clearDropZone(event)" class="absolute top-2 right-2 bg-black/80 hover:bg-red-500 p-2 rounded-full text-white transition"><i class="fa-solid fa-trash-can text-sm"></i></button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Default Featured Image Drop Zone -->
+                      <div class="md:col-span-2">
+                        <label class="block text-xs font-semibold uppercase text-zinc-400 mb-1">Default Featured Image / Video Still Poster</label>
+                        <span class="block text-[11px] text-zinc-500 mb-2">Primary project thumbnail image displayed on cards and search views.</span>
+                        <div class="drop-zone border-2 border-dashed border-zinc-800 hover:border-brand-500/50 rounded-2xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center bg-black/40 relative min-h-[160px]" data-field="main-image">
+                          <input type="file" class="hidden file-input" accept="image/*">
+                          <div class="drop-zone-content flex flex-col items-center">
+                            <i class="fa-solid fa-image text-brand-500 text-3xl mb-3"></i>
+                            <span class="text-sm font-semibold text-zinc-200">Drag & Drop or Click</span>
+                            <span class="text-xs text-zinc-500 mt-1">Default Featured Image (16:9 ratio recommended)</span>
+                          </div>
+                          <div class="preview-img-container hidden absolute inset-0 rounded-2xl overflow-hidden bg-zinc-950 flex items-center justify-center">
+                            <img src="" class="h-full w-full object-cover">
+                            <button type="button" onclick="clearDropZone(event)" class="absolute top-2 right-2 bg-black/80 hover:bg-red-500 p-2 rounded-full text-white transition"><i class="fa-solid fa-trash-can text-sm"></i></button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                  <!-- Project Gallery Images Drop Zone -->
-                  <div class="md:col-span-2 border-t border-zinc-800/80 pt-6">
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-1">Project Gallery Photos (Masonry Grid)</label>
-                    <span class="block text-[11px] text-zinc-500 mb-3">Upload multiple photos to display in the project's bottom masonry grid gallery.</span>
-                    <div class="drop-zone border-2 border-dashed border-zinc-800 hover:border-brand-500/50 rounded-2xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center bg-black/40 relative min-h-[140px]" data-field="project-gallery-images">
+                  <!-- SECTION 4: RICH TEXT CONTENT -->
+                  <div class="border border-zinc-800/80 rounded-2xl p-6 bg-black/40 space-y-4">
+                    <h5 class="text-xs font-bold text-brand-500 uppercase tracking-widest flex items-center gap-2 border-b border-zinc-800 pb-3">
+                      <i class="fa-solid fa-file-pen"></i> 4. Rich Text Details
+                    </h5>
+                    <div class="space-y-4">
+                      <div>
+                        <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Project Description</label>
+                        <div class="quill-editor-container bg-black border border-zinc-800 rounded-xl overflow-hidden mt-1 text-white">
+                          <div id="project-desc-editor" style="height: 200px;" class="text-white"></div>
+                        </div>
+                        <textarea id="project-desc" class="hidden"></textarea>
+                      </div>
+
+                      <div>
+                        <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Client Details</label>
+                        <div class="quill-editor-container bg-black border border-zinc-800 rounded-xl overflow-hidden mt-1 text-white">
+                          <div id="project-client-details-editor" style="height: 120px;" class="text-white"></div>
+                        </div>
+                        <textarea id="project-client-details" class="hidden"></textarea>
+                      </div>
+
+                      <div>
+                        <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Project Challenge</label>
+                        <div class="quill-editor-container bg-black border border-zinc-800 rounded-xl overflow-hidden mt-1 text-white">
+                          <div id="project-challenge-editor" style="height: 100px;" class="text-white"></div>
+                        </div>
+                        <textarea id="project-challenge" class="hidden"></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- SECTION 5: REORDERABLE PROJECT GALLERY PHOTOS -->
+                  <div class="border border-zinc-800/80 rounded-2xl p-6 bg-black/40 space-y-4">
+                    <div class="flex justify-between items-center border-b border-zinc-800 pb-3">
+                      <h5 class="text-xs font-bold text-brand-500 uppercase tracking-widest flex items-center gap-2">
+                        <i class="fa-solid fa-images"></i> 5. Reorderable Project Gallery Photos
+                      </h5>
+                      <span class="text-xs text-zinc-500">Move items ◄ ► to change display order</span>
+                    </div>
+                    <div class="drop-zone border-2 border-dashed border-zinc-800 hover:border-brand-500/50 rounded-2xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center bg-black/40 relative min-h-[120px]" data-field="project-gallery-images">
                       <input type="file" class="hidden file-input" accept="image/*" multiple>
                       <div class="drop-zone-content flex flex-col items-center">
-                        <i class="fa-solid fa-images text-brand-500 text-3xl mb-3"></i>
+                        <i class="fa-solid fa-plus text-brand-500 text-3xl mb-2"></i>
                         <span class="text-sm font-semibold text-zinc-200">Drag & Drop or Click to Add Gallery Photos</span>
-                        <span class="text-xs text-zinc-500 mt-1">Select one or multiple images</span>
+                        <span class="text-xs text-zinc-500 mt-1">Select multiple images</span>
                       </div>
                     </div>
                     <div id="project-gallery-previews" class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-                      <!-- Rendered gallery thumbnail previews -->
+                      <!-- Rendered gallery thumbnail cards with Move Left / Move Right / Delete controls -->
                     </div>
                   </div>
 
-                   <div class="md:col-span-2">
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Project Description</label>
-                    <div class="quill-editor-container bg-black border border-zinc-800 rounded-xl overflow-hidden mt-1 text-white">
-                      <div id="project-desc-editor" style="height: 220px;" class="text-white"></div>
-                    </div>
-                    <textarea id="project-desc" class="hidden"></textarea>
-                  </div>
-
-                  <div class="md:col-span-2">
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Client Details</label>
-                    <div class="quill-editor-container bg-black border border-zinc-800 rounded-xl overflow-hidden mt-1 text-white">
-                      <div id="project-client-details-editor" style="height: 120px;" class="text-white"></div>
-                    </div>
-                    <textarea id="project-client-details" class="hidden"></textarea>
-                  </div>
-
-                  <div class="md:col-span-2">
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Project Challenge</label>
-                    <div class="quill-editor-container bg-black border border-zinc-800 rounded-xl overflow-hidden mt-1 text-white">
-                      <div id="project-challenge-editor" style="height: 100px;" class="text-white"></div>
-                    </div>
-                    <textarea id="project-challenge" class="hidden"></textarea>
-                  </div>
-
-                  <div class="md:col-span-2 border-t border-zinc-800 pt-6">
-                    <h5 class="text-sm font-semibold text-brand-100 uppercase tracking-wider mb-4">Project Preview Mockup</h5>
-                    <!-- Real-time Project Card Preview Mockup -->
+                  <!-- SECTION 6: LIVE PREVIEW MOCKUP -->
+                  <div class="border border-zinc-800/80 rounded-2xl p-6 bg-black/40 space-y-4">
+                    <h5 class="text-xs font-bold text-brand-500 uppercase tracking-widest flex items-center gap-2 border-b border-zinc-800 pb-3">
+                      <i class="fa-solid fa-eye"></i> 6. Real-Time Project Card Preview
+                    </h5>
                     <div class="glass rounded-2xl overflow-hidden max-w-sm border border-zinc-800 mx-auto">
                       <div class="aspect-video bg-zinc-900 relative flex items-center justify-center text-zinc-700">
-                        <img id="mock-image" src="/assets/images/inner-circle.svg" class="w-full h-full object-cover">
+                        <img id="mock-image" src="/assets/images/firsttonelogos-01_1.avif" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-4">
                           <div>
-                            <span class="text-xs text-brand-100 font-bold uppercase tracking-wider">PROJECT</span>
-                            <h4 id="mock-title" class="text-lg font-bold text-white mt-1">ECOMAAT Commercial</h4>
+                            <span id="mock-badge" class="text-xs text-brand-100 font-bold uppercase tracking-wider">PROJECT</span>
+                            <h4 id="mock-title" class="text-lg font-bold text-white mt-1">Project Name</h4>
                           </div>
                         </div>
                       </div>
                       <div class="p-5 space-y-4">
-                        <p id="mock-desc" class="text-zinc-400 text-xs leading-relaxed">First Tone produced a captivating video to help ECOMAAT expand into the Chinese market using its global network.</p>
+                        <p id="mock-desc" class="text-zinc-400 text-xs leading-relaxed">Brief project description summary...</p>
                         <a href="#" class="inline-flex items-center gap-2 text-brand-500 font-semibold text-xs uppercase tracking-wider">View Project <i class="fa-solid fa-arrow-right"></i></a>
                       </div>
                     </div>
@@ -777,6 +797,37 @@
                   <button type="submit" class="px-6 py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-sm font-semibold transition">Save Partner</button>
                 </div>
               </form>
+            </div>
+          </div>
+        <!-- ================= HOME GALLERY VIEW ================= -->
+        <section id="home-gallery-view" class="tab-view space-y-6 hidden">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="text-lg font-bold text-white">Manage Home Page Gallery</h3>
+              <p class="text-xs text-zinc-400 mt-1">Displays under the About Us section on the homepage. Max 8 photos allowed.</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <span id="home-gallery-count" class="text-xs font-semibold px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-brand-100">0 / 8 Photos</span>
+              <button onclick="saveHomeGallery()" class="px-5 py-2.5 bg-brand-500 hover:bg-brand-600 rounded-xl text-sm font-semibold flex items-center gap-2 transition text-white">
+                <i class="fa-solid fa-floppy-disk"></i> Save Home Gallery
+              </button>
+            </div>
+          </div>
+
+          <!-- Upload Drop Zone -->
+          <div class="glass p-6 rounded-2xl space-y-4">
+            <div class="drop-zone border-2 border-dashed border-zinc-800 hover:border-brand-500/50 rounded-2xl p-8 text-center cursor-pointer transition flex flex-col items-center justify-center bg-black/40 relative min-h-[140px]" data-field="home-gallery-uploader">
+              <input type="file" class="hidden file-input" accept="image/*" multiple>
+              <div class="drop-zone-content flex flex-col items-center">
+                <i class="fa-solid fa-images text-brand-500 text-4xl mb-3"></i>
+                <span class="text-sm font-semibold text-zinc-200">Drag & Drop or Click to Add Gallery Photos</span>
+                <span class="text-xs text-zinc-500 mt-1">Maximum 8 photos (16:9 or 4:3 ratio recommended)</span>
+              </div>
+            </div>
+
+            <!-- Reorderable Photo Grid Cards -->
+            <div id="home-gallery-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
+              <!-- Rendered thumbnail cards with Move Left ◄ / Move Right ► / Delete 🗑 controls -->
             </div>
           </div>
         </section>
@@ -1310,6 +1361,8 @@
         await renderServicesTab();
       } else if (tab === 'partnerships') {
         await renderPartnershipsTab();
+      } else if (tab === 'home-gallery') {
+        await renderHomeGalleryTab();
       } else if (tab === 'settings') {
         await renderSettingsTab();
       }
@@ -1699,13 +1752,107 @@
       }).join('');
     }
 
+    let currentProjectGallery = [];
+    let currentHomeGallery = [];
+
+    function renderProjectGalleryPreviews() {
+      const container = document.getElementById('project-gallery-previews');
+      if (!container) return;
+      if (currentProjectGallery.length === 0) {
+        container.innerHTML = '<p class="col-span-full text-xs text-zinc-500 text-center py-2">No gallery photos added yet.</p>';
+        return;
+      }
+      container.innerHTML = currentProjectGallery.map((item, index) => `
+        <div class="relative group bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden aspect-video flex items-center justify-center">
+          <img src="${item.url}" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-1.5 p-2">
+            ${index > 0 ? `<button type="button" onclick="moveProjectGalleryPhoto(${index}, -1)" title="Move Left" class="p-1.5 bg-zinc-800 hover:bg-brand-500 rounded-lg text-white text-xs transition"><i class="fa-solid fa-chevron-left"></i></button>` : ''}
+            ${index < currentProjectGallery.length - 1 ? `<button type="button" onclick="moveProjectGalleryPhoto(${index}, 1)" title="Move Right" class="p-1.5 bg-zinc-800 hover:bg-brand-500 rounded-lg text-white text-xs transition"><i class="fa-solid fa-chevron-right"></i></button>` : ''}
+            <button type="button" onclick="deleteProjectGalleryPhoto(${index})" title="Remove Photo" class="p-1.5 bg-red-500/80 hover:bg-red-600 rounded-lg text-white text-xs transition"><i class="fa-solid fa-trash-can"></i></button>
+          </div>
+          <span class="absolute top-1 left-1.5 text-[10px] font-bold text-white bg-black/70 px-1.5 py-0.5 rounded">#${index + 1}</span>
+        </div>
+      `).join('');
+    }
+
+    function moveProjectGalleryPhoto(index, direction) {
+      const newIndex = index + direction;
+      if (newIndex < 0 || newIndex >= currentProjectGallery.length) return;
+      const temp = currentProjectGallery[index];
+      currentProjectGallery[index] = currentProjectGallery[newIndex];
+      currentProjectGallery[newIndex] = temp;
+      renderProjectGalleryPreviews();
+    }
+
+    function deleteProjectGalleryPhoto(index) {
+      currentProjectGallery.splice(index, 1);
+      renderProjectGalleryPreviews();
+    }
+
+    function renderHomeGalleryTab() {
+      const grid = document.getElementById('home-gallery-grid');
+      const countEl = document.getElementById('home-gallery-count');
+      if (countEl) countEl.innerText = `${currentHomeGallery.length} / 8 Photos`;
+      if (!grid) return;
+      if (currentHomeGallery.length === 0) {
+        grid.innerHTML = '<p class="col-span-full text-xs text-zinc-500 text-center py-6">No home gallery photos uploaded yet. Max limit is 8 photos.</p>';
+        return;
+      }
+      grid.innerHTML = currentHomeGallery.map((item, index) => `
+        <div class="relative group bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden aspect-video flex items-center justify-center shadow-lg">
+          <img src="${item.url}" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2 p-2">
+            ${index > 0 ? `<button type="button" onclick="moveHomeGalleryPhoto(${index}, -1)" title="Move Left" class="p-2 bg-zinc-800 hover:bg-brand-500 rounded-xl text-white text-xs transition"><i class="fa-solid fa-chevron-left"></i></button>` : ''}
+            ${index < currentHomeGallery.length - 1 ? `<button type="button" onclick="moveHomeGalleryPhoto(${index}, 1)" title="Move Right" class="p-2 bg-zinc-800 hover:bg-brand-500 rounded-xl text-white text-xs transition"><i class="fa-solid fa-chevron-right"></i></button>` : ''}
+            <button type="button" onclick="deleteHomeGalleryPhoto(${index})" title="Remove Photo" class="p-2 bg-red-500 hover:bg-red-600 rounded-xl text-white text-xs transition"><i class="fa-solid fa-trash-can"></i></button>
+          </div>
+          <span class="absolute top-2 left-2 text-xs font-bold text-white bg-black/80 px-2 py-0.5 rounded-lg border border-zinc-800">#${index + 1}</span>
+        </div>
+      `).join('');
+    }
+
+    function moveHomeGalleryPhoto(index, direction) {
+      const newIndex = index + direction;
+      if (newIndex < 0 || newIndex >= currentHomeGallery.length) return;
+      const temp = currentHomeGallery[index];
+      currentHomeGallery[index] = currentHomeGallery[newIndex];
+      currentHomeGallery[newIndex] = temp;
+      renderHomeGalleryTab();
+    }
+
+    function deleteHomeGalleryPhoto(index) {
+      currentHomeGallery.splice(index, 1);
+      renderHomeGalleryTab();
+    }
+
+    async function saveHomeGallery() {
+      if (isDemo) {
+        alert("Demo Mode: Home Gallery saved successfully!");
+        return;
+      }
+      try {
+        const payload = {
+          key: 'home_gallery',
+          url: JSON.stringify(currentHomeGallery),
+          alt: 'Home Masonry Gallery'
+        };
+        const { error } = await supabaseClient.from('images').upsert(payload);
+        if (error) throw error;
+        alert("Success: Home Gallery saved successfully!");
+      } catch (err) {
+        alert("Error saving Home Gallery: " + err.message);
+      }
+    }
+
     // Media Dropzones Setup
     document.querySelectorAll('.drop-zone').forEach(zone => {
       const fileInput = zone.querySelector('.file-input');
-      const previewContainer = zone.querySelector('.preview-img-container');
-      const previewImg = previewContainer.querySelector('img');
+      if (!fileInput) return;
 
-      zone.onclick = () => fileInput.click();
+      zone.onclick = (e) => {
+        if (e.target.tagName === 'INPUT') return;
+        fileInput.click();
+      };
       
       zone.ondragover = (e) => {
         e.preventDefault();
@@ -1718,36 +1865,21 @@
         zone.classList.remove('border-brand-500');
         const files = e.dataTransfer.files;
         if (files.length > 0) {
-          fileInput.files = files;
-          await handleFileUpload(files[0], zone);
+          await handleFileUpload(files, zone);
         }
       };
 
       fileInput.onchange = async () => {
         if (fileInput.files.length > 0) {
-          await handleFileUpload(fileInput.files[0], zone);
+          await handleFileUpload(fileInput.files, zone);
         }
       };
     });
 
-    async function handleFileUpload(file, zone) {
-      const previewContainer = zone.querySelector('.preview-img-container');
-      const previewImg = previewContainer.querySelector('img');
-      const content = zone.querySelector('.drop-zone-content');
-      
-      content.innerHTML = '<i class="fa-solid fa-spinner animate-spin text-brand-500 text-3xl mb-3"></i><span class="text-sm">Uploading...</span>';
-      
+    async function uploadSingleFile(file) {
       if (isDemo) {
-        setTimeout(() => {
-          const fakeUrl = URL.createObjectURL(file);
-          previewImg.src = fakeUrl;
-          previewContainer.classList.remove('hidden');
-          zone.setAttribute('data-uploaded-url', fakeUrl);
-          updateProjectPreview();
-        }, 600);
-        return;
+        return URL.createObjectURL(file);
       }
-
       try {
         const fileExt = file.name.split('.').pop();
         const fileName = `${Date.now()}_${Math.random().toString(36).substring(2)}.${fileExt}`;
@@ -1756,30 +1888,73 @@
           upsert: false
         });
         if (error) throw error;
-
         const { data: { publicUrl } } = supabaseClient.storage.from('assets').getPublicUrl(fileName);
-        previewImg.src = publicUrl;
-        previewContainer.classList.remove('hidden');
-        zone.setAttribute('data-uploaded-url', publicUrl);
-        updateProjectPreview();
+        return publicUrl;
       } catch (err) {
-        alert("Upload failed: " + err.message + "\n(Verify you created a public bucket named 'assets' in Supabase)");
+        console.error("Upload failed:", err);
+        alert("Upload error: " + err.message);
+        return null;
+      }
+    }
+
+    async function handleFileUpload(files, zone) {
+      const field = zone.getAttribute('data-field');
+      
+      if (field === 'project-gallery-images' || field === 'home-gallery-uploader') {
+        const isHome = (field === 'home-gallery-uploader');
+        for (let i = 0; i < files.length; i++) {
+          if (isHome && currentHomeGallery.length >= 8) {
+            alert("Maximum limit of 8 photos reached for the Home Gallery.");
+            break;
+          }
+          const uploadedUrl = await uploadSingleFile(files[i]);
+          if (uploadedUrl) {
+            if (isHome) {
+              currentHomeGallery.push({ url: uploadedUrl, alt: files[i].name });
+            } else {
+              currentProjectGallery.push({ url: uploadedUrl, alt: files[i].name });
+            }
+          }
+        }
+        if (isHome) renderHomeGalleryTab();
+        else renderProjectGalleryPreviews();
+        return;
+      }
+
+      const previewContainer = zone.querySelector('.preview-img-container');
+      const content = zone.querySelector('.drop-zone-content');
+      if (!previewContainer) return;
+      
+      if (content) content.innerHTML = '<i class="fa-solid fa-spinner animate-spin text-brand-500 text-3xl mb-3"></i><span class="text-sm">Uploading...</span>';
+      
+      const uploadedUrl = await uploadSingleFile(files[0]);
+      if (uploadedUrl) {
+        const previewImg = previewContainer.querySelector('img') || previewContainer.querySelector('video');
+        if (previewImg) previewImg.src = uploadedUrl;
+        previewContainer.classList.remove('hidden');
+        zone.setAttribute('data-uploaded-url', uploadedUrl);
+        updateProjectPreview();
+      } else if (content) {
         content.innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-brand-500 text-3xl mb-3"></i><span class="text-sm font-semibold">Drag & Drop or Click</span>';
       }
     }
 
     function clearDropZone(event) {
-      event.stopPropagation();
-      const btn = event.currentTarget;
-      const previewContainer = btn.parentElement;
-      const zone = previewContainer.parentElement;
+      if (event) event.stopPropagation();
+      const btn = event ? (event.currentTarget || event.target) : null;
+      const zone = btn ? btn.closest('.drop-zone') : null;
+      if (!zone) return;
+
+      const previewContainer = zone.querySelector('.preview-img-container');
       const content = zone.querySelector('.drop-zone-content');
       const fileInput = zone.querySelector('.file-input');
 
-      fileInput.value = "";
+      if (fileInput) fileInput.value = "";
       zone.removeAttribute('data-uploaded-url');
-      previewContainer.classList.add('hidden');
-      content.innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-brand-500 text-3xl mb-3"></i><span class="text-sm font-semibold">Drag & Drop or Click</span>';
+      if (previewContainer) previewContainer.classList.add('hidden');
+      if (content) {
+        content.innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-brand-500 text-3xl mb-3"></i><span class="text-sm font-semibold">Drag & Drop or Click</span>';
+      }
       updateProjectPreview();
     }
 
@@ -1835,16 +2010,19 @@
           
           if (proj.main_image?.url) {
             const zone = document.querySelector('[data-field="main-image"]');
-            zone.setAttribute('data-uploaded-url', proj.main_image.url);
-            zone.querySelector('.preview-img-container img').src = proj.main_image.url;
-            zone.querySelector('.preview-img-container').classList.remove('hidden');
+            if (zone) {
+              zone.setAttribute('data-uploaded-url', proj.main_image.url);
+              const preview = zone.querySelector('.preview-img-container');
+              if (preview) {
+                const img = preview.querySelector('img');
+                if (img) img.src = proj.main_image.url;
+                preview.classList.remove('hidden');
+              }
+            }
           }
-          if (proj.mobile_image?.url) {
-            const zone = document.querySelector('[data-field="mobile-image"]');
-            zone.setAttribute('data-uploaded-url', proj.mobile_image.url);
-            zone.querySelector('.preview-img-container img').src = proj.mobile_image.url;
-            zone.querySelector('.preview-img-container').classList.remove('hidden');
-          }
+
+          currentProjectGallery = (proj && Array.isArray(proj.gallery_images)) ? [...proj.gallery_images] : [];
+          renderProjectGalleryPreviews();
         }
       } else {
         document.getElementById('project-editor-title').innerText = "Add New Project";
@@ -1855,6 +2033,9 @@
         quillProjectDesc.root.innerHTML = '';
         quillProjectClientDetails.root.innerHTML = '';
         quillProjectChallenge.root.innerHTML = '';
+
+        currentProjectGallery = [];
+        renderProjectGalleryPreviews();
       }
       
       updateProjectPreview();
@@ -1888,7 +2069,6 @@
       }
 
       const mainImageZone = document.querySelector('[data-field="main-image"]');
-      const mobileImageZone = document.querySelector('[data-field="mobile-image"]');
       
       const payload = {
         title,
@@ -1901,8 +2081,8 @@
         body: body || '',
         client_details: clientDetails || null,
         challenge: challenge || null,
-        main_image: mainImageZone.getAttribute('data-uploaded-url') ? { url: mainImageZone.getAttribute('data-uploaded-url'), alt: "" } : null,
-        mobile_image: mobileImageZone.getAttribute('data-uploaded-url') ? { url: mobileImageZone.getAttribute('data-uploaded-url'), alt: "" } : null,
+        main_image: (mainImageZone && mainImageZone.getAttribute('data-uploaded-url')) ? { url: mainImageZone.getAttribute('data-uploaded-url'), alt: "" } : null,
+        gallery_images: currentProjectGallery,
         updated_on: new Date().toISOString()
       };
 

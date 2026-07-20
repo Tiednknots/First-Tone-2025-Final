@@ -387,10 +387,12 @@ a {
             <section class="home-masonry-gallery-section my-16 px-4 py-8">
               <div class="max-w-7xl mx-auto">
                 <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-                  {%- for img in gallery -%}
+                  {%- for img in gallery limit: 8 -%}
+                  {%- if img.url -%}
                   <div class="break-inside-avoid rounded-2xl overflow-hidden shadow-2xl border border-zinc-800/80 bg-zinc-950 group transition duration-300">
                     <img src="{{ img.url }}" loading="lazy" alt="{{ img.alt | default: 'First Tone Production Gallery' }}" class="w-full h-auto object-cover group-hover:scale-105 transition duration-500">
                   </div>
+                  {%- endif -%}
                   {%- endfor -%}
                 </div>
               </div>

@@ -86,15 +86,25 @@ async function fetchSettings() {
   await fs.outputJson(path.join(__dirname, '../../cms/_data/links.json'), links, { spaces: 2 });
   console.log(`Fetched and wrote ${Object.keys(links).length} links.`);
 
-  // Fetch images
+  // Fetch images & home gallery
   const { data: imagesData, error: imagesError } = await supabase.from('images').select('key, url, alt');
   if (imagesError) throw imagesError;
   const images = {};
+  let gallery = [];
   imagesData.forEach(row => {
-    images[row.key] = { url: row.url, alt: row.alt || '' };
+    if (row.key === 'home_gallery') {
+      try {
+        gallery = JSON.parse(row.url);
+      } catch (e) {
+        gallery = [];
+      }
+    } else {
+      images[row.key] = { url: row.url, alt: row.alt || '' };
+    }
   });
   await fs.outputJson(path.join(__dirname, '../../cms/_data/images.json'), images, { spaces: 2 });
-  console.log(`Fetched and wrote ${Object.keys(images).length} images.`);
+  await fs.outputJson(path.join(__dirname, '../../cms/_data/gallery.json'), gallery, { spaces: 2 });
+  console.log(`Fetched and wrote ${Object.keys(images).length} images and ${gallery.length} home gallery items.`);
 }
 
 async function fetchCaseStudies() {
