@@ -1290,17 +1290,62 @@
       }
     });
 
+    function showBrandNotification(title, message, type = 'success') {
+      let container = document.getElementById('brand-toast-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'brand-toast-container';
+        container.className = 'fixed bottom-6 right-6 z-50 flex flex-col space-y-3 pointer-events-none';
+        document.body.appendChild(container);
+      }
+
+      const toast = document.createElement('div');
+      const borderClass = type === 'error' ? 'border-red-500/50 bg-red-950/90 text-white' : 'border-brand-500/50 bg-zinc-950/95 text-white';
+      const iconClass = type === 'error' ? 'fa-solid fa-triangle-exclamation text-red-400' : 'fa-solid fa-circle-check text-brand-500';
+      const iconBg = type === 'error' ? 'bg-red-500/10 border-red-500/20' : 'bg-brand-500/10 border-brand-500/20';
+
+      toast.className = `pointer-events-auto max-w-sm w-full border ${borderClass} rounded-2xl p-4 shadow-2xl backdrop-blur-xl transition-all duration-300 transform translate-y-4 opacity-0 flex items-start gap-3.5`;
+
+      toast.innerHTML = `
+        <div class="h-10 w-10 rounded-xl ${iconBg} border flex items-center justify-center shrink-0 mt-0.5">
+          <i class="${iconClass} text-lg"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white">${title}</h4>
+          <p class="text-xs text-zinc-300 mt-1 leading-relaxed">${message}</p>
+        </div>
+        <button type="button" onclick="this.closest('.pointer-events-auto').remove()" class="text-zinc-500 hover:text-white transition p-1 shrink-0">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-4', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+      });
+
+      setTimeout(() => {
+        if (toast.parentElement) {
+          toast.classList.remove('translate-y-0', 'opacity-100');
+          toast.classList.add('translate-y-4', 'opacity-0');
+          setTimeout(() => toast.remove(), 300);
+        }
+      }, 5000);
+    }
+
     // Trigger Rebuild
-    document.getElementById('rebuild-btn').addEventListener('click', async () => {
-      const btn = document.getElementById('rebuild-btn');
+    document.getElementById('rebuild-trigger-btn').addEventListener('click', async (e) => {
+      const btn = e.currentTarget;
       btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Triggering...';
+      btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>Triggering Update...</span>';
 
       if (isDemo) {
         setTimeout(() => {
           btn.disabled = false;
           btn.innerHTML = '<i class="fa-solid fa-rotate"></i> <span>Trigger Rebuild</span>';
-          alert("Demo Mode: Simulated rebuild triggered successfully!");
+          showBrandNotification("First Tone Live Site Build", "Simulated build triggered successfully! Your live site changes will be published in about 1 minute.", "success");
         }, 1000);
         return;
       }
@@ -1317,9 +1362,9 @@
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "Failed to trigger rebuild");
         
-        alert("Success: Production rebuild triggered on Netlify! A fresh build usually takes about 1 minute.");
+        showBrandNotification("First Tone Live Site Build", "Site updates triggered successfully! Your live website changes are now building and will be published live in about 1 minute.", "success");
       } catch (err) {
-        alert("Rebuild Trigger Error: " + err.message);
+        showBrandNotification("Build Trigger Issue", err.message, "error");
       } finally {
         btn.disabled = false;
         btn.innerHTML = '<i class="fa-solid fa-rotate"></i> <span>Trigger Rebuild</span>';
