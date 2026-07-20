@@ -49,6 +49,7 @@ f_video-url: "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3
 f_mobile-image:
   url: "/assets/external/67ba2075e492bbc49f2b9bb8_screenshot202025-02-1720at2021.03.37.avif"
 f_home-video-order: 6
+f_work-video-order: 1
 f_short-desc: First Tone produced a captivating video to help ECOMAAT expand into the Chinese market using its global network.
 f_link-to-service:
 layout: "[case-studies].html"
