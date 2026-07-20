@@ -350,15 +350,43 @@ background:rgba(255, 255, 255, 0);
     <div class="div-block-39 secondary">
       <div class="left-content">
         <div class="div-block-30 secondary">
-          <div class="div-block-33"><div class="photo-gallery-container"><div class="photo-gallery w-dyn-list"><div role="list" class="w-dyn-items"><div role="listitem" class="collection-item-4 w-dyn-item"><img src="" loading="lazy" alt="" class=""></div><div role="listitem" class="collection-item-4 w-dyn-item"><img src="" loading="lazy" alt="" class=""></div></div><template><div class="photo-gallery w-dyn-list" udesly-repeater="true">
-                <div role="list" class="w-dyn-items">
-                  <div role="listitem" class="collection-item-4 w-dyn-item"><img src="{# setItem.url #}" loading="lazy" alt="" class=""></div>
-                </div>
-                <div class="w-dyn-empty">
-                  <div>{# texts.3d503d2b #}</div>
-                </div>
-              </div></template></div>
-            </div></div>
+          <div class="div-block-33">
+            <style>
+              .left-content {
+                height: 100vh !important;
+                position: sticky !important;
+                top: 0 !important;
+              }
+              .div-block-30.secondary {
+                height: 100% !important;
+                width: 100% !important;
+              }
+              .div-block-33 {
+                width: 100% !important;
+                height: 100% !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+              }
+              .video-container-sticky {
+                width: 100%;
+                aspect-ratio: 16 / 9;
+                border-radius: 16px;
+                overflow: hidden;
+                background: #09090b;
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+              }
+              .video-container-sticky iframe,
+              .video-container-sticky img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border: none;
+              }
+            </style>
+
+            <div class="video-container-sticky"><img src="/assets/external/67abf17b8a73686e0cf53ba0_cmhsbc-c397-zhou-guanyu-screengrab-1-no-video-so-has-to-be-images.avif" alt="HSBC × Zhou Guanyu" loading="lazy"></div>
+          </div>
         </div>
       </div>
       <div class="right-content">
@@ -380,29 +408,16 @@ background:rgba(255, 255, 255, 0);
           <div class="rich-text-block-3 w-richtext"><p>Commissioned by HSBC China, IMG Media aimed to produce a video featuring China's first Formula 1 driver, Zhou Guanyu, for a Mandarin-speaking audience. The project's unique challenge arose from IMG's predominantly English-speaking production team. First Tone solved this by supplying bilingual crew members who were proficient in both languages and experienced in film production. This ensured not only smooth communication between all parties but also allowed for a focus on Zhou Guanyu, who was central to the campaign's success. The outcome? A project that met its linguistic and artistic objectives to the satisfaction of everyone involved.</p>
 </div>
         </div></div>
-    </div>
-    <div class="video-back-ground">
-      <div class="code-embed-3 w-embed w-iframe"><div class="custom-video-container">
-  <iframe src="https://player.vimeo.com/video/?autoplay=1&amp;controls=0&amp;muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen="">
-  </iframe>
-</div>
-
-<!-- CSS -->
-<style>
-  .custom-video-container {
-    position: relative;
-    width: 200vw; /* 60% of the viewport width */
-    height: 100vh; /* 60% of the viewport height */
-    margin: 0 auto; /* Center it horizontally */
-  }
-
-  .custom-video-container iframe {
-    width: 100%; /* Make iframe fill the container */
-    height: 100%; /* Make iframe fill the container */
-    border: none; /* Remove any default borders */
-  }
-</style></div>
-      <div class="div-block-35"></div>
+    </div><div class="project-masonry-gallery max-w-7xl mx-auto px-6 py-12 md:py-16 border-t border-zinc-800/80 relative z-20">
+      <h3 class="heading-7 mb-8 text-white uppercase tracking-wider text-base font-bold text-center">Project Gallery</h3>
+      <div class="columns-1 sm:columns-2 lg:columns-3 gap-4 sm:gap-6 space-y-4 sm:space-y-6"><div class="break-inside-avoid rounded-2xl overflow-hidden shadow-2xl border border-zinc-800/80 bg-zinc-900 group transition duration-300">
+          <img src="object Object" loading="lazy" alt="HSBC × Zhou Guanyu" class="w-full h-auto object-cover group-hover:scale-105 transition duration-500">
+        </div><div class="break-inside-avoid rounded-2xl overflow-hidden shadow-2xl border border-zinc-800/80 bg-zinc-900 group transition duration-300">
+          <img src="object Object" loading="lazy" alt="HSBC × Zhou Guanyu" class="w-full h-auto object-cover group-hover:scale-105 transition duration-500">
+        </div></div>
+    </div><div class="video-back-ground"><div class="custom-video-container" style="position:relative; width:200vw; height:100vh; margin:0 auto;">
+        <img src="/assets/external/67abf17b8a73686e0cf53ba0_cmhsbc-c397-zhou-guanyu-screengrab-1-no-video-so-has-to-be-images.avif" alt="" class="w-full h-full object-cover opacity-30">
+      </div><div class="div-block-35"></div>
     </div>
   </section>
   <section class="section-13">

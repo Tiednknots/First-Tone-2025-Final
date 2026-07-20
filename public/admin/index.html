@@ -175,13 +175,26 @@
       padding-left: 0.5rem !important;
       padding-right: 0.5rem !important;
     }
-    @media (max-width: 767px) {
+    @media (max-width: 768px) {
       #editor-responsive-gate {
-        display: flex !important;
-      }
-      #editor-sidebar, #settings-view > div:not(#editor-responsive-gate) {
         display: none !important;
       }
+      #settings-view > div.flex-1 {
+        flex-direction: column !important;
+        overflow-y: auto !important;
+      }
+      #editor-sidebar {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        border-right: none !important;
+        border-bottom: 1px solid #27272a !important;
+      }
+      #preview-frame {
+        min-height: 400px !important;
+        height: 500px !important;
+      }
+    }
     /* Quill Editor Dark Theme styling */
     .quill-editor-container {
       margin-top: 0.5rem;
