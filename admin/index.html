@@ -87,6 +87,52 @@
       border-left: 4px solid #cd0025 !important;
       color: #ffffff !important;
     }
+    @media (max-width: 768px) {
+      #main-layout {
+        flex-direction: column !important;
+      }
+      aside#main-sidebar {
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        border-right: none !important;
+        border-bottom: 1px solid #27272a !important;
+        padding: 0 !important;
+      }
+      aside#main-sidebar > div.p-6 {
+        display: none !important;
+      }
+      aside#main-sidebar nav {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        padding: 10px 12px !important;
+        gap: 6px !important;
+        -webkit-overflow-scrolling: touch;
+      }
+      aside#main-sidebar nav .sidebar-text {
+        display: inline !important;
+      }
+      aside#main-sidebar nav .nav-item {
+        padding: 8px 14px !important;
+        font-size: 13px !important;
+        border-radius: 12px !important;
+        flex: none !important;
+        border-left: none !important;
+      }
+      aside#main-sidebar nav .active-nav {
+        border-bottom: 3px solid #fe5c00 !important;
+        border-left: none !important;
+        background: rgba(254, 92, 0, 0.15) !important;
+      }
+      aside#main-sidebar > div.border-t {
+        display: none !important;
+      }
+      main {
+        padding: 16px !important;
+      }
+    }
     #main-sidebar.mini-sidebar {
       width: 72px !important;
     }
@@ -799,38 +845,6 @@
               </form>
             </div>
           </div>
-        <!-- ================= HOME GALLERY VIEW ================= -->
-        <section id="home-gallery-view" class="tab-view space-y-6 hidden">
-          <div class="flex justify-between items-center">
-            <div>
-              <h3 class="text-lg font-bold text-white">Manage Home Page Gallery</h3>
-              <p class="text-xs text-zinc-400 mt-1">Displays under the About Us section on the homepage. Max 8 photos allowed.</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <span id="home-gallery-count" class="text-xs font-semibold px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-brand-100">0 / 8 Photos</span>
-              <button onclick="saveHomeGallery()" class="px-5 py-2.5 bg-brand-500 hover:bg-brand-600 rounded-xl text-sm font-semibold flex items-center gap-2 transition text-white">
-                <i class="fa-solid fa-floppy-disk"></i> Save Home Gallery
-              </button>
-            </div>
-          </div>
-
-          <!-- Upload Drop Zone -->
-          <div class="glass p-6 rounded-2xl space-y-4">
-            <div class="drop-zone border-2 border-dashed border-zinc-800 hover:border-brand-500/50 rounded-2xl p-8 text-center cursor-pointer transition flex flex-col items-center justify-center bg-black/40 relative min-h-[140px]" data-field="home-gallery-uploader">
-              <input type="file" class="hidden file-input" accept="image/*" multiple>
-              <div class="drop-zone-content flex flex-col items-center">
-                <i class="fa-solid fa-images text-brand-500 text-4xl mb-3"></i>
-                <span class="text-sm font-semibold text-zinc-200">Drag & Drop or Click to Add Gallery Photos</span>
-                <span class="text-xs text-zinc-500 mt-1">Maximum 8 photos (16:9 or 4:3 ratio recommended)</span>
-              </div>
-            </div>
-
-            <!-- Reorderable Photo Grid Cards -->
-            <div id="home-gallery-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
-              <!-- Rendered thumbnail cards with Move Left ◄ / Move Right ► / Delete 🗑 controls -->
-            </div>
-          </div>
-        </section>
 
         <!-- ================= SITE SETTINGS VIEW ================= -->
         <section id="settings-view" class="tab-view hidden h-full flex flex-col space-y-0">
@@ -1875,13 +1889,30 @@
       renderProjectGalleryPreviews();
     }
 
-    function renderHomeGalleryTab() {
-      const grid = document.getElementById('home-gallery-grid');
-      const countEl = document.getElementById('home-gallery-count');
+    async function renderHomeGalleryTab() {
+      if (!isDemo && currentHomeGallery.length === 0) {
+        try {
+          const { data, error } = await supabaseClient.from('images').select('*').eq('key', 'home_gallery').single();
+          if (data && data.url) {
+            let galleryData = data.url;
+            if (typeof galleryData === 'string') {
+              try { galleryData = JSON.parse(galleryData); } catch(e) {}
+            }
+            if (Array.isArray(galleryData)) {
+              currentHomeGallery = galleryData.map(img => typeof img === 'string' ? { url: img } : img);
+            }
+          }
+        } catch (e) {
+          console.warn("Could not fetch home gallery from Supabase:", e.message);
+        }
+      }
+
+      const grid = document.getElementById('home-gallery-previews') || document.getElementById('home-gallery-grid');
+      const countEl = document.getElementById('home-gallery-count-badge') || document.getElementById('home-gallery-count');
       if (countEl) countEl.innerText = `${currentHomeGallery.length} / 8 Photos`;
       if (!grid) return;
       if (currentHomeGallery.length === 0) {
-        grid.innerHTML = '<p class="col-span-full text-xs text-zinc-500 text-center py-6">No home gallery photos uploaded yet. Max limit is 8 photos.</p>';
+        grid.innerHTML = '<p class="col-span-full text-xs text-zinc-500 text-center py-8">No home gallery photos uploaded yet. Click or drag photos into the box above (Max 8 photos).</p>';
         return;
       }
       grid.innerHTML = currentHomeGallery.map((item, index) => `

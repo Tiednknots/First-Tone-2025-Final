@@ -130,7 +130,12 @@ async function fetchCaseStudies() {
       'f_video-url': row.video_url,
       'f_video-embed-rich-text': row.video_embed_rich_text,
       'f_main-image': row.main_image,
-      'f_gallery-images': row.gallery_images,
+      'f_gallery-images': (() => {
+        let g = row.gallery_images;
+        if (typeof g === 'string') { try { g = JSON.parse(g); } catch(e) {} }
+        if (Array.isArray(g)) return g.map(i => typeof i === 'string' ? { url: i } : i);
+        return [];
+      })(),
       'f_mobile-image': row.mobile_image,
       'f_home-video-order': (row.home_video_order !== null && row.home_video_order !== undefined) ? Number(row.home_video_order) : 99,
       'f_work-video-order': (row.work_video_order !== null && row.work_video_order !== undefined) ? Number(row.work_video_order) : 99,

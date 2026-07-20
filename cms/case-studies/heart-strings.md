@@ -19,6 +19,7 @@ f_project-overview: |-
 f_project-description: Shot and completed in early 2024, Heart & Strings is the queer spin off series of My Very Royal Romance, which is the UK's first-ever vertical short series.
 f_link-to-video: 997685582
 f_video-url: "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ed4e1db799d19bfa32e5_Heart%20%26%20Strings-transcode.mp4"
+f_gallery-images:
 f_mobile-image:
   url: "/assets/external/67ba152084b37ae06028b592_screenshot202025-02-2220at2010.18.27.avif"
 f_home-video-order: 5
