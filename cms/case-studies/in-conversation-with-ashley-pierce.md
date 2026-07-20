@@ -1,38 +1,42 @@
 ---
 title: In Conversation with Ashley Pierce ‒ Xiaomi Promo
 slug: in-conversation-with-ashley-pierce
-created-on: "2024-12-17T04:23:03.076+00:00"
-updated-on: "2025-02-22T18:35:14.803+00:00"
-published-on: "2025-04-11T05:06:43.588+00:00"
-f_challenge: To produce a cohesive four-part documentary series for Xiaomi's photography award judges across three countries during COVID travel bans, ensuring aesthetic consistency and creative alignment without the series director's physical presence.
+created-on: '2024-12-17T04:23:03.076+00:00'
+updated-on: '2025-02-22T18:35:14.803+00:00'
+published-on: '2025-04-11T05:06:43.588+00:00'
+f_challenge: 'To produce a cohesive four-part documentary series for Xiaomi''s photography award judges across three countries during COVID travel bans, ensuring aesthetic consistency and creative alignment without the series director''s physical presence.'
 f_client-details: |-
   **Client**: Qi Jian Ji Hua Productions
-  
+
   **Production Countries**: UK, China, USA
-  
+
   **Project Type**: Brand documentary
-  
+
   **Service Type**: Remote Filming
-f_project-overview: Xiaomi tasked Qi Jian Ji Hua with creating four globally shot documentaries for their 2022 Imagery Photography Award judges. Despite strict travel restrictions, we maintained the director's unified vision through meticulous remote coordination. Each shoot ‒ spanning the UK, USA, and China ‒ mirrored the same structure, framing, and tone. We set up live sessions for real-time director feedback during interviews and ensured every shot matched the predefined aesthetic. The result was a seamless, visually harmonized series that transcended geographical barriers.
+f_project-overview: 'Xiaomi tasked Qi Jian Ji Hua with creating four globally shot documentaries for their 2022 Imagery Photography Award judges. Despite strict travel restrictions, we maintained the director''s unified vision through meticulous remote coordination. Each shoot ‒ spanning the UK, USA, and China ‒ mirrored the same structure, framing, and tone. We set up live sessions for real-time director feedback during interviews and ensured every shot matched the predefined aesthetic. The result was a seamless, visually harmonized series that transcended geographical barriers.'
 f_project-description: |-
   Mini Documentary for XIAOMI IMAGERY AWARDS 2022
-  
+
   Production: First Tone壹声 x 其间计画  
   Producer: Zhizi Hao  
   Director & Interviewer: Hui Zhang  
   DoP: Alex Harrison
-f_link-to-video: 997656630
-f_video-url: "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a2d5444cb50ce92b3a73aa_Ashley%20Pierce-transcode.mp4"
-f_gallery-images:
+f_link-to-video: '997656630'
+f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a2d5444cb50ce92b3a73aa_Ashley%20Pierce-transcode.mp4'
+f_video-embed-rich-text: null
+f_main-image: null
+f_gallery-images: []
 f_mobile-image:
-  url: "/assets/external/67b421e72e4234c4bba6c4ee_screenshot202025-02-1720at2021.03.18.avif"
+  alt: null
+  url: /assets/external/67b421e72e4234c4bba6c4ee_screenshot202025-02-1720at2021.03.18.avif
 f_home-video-order: 7
 f_work-video-order: 99
 f_short-desc: Mini Documentary for XIAOMI IMAGERY AWARDS 2022
-f_link-to-service:
-layout: "[case-studies].html"
+f_link-to-service: []
+layout: '[case-studies].html'
 tags:
   - case-studies
+date: null
 ---
 
 

@@ -22,35 +22,9 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
   global: { fetch }
 });
 
+const yamlLib = require('js-yaml');
 function stringifyYAML(obj) {
-  let yaml = '';
-  for (const [key, val] of Object.entries(obj)) {
-    if (val === null || val === undefined) continue;
-    if (typeof val === 'object') {
-      if (Array.isArray(val)) {
-        yaml += `${key}:\n`;
-        for (const item of val) {
-          yaml += `  - ${item}\n`;
-        }
-      } else {
-        yaml += `${key}:\n`;
-        for (const [subKey, subVal] of Object.entries(val)) {
-          if (subVal !== null && subVal !== undefined) {
-            yaml += `  ${subKey}: ${typeof subVal === 'string' ? JSON.stringify(subVal) : subVal}\n`;
-          }
-        }
-      }
-    } else if (typeof val === 'string' && (val.includes('\n') || val.includes(':') || val.includes('[') || val.includes(']'))) {
-      if (val.includes('\n')) {
-        yaml += `${key}: |-\n  ${val.replace(/\n/g, '\n  ')}\n`;
-      } else {
-        yaml += `${key}: "${val.replace(/"/g, '\\"')}"\n`;
-      }
-    } else {
-      yaml += `${key}: ${val}\n`;
-    }
-  }
-  return yaml;
+  return yamlLib.dump(obj, { lineWidth: -1 });
 }
 
 async function fetchSettings() {
@@ -146,6 +120,7 @@ async function fetchCaseStudies() {
       date: row.publish_date
     };
 
+    console.log("-> Project:", row.slug, "gallery_images:", JSON.stringify(row.gallery_images));
     const fileContent = `---\n${stringifyYAML(frontmatter)}---\n\n${row.body || ''}\n`;
     await fs.writeFile(path.join(dirPath, `${row.slug}.md`), fileContent, 'utf-8');
     console.log(`Generated case study: ${row.slug}.md`);

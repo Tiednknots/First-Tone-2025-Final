@@ -1,34 +1,29 @@
 ---
 title: Heart & Strings
 slug: heart-strings
-created-on: "2024-12-17T04:17:47.481+00:00"
-updated-on: "2025-02-22T18:19:16.89+00:00"
-published-on: "2025-04-11T05:06:43.588+00:00"
-f_client-details: |-
-  **Client**: KalosTV and Minishorts 
-  
-  **Production Country**: UK 
-  
-  **Project Type**: Vertical Short Series 
-  
-  **Service Type**: Full Production
-f_project-overview: |-
-  Shot and completed in early 2024, Heart & Strings is the queer spin off series of My Very Royal Romance, which is the UK's first-ever vertical short series. 
-  
-  ‍
-f_project-description: Shot and completed in early 2024, Heart & Strings is the queer spin off series of My Very Royal Romance, which is the UK's first-ever vertical short series.
-f_link-to-video: 997685582
-f_video-url: "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ed4e1db799d19bfa32e5_Heart%20%26%20Strings-transcode.mp4"
-f_gallery-images:
+created-on: '2024-12-17T04:17:47.481+00:00'
+updated-on: '2025-02-22T18:19:16.89+00:00'
+published-on: '2025-04-11T05:06:43.588+00:00'
+f_challenge: null
+f_client-details: "**Client**: KalosTV and Minishorts\_\n\n**Production Country**: UK\_\n\n**Project Type**: Vertical Short Series\_\n\n**Service Type**: Full Production"
+f_project-overview: "Shot and completed in early 2024, Heart & Strings is the queer spin off series of My Very Royal Romance, which is the UK's first-ever vertical short series.\_\n\n‍"
+f_project-description: 'Shot and completed in early 2024, Heart & Strings is the queer spin off series of My Very Royal Romance, which is the UK''s first-ever vertical short series.'
+f_link-to-video: '997685582'
+f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ed4e1db799d19bfa32e5_Heart%20%26%20Strings-transcode.mp4'
+f_video-embed-rich-text: null
+f_main-image: null
+f_gallery-images: []
 f_mobile-image:
-  url: "/assets/external/67ba152084b37ae06028b592_screenshot202025-02-2220at2010.18.27.avif"
+  alt: null
+  url: /assets/external/67ba152084b37ae06028b592_screenshot202025-02-2220at2010.18.27.avif
 f_home-video-order: 5
 f_work-video-order: 99
 f_short-desc: A queer vertical series redefining modern British storytelling.
-f_link-to-service:
-layout: "[case-studies].html"
+f_link-to-service: []
+layout: '[case-studies].html'
 tags:
   - case-studies
+date: null
 ---
 
 

@@ -1,45 +1,35 @@
 ---
 title: HSBC × Zhou Guanyu
 slug: hsbc-x-zhou-guanyu
-created-on: "2025-02-11T20:34:54.138+00:00"
-updated-on: "2025-02-25T17:13:17.976+00:00"
-published-on: "2025-04-11T05:06:43.588+00:00"
-f_challenge: Create an authentic, engaging video that coherently melds traditional Chinese art with a modern London city vibe.
-f_client-details: |-
-  **Client**: IMG Media (Global Media Company) 
-  
-  **Production Countries**: UK, China 
-  
-  **Project Type**: Branding Video 
-  
-  **Service Type**: Bilingual crew supply
-f_project-overview: Commissioned by HSBC China, IMG Media aimed to produce a video featuring China's first Formula 1 driver, Zhou Guanyu, for a Mandarin-speaking audience. The project's unique challenge arose from IMG's predominantly English-speaking production team. First Tone solved this by supplying bilingual crew members who were proficient in both languages and experienced in film production. This ensured not only smooth communication between all parties but also allowed for a focus on Zhou Guanyu, who was central to the campaign's success. The outcome? A project that met its linguistic and artistic objectives to the satisfaction of everyone involved.
-f_project-description: |-
-  Client: IMG Media (Global Media Company) 
-  
-  Production Countries: UK, China 
-  
-  Project Type: Branding Video 
-  
-  Service Type: Bilingual crew supply 
-  
-  Challenge: Create an authentic, engaging video that coherently melds traditional Chinese art with a modern London city vibe. 
-  
-  Project Overview: Commissioned by HSBC China, IMG Media aimed to produce a video featuring China's first Formula 1 driver, Zhou Guanyu, for a Mandarin-speaking audience. The project's unique challenge arose from IMG's predominantly English-speaking production team. First Tone solved this by supplying bilingual crew members who were proficient in both languages and experienced in film production. This ensured not only smooth communication between all parties but also allowed for a focus on Zhou Guanyu, who was central to the campaign's success. The outcome? A project that met its linguistic and artistic objectives to the satisfaction of everyone involved.
+created-on: '2025-02-11T20:34:54.138+00:00'
+updated-on: '2025-02-25T17:13:17.976+00:00'
+published-on: '2025-04-11T05:06:43.588+00:00'
+f_challenge: 'Create an authentic, engaging video that coherently melds traditional Chinese art with a modern London city vibe.'
+f_client-details: "**Client**: IMG Media (Global Media Company)\_\n\n**Production Countries**: UK, China\_\n\n**Project Type**: Branding Video\_\n\n**Service Type**: Bilingual crew supply"
+f_project-overview: 'Commissioned by HSBC China, IMG Media aimed to produce a video featuring China''s first Formula 1 driver, Zhou Guanyu, for a Mandarin-speaking audience. The project''s unique challenge arose from IMG''s predominantly English-speaking production team. First Tone solved this by supplying bilingual crew members who were proficient in both languages and experienced in film production. This ensured not only smooth communication between all parties but also allowed for a focus on Zhou Guanyu, who was central to the campaign''s success. The outcome? A project that met its linguistic and artistic objectives to the satisfaction of everyone involved.'
+f_project-description: "Client: IMG Media (Global Media Company)\_\n\nProduction Countries: UK, China\_\n\nProject Type: Branding Video\_\n\nService Type: Bilingual crew supply\_\n\nChallenge: Create an authentic, engaging video that coherently melds traditional Chinese art with a modern London city vibe.\_\n\nProject Overview: Commissioned by HSBC China, IMG Media aimed to produce a video featuring China's first Formula 1 driver, Zhou Guanyu, for a Mandarin-speaking audience. The project's unique challenge arose from IMG's predominantly English-speaking production team. First Tone solved this by supplying bilingual crew members who were proficient in both languages and experienced in film production. This ensured not only smooth communication between all parties but also allowed for a focus on Zhou Guanyu, who was central to the campaign's success. The outcome? A project that met its linguistic and artistic objectives to the satisfaction of everyone involved."
+f_link-to-video: null
+f_video-url: null
+f_video-embed-rich-text: null
 f_main-image:
-  url: "/assets/external/67abf17b8a73686e0cf53ba0_cmhsbc-c397-zhou-guanyu-screengrab-1-no-video-so-has-to-be-images.avif"
+  alt: null
+  url: /assets/external/67abf17b8a73686e0cf53ba0_cmhsbc-c397-zhou-guanyu-screengrab-1-no-video-so-has-to-be-images.avif
 f_gallery-images:
-  - [object Object]
-  - [object Object]
+  - alt: null
+    url: /assets/external/67abf17b8a73686e0cf53ba0_cmhsbc-c397-zhou-guanyu-screengrab-1-no-video-so-has-to-be-images.avif
+  - alt: null
+    url: /assets/external/67abf17df4574ac1044f9cb9_cmhsbc-c397-zhou-guanyu-screengrab-2-no-video-so-has-to-be-images.avif
 f_mobile-image:
-  url: "/assets/external/67abf17b8a73686e0cf53ba0_cmhsbc-c397-zhou-guanyu-screengrab-1-no-video-so-has-to-be-images.avif"
+  alt: null
+  url: /assets/external/67abf17b8a73686e0cf53ba0_cmhsbc-c397-zhou-guanyu-screengrab-1-no-video-so-has-to-be-images.avif
 f_home-video-order: 9
 f_work-video-order: 99
-f_short-desc: Bilingual crew ensured a seamless, culturally rich branding video.
-f_link-to-service:
-layout: "[case-studies].html"
+f_short-desc: 'Bilingual crew ensured a seamless, culturally rich branding video.'
+f_link-to-service: []
+layout: '[case-studies].html'
 tags:
   - case-studies
+date: null
 ---
 
 

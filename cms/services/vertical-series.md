@@ -1,15 +1,17 @@
 ---
 title: Vertical Series
 slug: vertical-series
-created-on: "2025-01-02T22:19:27.867+00:00"
-updated-on: "2025-02-06T08:47:26.692+00:00"
-published-on: "2025-04-11T05:06:43.588+00:00"
+created-on: '2025-01-02T22:19:27.867+00:00'
+updated-on: '2025-02-06T08:47:26.692+00:00'
+published-on: '2025-04-11T05:06:43.588+00:00'
 f_image:
-  url: "/assets/external/67a475d6bb75f193f3f82b9f_services20e2809320vertical.avif"
-f_short-description: Pioneering the first vertical series in the UK. Efficient, reliable, and seamless productions—drama stays on screen, not behind the scenes.
-layout: "[services].html"
+  alt: null
+  url: /assets/external/67a475d6bb75f193f3f82b9f_services20e2809320vertical.avif
+f_short-description: 'Pioneering the first vertical series in the UK. Efficient, reliable, and seamless productions—drama stays on screen, not behind the scenes.'
+layout: '[services].html'
 tags:
   - services
+date: null
 ---
 
 
