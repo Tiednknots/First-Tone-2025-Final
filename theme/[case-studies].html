@@ -262,23 +262,20 @@ background:rgba(255, 255, 255, 0);
     object-fit: cover; /* Ensure the video covers the container, preserving aspect ratio */
   }
 </style></div>{%- endif -%}
-            {%- if f_gallery-images -%}<div class="photo-gallery-container">
-              {%- assign setItems = f_gallery-images -%}<div class="photo-gallery w-dyn-list">
-                {%- unless setItems.length == 0 -%}<div role="list" class="w-dyn-items">
-                  {%- for setItem in setItems -%}<div role="listitem" class="collection-item-4 w-dyn-item"><img src="{{ setItem.url }}" loading="lazy" alt="" class=""></div>{%- endfor -%}
-                </div>{%- endunless -%}
-                {%- if setItems.length == 0 -%}<div class="w-dyn-empty">
-                  <div data-edit-text="3d503d2b">{{ texts.3d503d2b }}</div>
-                </div>{%- endif -%}
-              <template><div class="photo-gallery w-dyn-list" udesly-repeater="true">
-                <div role="list" class="w-dyn-items">
-                  <div role="listitem" class="collection-item-4 w-dyn-item"><img src="{# setItem.url #}" loading="lazy" alt="" class=""></div>
+            {%- if f_gallery-images and f_gallery-images.size > 0 -%}
+            <div class="project-masonry-gallery my-12 pt-8 border-t border-zinc-800/60">
+              <h3 class="heading-7 mb-6 text-white uppercase tracking-wider text-sm font-semibold">Project Gallery</h3>
+              <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+                {%- for setItem in f_gallery-images -%}
+                {%- if setItem.url -%}
+                <div class="break-inside-avoid rounded-2xl overflow-hidden shadow-xl border border-zinc-800/80 bg-zinc-900 group transition duration-300">
+                  <img src="{{ setItem.url }}" loading="lazy" alt="{{ setItem.alt | default: title }}" class="w-full h-auto object-cover group-hover:scale-105 transition duration-500">
                 </div>
-                <div class="w-dyn-empty">
-                  <div>{# texts.3d503d2b #}</div>
-                </div>
-              </div></template></div>
-            </div>{%- endif -%}
+                {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+            {%- endif -%}
           </div>
         </div>
       </div>

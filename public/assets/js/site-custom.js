@@ -13,12 +13,38 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       
       const formData = new FormData(form);
+      
+      // Dynamic extraction helper to capture input values regardless of Webflow attribute variants
+      function getFieldValue(patterns, inputType = null) {
+        for (const [key, val] of formData.entries()) {
+          const lowerKey = key.toLowerCase();
+          for (const pattern of patterns) {
+            if (lowerKey.includes(pattern.toLowerCase()) && val && val.toString().trim() !== '') {
+              return val.toString().trim();
+            }
+          }
+        }
+        if (inputType) {
+          const inputEl = form.querySelector(`input[type="${inputType}"]`);
+          if (inputEl && inputEl.value && inputEl.value.trim() !== '') {
+            return inputEl.value.trim();
+          }
+        }
+        for (const pattern of patterns) {
+          const inputEl = form.querySelector(`[name*="${pattern}" i], [id*="${pattern}" i]`);
+          if (inputEl && inputEl.value && inputEl.value.trim() !== '') {
+            return inputEl.value.trim();
+          }
+        }
+        return '';
+      }
+
       const payload = {
-        name: formData.get('name-3') || formData.get('name-2') || '',
-        surname: formData.get('Surname-2') || '',
-        email: formData.get('email-3') || formData.get('email-2') || '',
-        company: formData.get('Company-2') || '',
-        message: formData.get('Additional-Message-3') || formData.get('field-2') || '',
+        name: getFieldValue(['name-3', 'name-2', 'name', 'first-name', 'firstname', 'full-name']),
+        surname: getFieldValue(['surname-2', 'surname', 'last-name', 'lastname']),
+        email: getFieldValue(['email-3', 'email-2', 'email', 'e-mail'], 'email'),
+        company: getFieldValue(['company-2', 'company', 'organization', 'organisation']),
+        message: getFieldValue(['additional-message-3', 'field-2', 'message', 'comment', 'notes', 'description'])
       };
       
       // Determine form type
@@ -26,10 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const messageText = payload.message ? payload.message.trim() : '';
       
       if (messageText.length > 0) {
-        // If they typed an actual message, it is a contact communication, regardless of the footer name
         payload.form_type = 'contact';
       } else if (formName.includes('newsletter')) {
-        // If the form name matches newsletter and has no message content, it is a subscriber signup
         payload.form_type = 'newsletter';
       } else {
         payload.form_type = 'contact';

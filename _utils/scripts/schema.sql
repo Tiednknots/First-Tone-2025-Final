@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS public.case_studies (
     gallery_images JSONB, -- [ { "url": string, "alt": string } ]
     mobile_image JSONB, -- { "url": string, "alt": string }
     home_video_order INTEGER,
+    work_video_order INTEGER,
     link_to_service TEXT[], -- Relation to services (array of markdown paths)
     tags TEXT[] DEFAULT ARRAY['case-studies']::TEXT[],
     layout TEXT DEFAULT '[case-studies].html',

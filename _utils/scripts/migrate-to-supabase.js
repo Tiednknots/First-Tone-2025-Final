@@ -3,6 +3,7 @@
 
 const fs = require('fs-extra');
 const path = require('path');
+const fetch = require('node-fetch');
 const { createClient } = require('@supabase/supabase-js');
 const matter = require('gray-matter');
 require('dotenv').config();
@@ -15,7 +16,10 @@ if (!supabaseUrl || !supabaseServiceKey) {
   process.exit(1);
 }
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+  auth: { persistSession: false },
+  global: { fetch }
+});
 
 async function migrateTexts() {
   console.log("Migrating texts.json...");
@@ -126,6 +130,7 @@ async function migrateCaseStudies() {
         gallery_images: data.f_gallery_images || data['f_gallery-images'] || null,
         mobile_image: data.f_mobile_image || data['f_mobile-image'] || null,
         home_video_order: data.f_home_video_order !== undefined ? Number(data.f_home_video_order) : (data['f_home-video-order'] !== undefined ? Number(data['f_home-video-order']) : null),
+        work_video_order: data.f_work_video_order !== undefined ? Number(data.f_work_video_order) : (data['f_work-video-order'] !== undefined ? Number(data['f_work-video-order']) : null),
         tags: Array.isArray(data.tags) ? data.tags : (typeof data.tags === 'string' ? [data.tags] : ['case-studies']),
         layout: data.layout || '[case-studies].html',
         publish_date: data.date ? new Date(data.date).toISOString() : null

@@ -2,7 +2,7 @@
 title: ECOMAAT Brand Documentary 2024
 slug: ecomaat-2024
 created-on: "2025-02-05T23:17:22.659+00:00"
-updated-on: "2025-02-22T18:26:33.071+00:00"
+updated-on: "2026-07-17T18:47:28.145+00:00"
 published-on: "2025-04-11T05:06:43.588+00:00"
 f_challenge: To remotely produce a segment of ECOMAAT's brand documentary in Paris amid travel restrictions, while assembling a lean, cost-effective team capable of capturing the brand's essence without compromising quality.
 f_client-details: |-
@@ -13,6 +13,8 @@ f_client-details: |-
   **Project Type**: Brand documentary 
   
   **Service Type**: Remote production
+  
+  test text. 
 f_project-overview: For two years, ECOMAAT partnered with us to craft the Parisian chapter of their brand documentary. With the director unable to travel, we leveraged remote expertise to assemble a lean team of six. Through collaborative pre-production planning, remote recces, and real-time coordination, we captured the brand's sustainability ethos on a tight budget ‒ delivering a polished, authentic narrative for their global audience.
 f_project-description: |-
   **Client**: ECOMAAT (Beauty Product Brand) 
@@ -31,6 +33,7 @@ f_project-description: |-
 f_link-to-video: 1054981278
 f_video-url: "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3c5c5efefa0a45620f130_ECOMAAT2024-transcode.mp4"
 f_mobile-image:
+  alt: ""
   url: "/assets/external/67b421b02e4234c4bba69973_screenshot202025-02-1720at2021.03.46.avif"
 f_home-video-order: 1
 f_short-desc: A stunning ECOMAAT campaign showcasing Bulgarian rose fields under a tight deadline.

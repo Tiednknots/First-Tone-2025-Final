@@ -35,6 +35,8 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
   
   <style>
     /* Premium High-Contrast Pitch Black & Dark Grey editor theme */
@@ -134,10 +136,69 @@
       #editor-sidebar, #settings-view > div:not(#editor-responsive-gate) {
         display: none !important;
       }
+    /* Quill Editor Dark Theme styling */
+    .quill-editor-container {
+      margin-top: 0.5rem;
+    }
+    .ql-toolbar.ql-snow {
+      background-color: #18181b !important;
+      border: 1px solid #27272a !important;
+      border-top-left-radius: 0.75rem !important;
+      border-top-right-radius: 0.75rem !important;
+      padding: 8px 12px !important;
+    }
+    .ql-container.ql-snow {
+      background-color: #09090b !important;
+      border: 1px solid #27272a !important;
+      border-top: 0 !important;
+      border-bottom-left-radius: 0.75rem !important;
+      border-bottom-right-radius: 0.75rem !important;
+      color: #f4f4f5 !important;
+      font-family: inherit !important;
+    }
+    .ql-editor {
+      min-height: 120px;
+      font-size: 0.875rem !important;
+      line-height: 1.5 !important;
+    }
+    .ql-editor.ql-blank::before {
+      color: #71717a !important;
+      font-style: normal !important;
+    }
+    .ql-snow .ql-stroke {
+      stroke: #a1a1aa !important;
+    }
+    .ql-snow .ql-fill {
+      fill: #a1a1aa !important;
+    }
+    .ql-snow .ql-picker {
+      color: #a1a1aa !important;
+    }
+    .ql-snow .ql-picker-options {
+      background-color: #18181b !important;
+      border: 1px solid #27272a !important;
+    }
+    .ql-snow.ql-toolbar button:hover .ql-stroke,
+    .ql-snow.ql-toolbar button:focus .ql-stroke,
+    .ql-snow.ql-toolbar button.ql-active .ql-stroke {
+      stroke: #cd0025 !important;
+    }
+    .ql-snow.ql-toolbar button:hover .ql-fill,
+    .ql-snow.ql-toolbar button:focus .ql-fill,
+    .ql-snow.ql-toolbar button.ql-active .ql-fill {
+      fill: #cd0025 !important;
     }
   </style>
 </head>
 <body class="h-full flex flex-col font-sans antialiased overflow-hidden">
+
+  <!-- ================= LOADING OVERLAY ================= -->
+  <div id="loading-overlay" class="fixed inset-0 z-[60] flex items-center justify-center bg-zinc-950">
+    <div class="text-center">
+      <i class="fa-solid fa-spinner animate-spin text-4xl text-brand-500 mb-4"></i>
+      <p class="text-zinc-400 text-sm font-semibold">Loading Admin Dashboard...</p>
+    </div>
+  </div>
 
   <!-- ================= AUTH GATE ================= -->
   <div id="auth-gate" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md">
@@ -513,19 +574,28 @@
                     </div>
                   </div>
 
-                  <div class="md:col-span-2">
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Project Description (Markdown)</label>
-                    <textarea id="project-desc" rows="6" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition font-mono text-sm" placeholder="Detailed description of the project production..."></textarea>
+                   <div class="md:col-span-2">
+                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Project Description</label>
+                    <div class="quill-editor-container bg-black border border-zinc-800 rounded-xl overflow-hidden mt-1 text-white">
+                      <div id="project-desc-editor" style="height: 220px;" class="text-white"></div>
+                    </div>
+                    <textarea id="project-desc" class="hidden"></textarea>
                   </div>
 
                   <div class="md:col-span-2">
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Client Details (Markdown)</label>
-                    <textarea id="project-client-details" rows="4" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition font-mono text-sm" placeholder="**Client:** Name&#10;**Production Countries:** UK, China&#10;**Service Type:** Solutions"></textarea>
+                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Client Details</label>
+                    <div class="quill-editor-container bg-black border border-zinc-800 rounded-xl overflow-hidden mt-1 text-white">
+                      <div id="project-client-details-editor" style="height: 120px;" class="text-white"></div>
+                    </div>
+                    <textarea id="project-client-details" class="hidden"></textarea>
                   </div>
 
                   <div class="md:col-span-2">
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Project Challenge (Markdown)</label>
-                    <textarea id="project-challenge" rows="3" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition font-mono text-sm" placeholder="Brief paragraph explaining the production challenge..."></textarea>
+                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Project Challenge</label>
+                    <div class="quill-editor-container bg-black border border-zinc-800 rounded-xl overflow-hidden mt-1 text-white">
+                      <div id="project-challenge-editor" style="height: 100px;" class="text-white"></div>
+                    </div>
+                    <textarea id="project-challenge" class="hidden"></textarea>
                   </div>
 
                   <div class="md:col-span-2 border-t border-zinc-800 pt-6">
@@ -602,8 +672,11 @@
                   </div>
                 </div>
                 <div>
-                  <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Full Description (Markdown)</label>
-                  <textarea id="service-body" rows="4" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition font-mono text-sm"></textarea>
+                  <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Full Description</label>
+                  <div class="quill-editor-container bg-black border border-zinc-800 rounded-xl overflow-hidden mt-1 text-white">
+                    <div id="service-body-editor" style="height: 180px;" class="text-white"></div>
+                  </div>
+                  <textarea id="service-body" class="hidden"></textarea>
                 </div>
                 <div class="flex justify-end gap-3 pt-4 border-t border-zinc-800">
                   <button type="button" onclick="closeServiceEditor()" class="px-5 py-2.5 bg-zinc-900 hover:bg-slate-700 text-zinc-300 rounded-xl text-sm transition">Cancel</button>
@@ -987,8 +1060,14 @@
         SUPABASE_URL = config.supabaseUrl;
         SUPABASE_ANON_KEY = config.supabaseAnonKey;
         
-        // Initialize Supabase Client using the window namespace
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // Initialize Supabase Client using the window namespace with explicit session persistence config
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+          }
+        });
         
         // Check session
         const { data: { session } } = await supabaseClient.auth.getSession();
@@ -1006,10 +1085,50 @@
         document.getElementById('connection-status').innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span> Demo Mode';
         document.getElementById('connection-status').className = "text-xs text-amber-400 flex items-center gap-1 font-semibold";
         showAuthGate();
+      } finally {
+        // Dismiss loading screen after routing is decided
+        const loader = document.getElementById('loading-overlay');
+        if (loader) loader.classList.add('hidden');
       }
     }
 
-    document.addEventListener('DOMContentLoaded', initConfig);
+    let quillProjectDesc = null;
+    let quillProjectClientDetails = null;
+    let quillProjectChallenge = null;
+    let quillServiceBody = null;
+
+    function initQuillEditors() {
+      const toolbarOptions = [
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        ['link', 'clean']
+      ];
+
+      quillProjectDesc = new Quill('#project-desc-editor', {
+        theme: 'snow',
+        modules: { toolbar: toolbarOptions }
+      });
+
+      quillProjectClientDetails = new Quill('#project-client-details-editor', {
+        theme: 'snow',
+        modules: { toolbar: toolbarOptions }
+      });
+
+      quillProjectChallenge = new Quill('#project-challenge-editor', {
+        theme: 'snow',
+        modules: { toolbar: toolbarOptions }
+      });
+
+      quillServiceBody = new Quill('#service-body-editor', {
+        theme: 'snow',
+        modules: { toolbar: toolbarOptions }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initQuillEditors();
+      initConfig();
+    });
 
     // Toggle Screen Gates
     function showAuthGate() {
@@ -1661,6 +1780,10 @@
           document.getElementById('project-client-details').value = proj.client_details || '';
           document.getElementById('project-challenge').value = proj.challenge || '';
           
+          quillProjectDesc.root.innerHTML = proj.body ? marked.parse(proj.body) : '';
+          quillProjectClientDetails.root.innerHTML = proj.client_details ? marked.parse(proj.client_details) : '';
+          quillProjectChallenge.root.innerHTML = proj.challenge ? marked.parse(proj.challenge) : '';
+          
           if (proj.main_image?.url) {
             const zone = document.querySelector('[data-field="main-image"]');
             zone.setAttribute('data-uploaded-url', proj.main_image.url);
@@ -1678,6 +1801,10 @@
         document.getElementById('project-editor-title').innerText = "Add New Project";
         document.getElementById('project-id').value = "";
         document.getElementById('project-slug').readOnly = false;
+        
+        quillProjectDesc.root.innerHTML = '';
+        quillProjectClientDetails.root.innerHTML = '';
+        quillProjectChallenge.root.innerHTML = '';
       }
       
       updateProjectPreview();
@@ -1696,6 +1823,10 @@
       const linkVideo = document.getElementById('project-link-video').value.trim();
       const videoUrl = document.getElementById('project-video-url').value.trim();
       const shortDesc = document.getElementById('project-short-desc').value.trim();
+      document.getElementById('project-desc').value = quillProjectDesc.root.innerHTML;
+      document.getElementById('project-client-details').value = quillProjectClientDetails.root.innerHTML;
+      document.getElementById('project-challenge').value = quillProjectChallenge.root.innerHTML;
+
       const body = document.getElementById('project-desc').value;
       const clientDetails = document.getElementById('project-client-details').value;
       const challenge = document.getElementById('project-challenge').value;
@@ -1813,6 +1944,7 @@
           document.getElementById('service-slug').readOnly = true;
           document.getElementById('service-short-desc').value = ser.f_short_description || '';
           document.getElementById('service-body').value = ser.body || '';
+          quillServiceBody.root.innerHTML = ser.body ? marked.parse(ser.body) : '';
 
           if (ser.f_image?.url) {
             zone.setAttribute('data-uploaded-url', ser.f_image.url);
@@ -1824,6 +1956,7 @@
         document.getElementById('service-editor-title').innerText = "Add New Service";
         document.getElementById('service-id').value = "";
         document.getElementById('service-slug').readOnly = false;
+        quillServiceBody.root.innerHTML = '';
       }
       modal.classList.remove('hidden');
     }
@@ -1838,6 +1971,7 @@
       const slug = document.getElementById('service-slug').value.trim();
       const title = document.getElementById('service-title').value.trim();
       const shortDesc = document.getElementById('service-short-desc').value.trim();
+      document.getElementById('service-body').value = quillServiceBody.root.innerHTML;
       const body = document.getElementById('service-body').value;
       const imageZone = document.querySelector('[data-field="service-image"]');
 

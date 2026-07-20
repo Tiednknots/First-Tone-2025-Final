@@ -382,6 +382,21 @@ a {
                 <a href="{{ links.7f22fa2e }}" class="button secondary w-button" data-edit-text="2c7c7737" data-edit-link="7f22fa2e">{{ texts.2c7c7737 }}</a>
               </div>
             </section>
+
+            {%- if gallery and gallery.length > 0 -%}
+            <section class="home-masonry-gallery-section my-16 px-4 py-8">
+              <div class="max-w-7xl mx-auto">
+                <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+                  {%- for img in gallery -%}
+                  <div class="break-inside-avoid rounded-2xl overflow-hidden shadow-2xl border border-zinc-800/80 bg-zinc-950 group transition duration-300">
+                    <img src="{{ img.url }}" loading="lazy" alt="{{ img.alt | default: 'First Tone Production Gallery' }}" class="w-full h-auto object-cover group-hover:scale-105 transition duration-500">
+                  </div>
+                  {%- endfor -%}
+                </div>
+              </div>
+            </section>
+            {%- endif -%}
+
             <section class="mobile-case-studies">
               <div class="secondary-service-tab gg w-clearfix">
                 <a href="{{ links.-7252aede }}" target="_blank" class="c-link w-inline-block" data-edit-link="-7252aede">

@@ -16,7 +16,11 @@ if (!supabaseUrl || !supabaseKey) {
   process.exit(0); // Exit gracefully during local setups without database keys
 }
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+const fetch = require('node-fetch');
+const supabase = createClient(supabaseUrl, supabaseKey, {
+  auth: { persistSession: false },
+  global: { fetch }
+});
 
 function stringifyYAML(obj) {
   let yaml = '';
@@ -119,6 +123,7 @@ async function fetchCaseStudies() {
       'f_gallery-images': row.gallery_images,
       'f_mobile-image': row.mobile_image,
       'f_home-video-order': row.home_video_order,
+      'f_work-video-order': row.work_video_order,
       'f_short-desc': row.short_desc,
       'f_link-to-service': row.link_to_service || [],
       layout: row.layout || '[case-studies].html',
