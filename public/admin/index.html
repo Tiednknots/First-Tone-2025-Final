@@ -522,34 +522,57 @@
                   </div>
                   
                   <div>
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Home Video Order</label>
-                    <input type="number" id="project-video-order" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="e.g. 1">
+                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Home Page Display Order</label>
+                    <input type="number" id="project-video-order" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="e.g. 1 (1 = First on Home Page)">
                   </div>
 
                   <div>
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Link to Video (Vimeo ID)</label>
+                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Our Work Page Display Order</label>
+                    <input type="number" id="project-work-video-order" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="e.g. 1 (1 = First on Our Work Page)">
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Vimeo Video ID</label>
                     <input type="text" id="project-link-video" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="e.g. 997670994">
                   </div>
 
                   <div>
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Direct Video File URL (Vimeo Video Source)</label>
+                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Direct Video File URL (.mp4 / .webm)</label>
                     <input type="text" id="project-video-url" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="https://cdn.prod.website-files.com/...">
                   </div>
 
+                  <!-- Project Video Drop Zone -->
                   <div class="md:col-span-2">
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Short Description</label>
+                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Upload Project Video File (.mp4, .webm, .mov)</label>
+                    <div class="drop-zone border-2 border-dashed border-zinc-800 hover:border-brand-500/50 rounded-2xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center bg-black/40 relative min-h-[140px]" data-field="project-video-file">
+                      <input type="file" class="hidden file-input" accept="video/mp4,video/webm,video/quicktime">
+                      <div class="drop-zone-content flex flex-col items-center">
+                        <i class="fa-solid fa-file-video text-brand-500 text-3xl mb-3"></i>
+                        <span class="text-sm font-semibold text-zinc-200">Drag & Drop or Click to Upload Video</span>
+                        <span class="text-xs text-zinc-500 mt-1">Upload preview video file for card & header playback</span>
+                      </div>
+                      <div class="preview-img-container hidden absolute inset-0 rounded-2xl overflow-hidden bg-zinc-950 flex items-center justify-center">
+                        <video src="" class="h-full w-full object-cover" muted loop playsinline></video>
+                        <button type="button" onclick="clearDropZone(event)" class="absolute top-2 right-2 bg-black/80 hover:bg-red-500 p-2 rounded-full text-white transition"><i class="fa-solid fa-trash-can text-sm"></i></button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="md:col-span-2">
+                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Short Summary Description</label>
                     <input type="text" id="project-short-desc" class="w-full px-4 py-3 bg-black border border-zinc-800 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="Brief summary displayed in list view cards." oninput="updateProjectPreview()">
                   </div>
 
-                  <!-- Upload Boxes -->
+                  <!-- Upload Image Drop Zones with Explicit Labels -->
                   <div>
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Main Grid Image</label>
+                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-1">Desktop / Default Featured Image</label>
+                    <span class="block text-[11px] text-zinc-500 mb-2">Used as the primary poster & desktop view thumbnail.</span>
                     <div class="drop-zone border-2 border-dashed border-zinc-800 hover:border-brand-500/50 rounded-2xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center bg-black/40 relative min-h-[160px]" data-field="main-image">
                       <input type="file" class="hidden file-input" accept="image/*">
                       <div class="drop-zone-content flex flex-col items-center">
-                        <i class="fa-solid fa-cloud-arrow-up text-brand-500 text-3xl mb-3"></i>
+                        <i class="fa-solid fa-desktop text-brand-500 text-3xl mb-3"></i>
                         <span class="text-sm font-semibold text-zinc-200">Drag & Drop or Click</span>
-                        <span class="text-xs text-zinc-500 mt-1">Image file (recommended 16:9 ratio)</span>
+                        <span class="text-xs text-zinc-500 mt-1">Desktop Thumbnail Image (16:9)</span>
                       </div>
                       <div class="preview-img-container hidden absolute inset-0 rounded-2xl overflow-hidden bg-zinc-950 flex items-center justify-center">
                         <img src="" class="h-full w-full object-cover">
@@ -559,18 +582,36 @@
                   </div>
 
                   <div>
-                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-2">Mobile Version Image</label>
+                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-1">Mobile Viewport Image</label>
+                    <span class="block text-[11px] text-zinc-500 mb-2">Optimized vertical/portrait image for mobile phones.</span>
                     <div class="drop-zone border-2 border-dashed border-zinc-800 hover:border-brand-500/50 rounded-2xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center bg-black/40 relative min-h-[160px]" data-field="mobile-image">
                       <input type="file" class="hidden file-input" accept="image/*">
                       <div class="drop-zone-content flex flex-col items-center">
                         <i class="fa-solid fa-mobile-screen-button text-brand-500 text-3xl mb-3"></i>
                         <span class="text-sm font-semibold text-zinc-200">Drag & Drop or Click</span>
-                        <span class="text-xs text-zinc-500 mt-1">Optimized image for mobile viewports</span>
+                        <span class="text-xs text-zinc-500 mt-1">Mobile Viewport Image (9:16 or 3:4)</span>
                       </div>
                       <div class="preview-img-container hidden absolute inset-0 rounded-2xl overflow-hidden bg-zinc-950 flex items-center justify-center">
                         <img src="" class="h-full w-full object-cover">
                         <button type="button" onclick="clearDropZone(event)" class="absolute top-2 right-2 bg-black/80 hover:bg-red-500 p-2 rounded-full text-white transition"><i class="fa-solid fa-trash-can text-sm"></i></button>
                       </div>
+                    </div>
+                  </div>
+
+                  <!-- Project Gallery Images Drop Zone -->
+                  <div class="md:col-span-2 border-t border-zinc-800/80 pt-6">
+                    <label class="block text-xs font-semibold uppercase text-zinc-400 mb-1">Project Gallery Photos (Masonry Grid)</label>
+                    <span class="block text-[11px] text-zinc-500 mb-3">Upload multiple photos to display in the project's bottom masonry grid gallery.</span>
+                    <div class="drop-zone border-2 border-dashed border-zinc-800 hover:border-brand-500/50 rounded-2xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center bg-black/40 relative min-h-[140px]" data-field="project-gallery-images">
+                      <input type="file" class="hidden file-input" accept="image/*" multiple>
+                      <div class="drop-zone-content flex flex-col items-center">
+                        <i class="fa-solid fa-images text-brand-500 text-3xl mb-3"></i>
+                        <span class="text-sm font-semibold text-zinc-200">Drag & Drop or Click to Add Gallery Photos</span>
+                        <span class="text-xs text-zinc-500 mt-1">Select one or multiple images</span>
+                      </div>
+                    </div>
+                    <div id="project-gallery-previews" class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+                      <!-- Rendered gallery thumbnail previews -->
                     </div>
                   </div>
 
@@ -1746,11 +1787,18 @@
       const title = document.getElementById('project-title').value || 'Project Title';
       const desc = document.getElementById('project-short-desc').value || 'Brief project description summary...';
       const mainImageZone = document.querySelector('[data-field="main-image"]');
-      const uploadedUrl = mainImageZone.getAttribute('data-uploaded-url') || '/assets/images/inner-circle.svg';
+      const uploadedUrl = (mainImageZone && mainImageZone.getAttribute('data-uploaded-url')) ? mainImageZone.getAttribute('data-uploaded-url') : '/assets/images/firsttonelogos-01_1.avif';
+      const homeOrder = document.getElementById('project-video-order').value;
+      const workOrder = document.getElementById('project-work-video-order').value;
+      const videoUrl = document.getElementById('project-video-url').value;
 
-      document.getElementById('mock-title').innerText = title;
-      document.getElementById('mock-desc').innerText = desc;
-      document.getElementById('mock-image').src = uploadedUrl;
+      const mockTitle = document.getElementById('mock-title');
+      const mockDesc = document.getElementById('mock-desc');
+      const mockImg = document.getElementById('mock-image');
+
+      if (mockTitle) mockTitle.innerText = title;
+      if (mockDesc) mockDesc.innerText = desc;
+      if (mockImg) mockImg.src = uploadedUrl;
     }
 
     function openProjectEditor(slug = null) {
@@ -1773,6 +1821,7 @@
           document.getElementById('project-slug').value = proj.slug;
           document.getElementById('project-slug').readOnly = true;
           document.getElementById('project-video-order').value = proj.home_video_order || '';
+          document.getElementById('project-work-video-order').value = proj.work_video_order || '';
           document.getElementById('project-link-video').value = proj.link_to_video || '';
           document.getElementById('project-video-url').value = proj.video_url || '';
           document.getElementById('project-short-desc').value = proj.short_desc || '';
@@ -1801,6 +1850,7 @@
         document.getElementById('project-editor-title').innerText = "Add New Project";
         document.getElementById('project-id').value = "";
         document.getElementById('project-slug').readOnly = false;
+        document.getElementById('project-work-video-order').value = "";
         
         quillProjectDesc.root.innerHTML = '';
         quillProjectClientDetails.root.innerHTML = '';
@@ -1820,6 +1870,7 @@
       const slug = document.getElementById('project-slug').value.trim();
       const title = document.getElementById('project-title').value.trim();
       const videoOrder = document.getElementById('project-video-order').value;
+      const workVideoOrder = document.getElementById('project-work-video-order').value;
       const linkVideo = document.getElementById('project-link-video').value.trim();
       const videoUrl = document.getElementById('project-video-url').value.trim();
       const shortDesc = document.getElementById('project-short-desc').value.trim();
@@ -1843,6 +1894,7 @@
         title,
         slug,
         home_video_order: videoOrder ? Number(videoOrder) : null,
+        work_video_order: workVideoOrder ? Number(workVideoOrder) : null,
         link_to_video: linkVideo || null,
         video_url: videoUrl || null,
         short_desc: shortDesc || null,
