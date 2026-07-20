@@ -1,6 +1,6 @@
 // submit-form.js
 // Netlify Serverless Function to handle form inputs on the client site, save them to Supabase,
-// and trigger instant Email (Resend) & WhatsApp (Twilio) notifications for non-newsletter inquiries.
+// and trigger instant Resend HTML Email notifications for non-newsletter inquiries.
 
 const fetch = require('node-fetch');
 
@@ -62,87 +62,6 @@ async function sendEmailNotification(data) {
   }
 }
 
-// Helper: Send FREE WhatsApp Notification via CallMeBot, Meta Cloud API, or Twilio
-async function sendWhatsAppNotification(data) {
-  const senderName = [data.name, data.surname].filter(Boolean).join(' ') || 'Website Visitor';
-  const messageText = `🔔 *FIRST TONE NEW INQUIRY*\n\n` +
-    `*From:* ${senderName}\n` +
-    `*Email:* ${data.email}\n` +
-    (data.company ? `*Company:* ${data.company}\n` : '') +
-    `*Type:* ${data.form_type}\n\n` +
-    `*Message:* ${data.message || 'No message provided.'}`;
-
-  const NOTIFY_WHATSAPP = process.env.NOTIFICATION_WHATSAPP_NUMBER; // e.g. +447123456789
-
-  // Option 1: CallMeBot Free WhatsApp API (100% FREE & ZERO COST)
-  const CALLMEBOT_KEY = process.env.CALLMEBOT_API_KEY;
-  if (CALLMEBOT_KEY && NOTIFY_WHATSAPP) {
-    try {
-      const cleanPhone = NOTIFY_WHATSAPP.replace('whatsapp:', '').replace(/\s+/g, '');
-      const callmebotUrl = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(cleanPhone)}&text=${encodeURIComponent(messageText)}&apikey=${encodeURIComponent(CALLMEBOT_KEY)}`;
-      const res = await fetch(callmebotUrl);
-      console.log("CallMeBot Free WhatsApp response status:", res.status);
-      return;
-    } catch (err) {
-      console.error("CallMeBot WhatsApp notification error:", err.message);
-    }
-  }
-
-  // Option 2: Meta Official WhatsApp Cloud API (Free 1,000 Conversations/Month)
-  const META_TOKEN = process.env.META_WHATSAPP_TOKEN;
-  const META_PHONE_ID = process.env.META_PHONE_ID;
-  if (META_TOKEN && META_PHONE_ID && NOTIFY_WHATSAPP) {
-    try {
-      const cleanPhone = NOTIFY_WHATSAPP.replace('whatsapp:', '').replace('+', '').replace(/\s+/g, '');
-      const res = await fetch(`https://graph.facebook.com/v18.0/${META_PHONE_ID}/messages`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${META_TOKEN}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          messaging_product: 'whatsapp',
-          to: cleanPhone,
-          type: 'text',
-          text: { body: messageText }
-        })
-      });
-      const result = await res.json();
-      console.log("Meta Official WhatsApp Cloud API response:", res.status, result);
-      return;
-    } catch (err) {
-      console.error("Meta WhatsApp Cloud API error:", err.message);
-    }
-  }
-
-  // Option 3: Twilio (Fallback)
-  const TWILIO_SID = process.env.TWILIO_ACCOUNT_SID;
-  const TWILIO_TOKEN = process.env.TWILIO_AUTH_TOKEN;
-  const TWILIO_FROM = process.env.TWILIO_WHATSAPP_NUMBER;
-  if (TWILIO_SID && TWILIO_TOKEN && TWILIO_FROM && NOTIFY_WHATSAPP) {
-    try {
-      const authHeader = 'Basic ' + Buffer.from(`${TWILIO_SID}:${TWILIO_TOKEN}`).toString('base64');
-      const params = new URLSearchParams();
-      params.append('From', TWILIO_FROM.startsWith('whatsapp:') ? TWILIO_FROM : `whatsapp:${TWILIO_FROM}`);
-      params.append('To', NOTIFY_WHATSAPP.startsWith('whatsapp:') ? NOTIFY_WHATSAPP : `whatsapp:${NOTIFY_WHATSAPP}`);
-      params.append('Body', messageText);
-
-      const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${TWILIO_SID}/Messages.json`, {
-        method: 'POST',
-        headers: {
-          'Authorization': authHeader,
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: params.toString()
-      });
-      const result = await res.json();
-      console.log("Twilio WhatsApp response:", res.status, result.sid || result.message);
-    } catch (err) {
-      console.error("Twilio WhatsApp error:", err.message);
-    }
-  }
-}
-
 exports.handler = async function(event, context) {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -191,12 +110,9 @@ exports.handler = async function(event, context) {
       throw new Error(`Supabase insert failed: ${errText}`);
     }
 
-    // 2. Trigger Email & WhatsApp notifications for contact inquiries (excl. mailing list subscriptions)
+    // 2. Trigger Resend Email notification for contact inquiries (excl. mailing list subscriptions)
     if (payload.form_type !== 'newsletter') {
-      await Promise.allSettled([
-        sendEmailNotification(payload),
-        sendWhatsAppNotification(payload)
-      ]);
+      await sendEmailNotification(payload);
     }
 
     return {
