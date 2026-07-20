@@ -241,27 +241,22 @@ background:rgba(255, 255, 255, 0);
           <div class="div-block-33">
             <style>
               .left-content {
-                height: auto !important;
-                min-height: 100vh !important;
-                flex-direction: column !important;
-                position: relative !important;
+                height: 100vh !important;
+                position: sticky !important;
+                top: 0 !important;
               }
               .div-block-30.secondary {
-                height: auto !important;
-                flex-direction: column !important;
-                align-items: stretch !important;
+                height: 100% !important;
                 width: 100% !important;
               }
               .div-block-33 {
                 width: 100% !important;
-                height: auto !important;
+                height: 100% !important;
                 display: flex !important;
-                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
               }
               .video-container-sticky {
-                position: sticky;
-                top: 20px;
-                z-index: 20;
                 width: 100%;
                 aspect-ratio: 16 / 9;
                 border-radius: 16px;
@@ -289,30 +284,6 @@ background:rgba(255, 255, 255, 0);
                 <div class="w-full h-full flex items-center justify-center bg-zinc-900 text-zinc-600 text-sm font-semibold">No Video or Image Preview</div>
               {%- endif -%}
             </div>
-
-            {%- assign hasGallery = false -%}
-            {%- if f_gallery-images -%}
-              {%- for img in f_gallery-images -%}
-                {%- if img.url -%}
-                  {%- assign hasGallery = true -%}
-                {%- endif -%}
-              {%- endfor -%}
-            {%- endif -%}
-
-            {%- if hasGallery -%}
-            <div class="project-masonry-gallery mt-8 pt-8 border-t border-zinc-800/60 w-full">
-              <h3 class="heading-7 mb-6 text-white uppercase tracking-wider text-sm font-semibold">Project Gallery</h3>
-              <div class="columns-1 sm:columns-2 gap-6 space-y-6">
-                {%- for setItem in f_gallery-images -%}
-                {%- if setItem.url -%}
-                <div class="break-inside-avoid rounded-2xl overflow-hidden shadow-xl border border-zinc-800/80 bg-zinc-900 group transition duration-300">
-                  <img src="{{ setItem.url }}" loading="lazy" alt="{{ setItem.alt | default: title }}" class="w-full h-auto object-cover group-hover:scale-105 transition duration-500">
-                </div>
-                {%- endif -%}
-                {%- endfor -%}
-              </div>
-            </div>
-            {%- endif -%}
           </div>
         </div>
       </div>
@@ -336,27 +307,60 @@ background:rgba(255, 255, 255, 0);
         </div>{%- endunless -%}
       </div>
     </div>
+
+    {%- assign hasGallery = false -%}
+    {%- if f_gallery-images -%}
+      {%- for img in f_gallery-images -%}
+        {%- if img.url -%}
+          {%- assign hasGallery = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {%- if hasGallery -%}
+    <div class="project-masonry-gallery max-w-7xl mx-auto px-6 py-16 border-t border-zinc-800/80 relative z-20">
+      <h3 class="heading-7 mb-8 text-white uppercase tracking-wider text-base font-bold text-center">Project Gallery</h3>
+      <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+        {%- for setItem in f_gallery-images -%}
+        {%- if setItem.url -%}
+        <div class="break-inside-avoid rounded-2xl overflow-hidden shadow-2xl border border-zinc-800/80 bg-zinc-900 group transition duration-300">
+          <img src="{{ setItem.url }}" loading="lazy" alt="{{ setItem.alt | default: title }}" class="w-full h-auto object-cover group-hover:scale-105 transition duration-500">
+        </div>
+        {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- endif -%}
+
     <div class="video-back-ground">
-      <div class="code-embed-3 w-embed w-iframe"><div class="custom-video-container">
-  <iframe src="https://player.vimeo.com/video/{{ f_link-to-video }}?autoplay=1&amp;controls=0&amp;muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen="">
-  </iframe>
-</div>
-
-<!-- CSS -->
-<style>
-  .custom-video-container {
-    position: relative;
-    width: 200vw; /* 60% of the viewport width */
-    height: 100vh; /* 60% of the viewport height */
-    margin: 0 auto; /* Center it horizontally */
-  }
-
-  .custom-video-container iframe {
-    width: 100%; /* Make iframe fill the container */
-    height: 100%; /* Make iframe fill the container */
-    border: none; /* Remove any default borders */
-  }
-</style></div>
+      {%- if f_link-to-video -%}
+      <div class="code-embed-3 w-embed w-iframe">
+        <div class="custom-video-container">
+          <iframe src="https://player.vimeo.com/video/{{ f_link-to-video }}?autoplay=1&amp;controls=0&amp;muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen=""></iframe>
+        </div>
+        <style>
+          .custom-video-container {
+            position: relative;
+            width: 200vw;
+            height: 100vh;
+            margin: 0 auto;
+          }
+          .custom-video-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+          }
+        </style>
+      </div>
+      {%- elsif f_main-image.url -%}
+      <div class="custom-video-container" style="position:relative; width:200vw; height:100vh; margin:0 auto;">
+        <img src="{{ f_main-image.url }}" alt="" class="w-full h-full object-cover opacity-30">
+      </div>
+      {%- elsif f_mobile-image.url -%}
+      <div class="custom-video-container" style="position:relative; width:200vw; height:100vh; margin:0 auto;">
+        <img src="{{ f_mobile-image.url }}" alt="" class="w-full h-full object-cover opacity-30">
+      </div>
+      {%- endif -%}
       <div class="div-block-35"></div>
     </div>
   </section>
