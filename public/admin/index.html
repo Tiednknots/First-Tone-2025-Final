@@ -1441,43 +1441,64 @@
 
     // Load active tab view
     async function loadTab(tab) {
-      document.getElementById('current-tab-title').innerText = tab.replace('-', ' ') + " Management";
-      document.querySelectorAll('.tab-view').forEach(view => view.classList.add('hidden'));
-      document.getElementById(`${tab}-view`).classList.remove('hidden');
+      try {
+        const titleEl = document.getElementById('current-tab-title');
+        if (titleEl) titleEl.innerText = tab.replace('-', ' ') + " Management";
 
-      // Expand/Collapse main navigation sidebar if entering settings visual editor
-      const mainSidebar = document.getElementById('main-sidebar');
-      if (mainSidebar) {
-        if (tab === 'settings') {
-          mainSidebar.classList.add('mini-sidebar');
-        } else {
-          mainSidebar.classList.remove('mini-sidebar');
+        const viewContainer = document.getElementById('view-container');
+        if (viewContainer) {
+          if (tab === 'settings') {
+            viewContainer.classList.remove('p-8');
+            viewContainer.classList.add('p-0', 'h-full');
+          } else {
+            viewContainer.classList.remove('p-0');
+            viewContainer.classList.add('p-8');
+          }
         }
-      }
 
-      // Highlight active nav item
-      document.querySelectorAll('.nav-item').forEach(i => {
-        if (i.getAttribute('data-tab') === tab) {
-          i.classList.add('active-nav');
+        document.querySelectorAll('.tab-view').forEach(view => view.classList.add('hidden'));
+
+        const targetView = document.getElementById(`${tab}-view`);
+        if (targetView) {
+          targetView.classList.remove('hidden');
         } else {
-          i.classList.remove('active-nav');
+          console.error("Tab view element not found:", `${tab}-view`);
         }
-      });
 
-      if (tab === 'dashboard') {
-        await renderDashboardTab();
-      } else if (tab === 'inbox') {
-        await renderInboxTab();
-      } else if (tab === 'case-studies') {
-        await renderProjectsTab();
-      } else if (tab === 'services') {
-        await renderServicesTab();
-      } else if (tab === 'partnerships') {
-        await renderPartnershipsTab();
-      } else if (tab === 'home-gallery') {
-        await renderHomeGalleryTab();
-      } else if (tab === 'settings') {
-        await renderSettingsTab();
+        const mainSidebar = document.getElementById('main-sidebar');
+        if (mainSidebar) {
+          if (tab === 'settings') {
+            mainSidebar.classList.add('mini-sidebar');
+          } else {
+            mainSidebar.classList.remove('mini-sidebar');
+          }
+        }
+
+        document.querySelectorAll('.nav-item').forEach(i => {
+          if (i.getAttribute('data-tab') === tab) {
+            i.classList.add('active-nav');
+          } else {
+            i.classList.remove('active-nav');
+          }
+        });
+
+        if (tab === 'dashboard') {
+          await renderDashboardTab();
+        } else if (tab === 'inbox') {
+          await renderInboxTab();
+        } else if (tab === 'case-studies') {
+          await renderProjectsTab();
+        } else if (tab === 'services') {
+          await renderServicesTab();
+        } else if (tab === 'partnerships') {
+          await renderPartnershipsTab();
+        } else if (tab === 'home-gallery') {
+          await renderHomeGalleryTab();
+        } else if (tab === 'settings') {
+          await renderSettingsTab();
+        }
+      } catch (err) {
+        console.error("Error loading tab:", tab, err);
       }
     }
 
