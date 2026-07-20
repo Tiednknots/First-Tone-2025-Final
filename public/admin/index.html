@@ -1129,6 +1129,8 @@
     let colors = {};
     let links = {};
     let images = {};
+    let currentProjectGallery = [];
+    let currentHomeGallery = [];
 
     // Current logged in user
     let user = null;
@@ -1336,40 +1338,43 @@
     }
 
     // Trigger Rebuild
-    document.getElementById('rebuild-trigger-btn').addEventListener('click', async (e) => {
-      const btn = e.currentTarget;
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>Triggering Update...</span>';
+    const rebuildBtnEl = document.getElementById('rebuild-btn') || document.getElementById('rebuild-trigger-btn');
+    if (rebuildBtnEl) {
+      rebuildBtnEl.addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>Triggering Update...</span>';
 
-      if (isDemo) {
-        setTimeout(() => {
+        if (isDemo) {
+          setTimeout(() => {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-rotate"></i> <span>Trigger Rebuild</span>';
+            showBrandNotification("First Tone Live Site Build", "Simulated build triggered successfully! Your live site changes will be published in about 1 minute.", "success");
+          }, 1000);
+          return;
+        }
+
+        try {
+          const { data: { session } } = await supabaseClient.auth.getSession();
+          const token = session ? session.access_token : "";
+
+          const res = await fetch('/api/rebuild', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || "Failed to trigger rebuild");
+          
+          showBrandNotification("First Tone Live Site Build", "Site updates triggered successfully! Your live website changes are now building and will be published live in about 1 minute.", "success");
+        } catch (err) {
+          showBrandNotification("Build Trigger Issue", err.message, "error");
+        } finally {
           btn.disabled = false;
           btn.innerHTML = '<i class="fa-solid fa-rotate"></i> <span>Trigger Rebuild</span>';
-          showBrandNotification("First Tone Live Site Build", "Simulated build triggered successfully! Your live site changes will be published in about 1 minute.", "success");
-        }, 1000);
-        return;
-      }
-
-      try {
-        const { data: { session } } = await supabaseClient.auth.getSession();
-        const token = session ? session.access_token : "";
-
-        const res = await fetch('/api/rebuild', {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Failed to trigger rebuild");
-        
-        showBrandNotification("First Tone Live Site Build", "Site updates triggered successfully! Your live website changes are now building and will be published live in about 1 minute.", "success");
-      } catch (err) {
-        showBrandNotification("Build Trigger Issue", err.message, "error");
-      } finally {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-rotate"></i> <span>Trigger Rebuild</span>';
-      }
-    });
+        }
+      });
+    }
 
     // Load active tab view
     async function loadTab(tab) {

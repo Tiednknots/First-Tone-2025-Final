@@ -29,6 +29,7 @@ f_video-embed-rich-text: "<div style=\"padding:56.25% 0 0 0;position:relative;\"
 f_mobile-image:
   url: "/assets/external/67ba14c332007415b4ae7635_screenshot202025-02-2220at2010.16.51.avif"
 f_home-video-order: 2
+f_work-video-order: 99
 f_short-desc: A vibrant fusion of Chinese art and London’s modern energy.
 f_link-to-service:
 layout: "[case-studies].html"

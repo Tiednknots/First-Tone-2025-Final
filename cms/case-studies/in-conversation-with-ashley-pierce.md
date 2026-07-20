@@ -26,6 +26,7 @@ f_video-url: "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a2
 f_mobile-image:
   url: "/assets/external/67b421e72e4234c4bba6c4ee_screenshot202025-02-1720at2021.03.18.avif"
 f_home-video-order: 7
+f_work-video-order: 99
 f_short-desc: Mini Documentary for XIAOMI IMAGERY AWARDS 2022
 f_link-to-service:
 layout: "[case-studies].html"
