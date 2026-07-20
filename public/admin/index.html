@@ -2099,9 +2099,17 @@
         return;
       }
 
-      const { error } = await supabaseClient.from('case_studies').upsert(payload);
-      if (error) alert("Failed to save project: " + error.message);
-      else {
+      let { error } = await supabaseClient.from('case_studies').upsert(payload);
+      if (error && error.message.includes('work_video_order')) {
+        console.warn("work_video_order column not in Supabase schema yet. Retrying save without work_video_order field.");
+        delete payload.work_video_order;
+        const retry = await supabaseClient.from('case_studies').upsert(payload);
+        error = retry.error;
+      }
+
+      if (error) {
+        alert("Failed to save project: " + error.message);
+      } else {
         closeProjectEditor();
         renderProjectsTab();
       }
