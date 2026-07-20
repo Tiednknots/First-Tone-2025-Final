@@ -239,33 +239,70 @@ background:rgba(255, 255, 255, 0);
       <div class="left-content">
         <div class="div-block-30 secondary">
           <div class="div-block-33">
-            {%- if f_link-to-video -%}<div class="code-embed-2 w-embed w-iframe"><div class="video-container">
-  <iframe src="https://player.vimeo.com/video/{{ f_link-to-video }}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen="">
-  </iframe>
-</div>
+            <style>
+              .left-content {
+                height: auto !important;
+                min-height: 100vh !important;
+                flex-direction: column !important;
+                position: relative !important;
+              }
+              .div-block-30.secondary {
+                height: auto !important;
+                flex-direction: column !important;
+                align-items: stretch !important;
+                width: 100% !important;
+              }
+              .div-block-33 {
+                width: 100% !important;
+                height: auto !important;
+                display: flex !important;
+                flex-direction: column !important;
+              }
+              .video-container-sticky {
+                position: sticky;
+                top: 20px;
+                z-index: 20;
+                width: 100%;
+                aspect-ratio: 16 / 9;
+                border-radius: 16px;
+                overflow: hidden;
+                background: #09090b;
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+              }
+              .video-container-sticky iframe,
+              .video-container-sticky img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border: none;
+              }
+            </style>
 
-<!-- CSS -->
-<style>
-  .video-container {
-    position: relative;
-    width: 100%;  /* Set width to 60% of viewport width */
-    height: 60vh; /* Set height to 60% of viewport height */
-    overflow: hidden; /* Ensure no overflow occurs */
-  }
+            <div class="video-container-sticky">
+              {%- if f_link-to-video -%}
+                <iframe src="https://player.vimeo.com/video/{{ f_link-to-video }}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen=""></iframe>
+              {%- elsif f_main-image.url -%}
+                <img src="{{ f_main-image.url }}" alt="{{ title }}" loading="lazy">
+              {%- elsif f_mobile-image.url -%}
+                <img src="{{ f_mobile-image.url }}" alt="{{ title }}" loading="lazy">
+              {%- else -%}
+                <div class="w-full h-full flex items-center justify-center bg-zinc-900 text-zinc-600 text-sm font-semibold">No Video or Image Preview</div>
+              {%- endif -%}
+            </div>
 
-  .video-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;  /* Make iframe fill the container */
-    height: 100%; /* Make iframe fill the container */
-    object-fit: cover; /* Ensure the video covers the container, preserving aspect ratio */
-  }
-</style></div>{%- endif -%}
-            {%- if f_gallery-images and f_gallery-images.size > 0 -%}
-            <div class="project-masonry-gallery my-12 pt-8 border-t border-zinc-800/60">
+            {%- assign hasGallery = false -%}
+            {%- if f_gallery-images -%}
+              {%- for img in f_gallery-images -%}
+                {%- if img.url -%}
+                  {%- assign hasGallery = true -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+
+            {%- if hasGallery -%}
+            <div class="project-masonry-gallery mt-8 pt-8 border-t border-zinc-800/60 w-full">
               <h3 class="heading-7 mb-6 text-white uppercase tracking-wider text-sm font-semibold">Project Gallery</h3>
-              <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+              <div class="columns-1 sm:columns-2 gap-6 space-y-6">
                 {%- for setItem in f_gallery-images -%}
                 {%- if setItem.url -%}
                 <div class="break-inside-avoid rounded-2xl overflow-hidden shadow-xl border border-zinc-800/80 bg-zinc-900 group transition duration-300">
