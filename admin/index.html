@@ -2554,15 +2554,27 @@
       });
 
       if (!isDemo) {
-        const { data: colorsData } = await supabaseClient.from('colors').select('*');
-        const { data: linksData } = await supabaseClient.from('links').select('*');
-        const { data: textsData } = await supabaseClient.from('texts').select('*');
-        const { data: imagesData } = await supabaseClient.from('images').select('*');
+        try {
+          const { data: colorsData } = await supabaseClient.from('colors').select('*');
+          const { data: linksData } = await supabaseClient.from('links').select('*');
+          const { data: textsData } = await supabaseClient.from('texts').select('*');
+          const { data: imagesData } = await supabaseClient.from('images').select('*');
 
-        colors = {}; colorsData.forEach(row => colors[row.key] = row.hex);
-        links = {}; linksData.forEach(row => links[row.key] = row.url);
-        texts = {}; textsData.forEach(row => texts[row.key] = row.current_text);
-        images = {}; imagesData.forEach(row => images[row.key] = { url: row.url, alt: row.alt });
+          if (colorsData && Array.isArray(colorsData)) {
+            colors = {}; colorsData.forEach(row => colors[row.key] = row.hex);
+          }
+          if (linksData && Array.isArray(linksData)) {
+            links = {}; linksData.forEach(row => links[row.key] = row.url);
+          }
+          if (textsData && Array.isArray(textsData)) {
+            texts = {}; textsData.forEach(row => texts[row.key] = row.current_text);
+          }
+          if (imagesData && Array.isArray(imagesData)) {
+            images = {}; imagesData.forEach(row => images[row.key] = { url: row.url, alt: row.alt });
+          }
+        } catch (e) {
+          console.warn("Could not fetch settings data from Supabase:", e.message);
+        }
       }
 
       // Render Colors
