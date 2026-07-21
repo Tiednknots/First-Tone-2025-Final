@@ -1209,12 +1209,18 @@
       grid.innerHTML = projects.map(proj => {
         let imgUrl = proj.main_image?.url || proj.mobile_image?.url || '';
         const vimeoId = proj.link_to_video;
+        const videoUrl = proj.video_url;
         const imgId = `proj-img-${proj.slug}`;
+        let mediaHtml = '';
 
-        if (!imgUrl && vimeoId) {
+        if (imgUrl) {
+           mediaHtml = `<img id="${imgId}" src="${imgUrl}" class="w-full h-full object-cover">`;
+        } else if (videoUrl) {
+           mediaHtml = `<video src="${videoUrl}" class="w-full h-full object-cover" muted loop playsinline autoplay></video>`;
+        } else if (vimeoId) {
           // Placeholder spinner before thumbnail resolution
           imgUrl = '/assets/images/inner-circle.svg';
-          
+          mediaHtml = `<img id="${imgId}" src="${imgUrl}" class="w-full h-full object-cover">`;
           fetch(`https://vimeo.com/api/v2/video/${vimeoId}.json`)
             .then(res => res.json())
             .then(data => {
@@ -1224,16 +1230,14 @@
               }
             })
             .catch(err => console.warn(`Vimeo thumbnail load failed for ${proj.slug}:`, err));
-        }
-
-        if (!imgUrl) {
-          imgUrl = '/assets/images/inner-circle.svg';
+        } else {
+          mediaHtml = `<div class="w-full h-full flex items-center justify-center text-zinc-700"><i class="fa-solid fa-image text-4xl"></i></div>`;
         }
 
         return `
           <div class="glass rounded-2xl overflow-hidden flex flex-col border border-zinc-800 hover:border-brand-500/50 transition">
             <div class="aspect-video bg-zinc-950 relative">
-              <img id="${imgId}" src="${imgUrl}" class="w-full h-full object-cover">
+              ${mediaHtml}
               <div class="absolute top-2 right-2 flex gap-1">
                 <span class="bg-black/80 text-brand-400 text-[10px] font-bold px-2 py-0.5 rounded border border-brand-500/30" title="Home Page Order">Home #${proj.home_video_order || '-'}</span>
                 <span class="bg-black/80 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-500/30" title="Our Work Page Order">Work #${proj.work_video_order || '-'}</span>
@@ -1512,10 +1516,26 @@
       const mockTitle = document.getElementById('mock-title');
       const mockDesc = document.getElementById('mock-desc');
       const mockImg = document.getElementById('mock-image');
+      const mockVideo = document.getElementById('mock-video');
 
       if (mockTitle) mockTitle.innerText = title;
       if (mockDesc) mockDesc.innerText = desc;
-      if (mockImg) mockImg.src = uploadedUrl;
+      
+      if (mockImg && mockVideo) {
+        if (mainImageZone && mainImageZone.getAttribute('data-uploaded-url')) {
+          mockImg.src = mainImageZone.getAttribute('data-uploaded-url');
+          mockImg.classList.remove('hidden');
+          mockVideo.classList.add('hidden');
+        } else if (videoUrl) {
+          mockVideo.src = videoUrl;
+          mockVideo.classList.remove('hidden');
+          mockImg.classList.add('hidden');
+        } else {
+          mockImg.src = '/assets/images/firsttonelogos-01_1.avif';
+          mockImg.classList.remove('hidden');
+          mockVideo.classList.add('hidden');
+        }
+      }
     }
 
     function openProjectEditor(slug = null) {
