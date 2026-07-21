@@ -589,7 +589,7 @@
           user = session.user;
           document.getElementById('user-email').innerText = user.email;
           showLayout();
-          loadTab('dashboard');
+          loadTab('{{ currentTab }}');
         } else {
           showAuthGate();
         }
@@ -686,7 +686,7 @@
           document.getElementById('user-email').innerText = user.email;
           await initMockData();
           showLayout();
-          loadTab('dashboard');
+          loadTab('{{ currentTab }}');
           submitBtn.disabled = false;
           submitBtn.innerHTML = '<span>Log In</span> <i class="fa-solid fa-arrow-right text-sm"></i>';
         }, 800);
@@ -700,7 +700,7 @@
         user = data.user;
         document.getElementById('user-email').innerText = user.email;
         showLayout();
-        loadTab('dashboard');
+        loadTab('{{ currentTab }}');
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<span>Log In</span> <i class="fa-solid fa-arrow-right text-sm"></i>';
       } catch (err) {
@@ -2324,7 +2324,7 @@
       if (mainSidebar) {
         mainSidebar.classList.remove('mini-sidebar');
       }
-      loadTab('dashboard');
+      loadTab('{{ currentTab }}');
     }
 
     function navigatePreviewFrame(path) {
