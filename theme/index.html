@@ -424,8 +424,9 @@ a {
                 </div>
               </div>
             </section>
-            <div data-w-id="7c21ea1f-e321-8093-2581-0e67ec1b4e6d" class="section-main is--slider">
-              <div class="secondary-service-tab gg w-clearfix">
+            <div class="section-main is--slider relative w-full pt-16 pb-16">
+              
+              <div class="secondary-service-tab gg w-clearfix mb-8">
                 <a href="{{ links.-7252aede }}" target="_blank" class="c-link w-inline-block" data-edit-link="-7252aede">
                   <h2 class="heading-5" data-edit-text="8b86fcf">{{ texts.8b86fcf }}</h2>
                 </a>
@@ -434,124 +435,226 @@ a {
                   <p class="udesly-paragraph-large bnsd">{{ texts.-25eb5e8d }}<span class="text-span-13" data-edit-text="1e10dab7">{{ texts.1e10dab7 }}</span>{{ texts.58465041 }}<span class="text-span-14" data-edit-text="-db4aae7">{{ texts.-db4aae7 }}</span>{{ texts.574 }}<span class="text-span-15" data-edit-text="544cd608">{{ texts.544cd608 }}</span>{{ texts.1f0b149 }}<span class="text-span-16" data-edit-text="-1f6f2f48">{{ texts.-1f6f2f48 }}</span>{{ texts.2e }}</p>
                 </div>
               </div>
-              <div class="div-block-68 mobile">
-                {%- assign collection = collections.case-studies | sort: "f_home-video-order" -%}<div class="collection-list-wrapper-5 w-dyn-list">
-                  {%- unless collection.length == 0 -%}<div role="list" class="w-dyn-items">
-                    {%- for item in collection -%}<div role="listitem" class="collection-item-5 w-dyn-item">
-                      <div class="div-block-73">
-                        <div class="div-block-74"></div>
+
+              <!-- Custom CSS for the native slider -->
+              <style>
+                .modern-projects-wrapper {
+                  position: relative;
+                  width: 100vw;
+                  left: 50%;
+                  transform: translateX(-50%);
+                  padding: 2rem 0;
+                  overflow: hidden;
+                }
+                .projects-scroll-track {
+                  display: flex;
+                  gap: 2rem;
+                  overflow-x: auto;
+                  scroll-snap-type: x mandatory;
+                  scroll-behavior: smooth;
+                  padding: 0 10vw;
+                  /* Hide scrollbar */
+                  -ms-overflow-style: none;
+                  scrollbar-width: none;
+                }
+                .projects-scroll-track::-webkit-scrollbar {
+                  display: none;
+                }
+                .modern-project-card {
+                  position: relative;
+                  flex: 0 0 auto;
+                  width: 85vw;
+                  max-width: 700px;
+                  aspect-ratio: 16 / 9;
+                  border-radius: 1.5rem;
+                  overflow: hidden;
+                  scroll-snap-align: center;
+                  cursor: pointer;
+                  background: #050505;
+                  border: 1px solid rgba(255,255,255,0.1);
+                  transition: transform 0.4s ease, border-color 0.4s ease;
+                }
+                .modern-project-card:hover {
+                  transform: scale(1.02);
+                  border-color: rgba(255,255,255,0.3);
+                }
+                .modern-project-poster {
+                  position: absolute;
+                  inset: 0;
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  z-index: 10;
+                  transition: opacity 0.5s ease;
+                }
+                .modern-project-video {
+                  position: absolute;
+                  inset: 0;
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                  z-index: 5;
+                }
+                .modern-project-overlay {
+                  position: absolute;
+                  inset: 0;
+                  z-index: 20;
+                  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 40%, transparent 100%);
+                  opacity: 0;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: flex-end;
+                  padding: 2.5rem;
+                  transition: opacity 0.4s ease;
+                }
+                .modern-project-content {
+                  transform: translateY(20px);
+                  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+                }
+                .modern-project-card:hover .modern-project-poster {
+                  opacity: 0;
+                }
+                .modern-project-card:hover .modern-project-overlay {
+                  opacity: 1;
+                }
+                .modern-project-card:hover .modern-project-content {
+                  transform: translateY(0);
+                }
+                .modern-project-title {
+                  color: white;
+                  font-family: Oswald, sans-serif;
+                  font-size: 2.5rem;
+                  text-transform: uppercase;
+                  margin-bottom: 0.5rem;
+                  line-height: 1.1;
+                }
+                .modern-project-desc {
+                  color: rgba(255,255,255,0.8);
+                  font-size: 1rem;
+                  font-family: 'Open Sans', sans-serif;
+                  max-width: 80%;
+                  margin-bottom: 1.5rem;
+                }
+                .modern-project-btn {
+                  display: inline-block;
+                  background: white;
+                  color: black;
+                  padding: 0.75rem 1.5rem;
+                  border-radius: 100px;
+                  font-weight: bold;
+                  text-transform: uppercase;
+                  font-size: 0.8rem;
+                  letter-spacing: 1px;
+                }
+                .scroll-arrow {
+                  position: absolute;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  width: 60px;
+                  height: 60px;
+                  border-radius: 50%;
+                  background: rgba(255,255,255,0.1);
+                  backdrop-filter: blur(10px);
+                  border: 1px solid rgba(255,255,255,0.2);
+                  color: white;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 1.5rem;
+                  cursor: pointer;
+                  z-index: 30;
+                  transition: background 0.3s ease, transform 0.3s ease;
+                }
+                .scroll-arrow:hover {
+                  background: rgba(255,255,255,0.2);
+                  transform: translateY(-50%) scale(1.1);
+                }
+                .scroll-arrow.left { left: 2rem; }
+                .scroll-arrow.right { right: 2rem; }
+                
+                @media (max-width: 768px) {
+                  .projects-scroll-track {
+                    gap: 1rem;
+                    padding: 0 5vw;
+                  }
+                  .modern-project-card {
+                    width: 90vw;
+                  }
+                  .scroll-arrow {
+                    display: none;
+                  }
+                  .modern-project-overlay {
+                    opacity: 1; /* Always show text on mobile */
+                    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+                  }
+                  .modern-project-content {
+                    transform: translateY(0);
+                  }
+                  .modern-project-title { font-size: 1.5rem; }
+                  .modern-project-desc { font-size: 0.8rem; max-width: 100%; margin-bottom: 1rem; }
+                }
+              </style>
+
+              <div class="modern-projects-wrapper">
+                <button class="scroll-arrow left" onclick="scrollProjects(-1)">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                </button>
+                
+                <div class="projects-scroll-track" id="projectsScrollTrack">
+                  {%- assign collection = collections.case-studies | sort: "f_home-video-order" -%}
+                  {%- for item in collection -%}
+                  <a href="{{ item.url }}" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+                    <img src="{{ item.data.f_main-image.url | default: item.data.f_mobile-image.url }}" class="modern-project-poster" alt="{{ item.data.title }}">
+                    <video class="modern-project-video" muted loop playsinline preload="none">
+                      <source src="{{ item.data.f_video-url }}" type="video/mp4">
+                    </video>
+                    <div class="modern-project-overlay">
+                      <div class="modern-project-content">
+                        <h4 class="modern-project-title">{{ item.data.title }}</h4>
+                        <p class="modern-project-desc">{{ item.data.f_short-desc }}</p>
+                        <div class="modern-project-btn">View Project</div>
                       </div>
-                      <a href="{{ item.url }}" class="link-block w-inline-block">
-                        <div class="background-image-mobile"><img src="{{ item.data.f_mobile-image.url }}" loading="lazy" alt="" class="image-12"></div>
-                        <div class="gradiant-info-cover">
-                          <div class="div-block-72">
-                            <div>
-                              <h4 class="heading-4">{{ item.data.title }}</h4>
-                              <div class="scroll-in-text white">{{ item.data.f_short-desc }}</div>
-                            </div>
-                            <div class="button main sdf">
-                              <div data-edit-text="162aefac">{{ texts.162aefac }}</div>
-                            </div>
-                          </div>
-                        </div>
-                      </a>
-                    </div>{%- endfor -%}
-                  </div>{%- endunless -%}
-                  {%- if collection.length == 0 -%}<div class="w-dyn-empty">
-                    <div data-edit-text="3d503d2b">{{ texts.3d503d2b }}</div>
-                  </div>{%- endif -%}
+                    </div>
+                  </a>
+                  {%- endfor -%}
                 </div>
+                
+                <button class="scroll-arrow right" onclick="scrollProjects(1)">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                </button>
               </div>
-              <div class="case-study-swipes">
-                <div class="slider_contain desktop">
-                  {%- assign collection = collections.case-studies | sort: "f_home-video-order" -%}<div class="wrapper w-dyn-list">
-                    {%- unless collection.length == 0 -%}<div role="list" class="list w-dyn-items">
-                      {%- for item in collection -%}<div data-w-id="00a55e43-d207-4767-6593-491de78299a6" style="opacity:0.35" role="listitem" class="item home w-dyn-item">
-                        <div class="div-block-67">
-                          <div class="scroll-in-category">
-                            {%- assign servicesOfCase-studies = item.data.f_link-to-service | resolveMultiReferences | sort: "-created-on" -%}<div class="collection-list-wrapper-4 w-dyn-list">
-                              {%- unless servicesOfCase-studies.length == 0 -%}<div role="list" class="collection-list-3 ggf w-dyn-items w-row">
-                                {%- for item in servicesOfCase-studies -%}<div style="-webkit-transform:translate3d(0, -233px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, -233px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, -233px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, -233px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" role="listitem" class="collection-item-3 w-dyn-item w-col w-col-4">
-                                  <a href="{{ item.url }}" class="link-4">{{ item.data.title }}</a>
-                                </div>{%- endfor -%}
-                              </div>{%- endunless -%}
-                            </div>
-                          </div>
-                          <a href="{{ item.url }}" class="card w-inline-block">
-                            <div class="embed w-embed w-script"><div class="hover_video_wrapper">
-  <div class="video-fallback" style="background-image: url('fallback-image.jpg');"></div>
-  <video class="video" loop="" preload="auto" muted="" playsinline="" width="100%">
-    <source src="{{ item.data.f_video-url }}" type="video/mp4">
-  </video>
-</div>
 
-<style>
-  .hover_video_wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 100%;
-    cursor: pointer;
-    overflow: hidden; /* Prevents unwanted overflow */
-  }
-  
-  .hover_video_wrapper .video-fallback {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    z-index: 1;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-  }
-  
-  .hover_video_wrapper .video {
-    display: block;
-    width: 100%;
-    z-index: 2;
-  }
-</style>
+              <script>
+                function scrollProjects(direction) {
+                  const track = document.getElementById('projectsScrollTrack');
+                  const cardWidth = track.querySelector('.modern-project-card').offsetWidth + 32; // 32 is the gap
+                  track.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+                }
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".hover_video_wrapper, .hover_video_wrapper-2").forEach(wrapper => {
-      const video = wrapper.querySelector(".video, .video-m");
-      const fallback = wrapper.querySelector(".video-fallback");
+                function playVideo(card) {
+                  if (window.innerWidth > 768) { // Only autoplay on hover for desktop
+                    const video = card.querySelector('video');
+                    if (video && video.readyState >= 3) {
+                      video.play().catch(e => console.log('Autoplay prevented', e));
+                    } else if (video) {
+                      video.load();
+                      video.play().catch(e => console.log('Autoplay prevented', e));
+                    }
+                  }
+                }
 
-      if (!video) return;
+                function pauseVideo(card) {
+                  if (window.innerWidth > 768) {
+                    const video = card.querySelector('video');
+                    if (video) {
+                      video.pause();
+                    }
+                  }
+                }
+              </script>
 
-      wrapper.addEventListener("mouseenter", function () {
-        video.play();
-        if (fallback) fallback.style.opacity = "0";
-      });
-
-      wrapper.addEventListener("mouseleave", function () {
-        video.pause();
-        if (fallback) fallback.style.opacity = "1";
-      });
-    });
-  });
-</script></div>{%- if item.data.title == "HSBC × Zhou Guanyu" -%}<img src="{{ item.data.f_main-image.url }}" loading="lazy" alt="" class="image-10">{%- endif -%}
-                            <div style="opacity:0;-webkit-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="text-contain">
-                              <div class="div-block-65">
-                                <h4 class="heading-4">{{ item.data.title }}</h4>
-                                <div class="scroll-in-text">{{ item.data.f_short-desc }}</div>
-                              </div>
-                              <div class="button main sdf">
-                                <div data-edit-text="-61473034">{{ texts.-61473034 }}</div>
-                              </div>
-                            </div>
-                          </a>
-                        </div>
-                      </div>{%- endfor -%}
-                    </div>{%- endunless -%}
-                    {%- if collection.length == 0 -%}<div class="empty-state w-dyn-empty">
-                      <div data-edit-text="3d503d2b">{{ texts.3d503d2b }}</div>
-                    </div>{%- endif -%}
-                  </div>
-                </div>
-                <a href="{{ links.7f22fa2e }}" class="button main slider-title2 w-button" data-edit-text="21a740d2" data-edit-link="7f22fa2e">{{ texts.21a740d2 }}</a>
+              <div class="flex justify-center mt-12">
+                <a href="{{ links.7f22fa2e }}" class="button main w-button" data-edit-text="21a740d2" data-edit-link="7f22fa2e">{{ texts.21a740d2 }}</a>
               </div>
             </div>
             <section class="section-5">
@@ -939,10 +1042,7 @@ a {
           <div class="item"><video src="/assets/null/video4.mp4" width="300" muted="" loop=""></video></div>
           <div class="item"><video src="/assets/null/video5.mp4" width="300" muted="" loop=""></video></div>
         </div>
-        <!--  Custom arrows  -->
-        <div class="arrow arrow-left" data-edit-text="2190">{{ texts.2190 }}</div>
-        <div class="arrow arrow-right" data-edit-text="2192">{{ texts.2192 }}</div>
-      </div>
+        <!--  Old custom arrows removed  -->
     </div>
     <!--  jQuery + Slick JS  -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

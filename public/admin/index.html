@@ -1314,7 +1314,7 @@
         if (imgUrl) {
            mediaHtml = `<img id="${imgId}" src="${imgUrl}" class="w-full h-full object-cover">`;
         } else if (videoUrl) {
-           mediaHtml = `<video src="${videoUrl}" class="w-full h-full object-cover" muted loop playsinline autoplay></video>`;
+           mediaHtml = `<video src="${videoUrl}" class="w-full h-full object-cover" muted playsinline></video>`;
         } else if (vimeoId) {
           // Placeholder spinner before thumbnail resolution
           imgUrl = '/assets/images/inner-circle.svg';
