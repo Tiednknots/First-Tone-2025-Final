@@ -716,25 +716,33 @@
         ['link', 'clean']
       ];
 
-      quillProjectDesc = new Quill('#project-desc-editor', {
-        theme: 'snow',
-        modules: { toolbar: toolbarOptions }
-      });
+      if (document.getElementById('project-desc-editor')) {
+        quillProjectDesc = new Quill('#project-desc-editor', {
+          theme: 'snow',
+          modules: { toolbar: toolbarOptions }
+        });
+      }
 
-      quillProjectClientDetails = new Quill('#project-client-details-editor', {
-        theme: 'snow',
-        modules: { toolbar: toolbarOptions }
-      });
+      if (document.getElementById('project-client-details-editor')) {
+        quillProjectClientDetails = new Quill('#project-client-details-editor', {
+          theme: 'snow',
+          modules: { toolbar: toolbarOptions }
+        });
+      }
 
-      quillProjectChallenge = new Quill('#project-challenge-editor', {
-        theme: 'snow',
-        modules: { toolbar: toolbarOptions }
-      });
+      if (document.getElementById('project-challenge-editor')) {
+        quillProjectChallenge = new Quill('#project-challenge-editor', {
+          theme: 'snow',
+          modules: { toolbar: toolbarOptions }
+        });
+      }
 
-      quillServiceBody = new Quill('#service-body-editor', {
-        theme: 'snow',
-        modules: { toolbar: toolbarOptions }
-      });
+      if (document.getElementById('service-body-editor')) {
+        quillServiceBody = new Quill('#service-body-editor', {
+          theme: 'snow',
+          modules: { toolbar: toolbarOptions }
+        });
+      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -1163,8 +1171,8 @@
       applyInboxFilter();
     }
 
-    document.getElementById('inbox-search').addEventListener('input', applyInboxFilter);
-    document.getElementById('inbox-filter').addEventListener('change', applyInboxFilter);
+    document.getElementById('inbox-search')?.addEventListener('input', applyInboxFilter);
+    document.getElementById('inbox-filter')?.addEventListener('change', applyInboxFilter);
 
     function applyInboxFilter() {
       const searchVal = document.getElementById('inbox-search').value.toLowerCase();
@@ -1664,7 +1672,7 @@
       document.getElementById('project-editor-modal').classList.add('hidden');
     }
 
-    document.getElementById('project-save-btn').addEventListener('click', async () => {
+    document.getElementById('project-save-btn')?.addEventListener('click', async () => {
       const editSlug = document.getElementById('project-id').value;
       const slug = document.getElementById('project-slug').value.trim();
       const title = document.getElementById('project-title').value.trim();
@@ -1823,7 +1831,7 @@
       document.getElementById('service-editor-modal').classList.add('hidden');
     }
 
-    document.getElementById('service-form').addEventListener('submit', async (e) => {
+    document.getElementById('service-form')?.addEventListener('submit', async (e) => {
       e.preventDefault();
       const editSlug = document.getElementById('service-id').value;
       const slug = document.getElementById('service-slug').value.trim();
@@ -1941,7 +1949,7 @@
       document.getElementById('partnership-editor-modal').classList.add('hidden');
     }
 
-    document.getElementById('partnership-form').addEventListener('submit', async (e) => {
+    document.getElementById('partnership-form')?.addEventListener('submit', async (e) => {
       e.preventDefault();
       const editSlug = document.getElementById('partnership-id').value;
       const slug = document.getElementById('partnership-slug').value.trim();
@@ -2146,7 +2154,7 @@
     }
 
     // Filter translation list
-    document.getElementById('texts-search').addEventListener('input', applyTextsFilter);
+    document.getElementById('texts-search')?.addEventListener('input', applyTextsFilter);
 
     // Component Group Definitions (Multi-Attribute visual grouping)
     const COMPONENT_GROUPS = [
@@ -2425,7 +2433,7 @@
     }
 
     // Sync preview page selector and refresh context keys on iframe navigation
-    document.getElementById('preview-frame').addEventListener('load', () => {
+    document.getElementById('preview-frame')?.addEventListener('load', () => {
       try {
         const iframe = document.getElementById('preview-frame');
         const pathname = iframe.contentWindow.location.pathname;
