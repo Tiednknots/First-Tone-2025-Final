@@ -493,7 +493,11 @@ a {
                 <a href="/about-us/" class="button main one w-button" data-edit-text="60849c11" data-edit-link="-766f6c3e">about us</a>
                 <a href="/our-work/" class="button secondary w-button" data-edit-text="2c7c7737" data-edit-link="7f22fa2e">case studies</a>
               </div>
-            </section><section class="mobile-case-studies">
+            </section>
+
+
+
+            <section class="mobile-case-studies">
               <div class="secondary-service-tab gg w-clearfix">
                 <a href="https://www.youtube.com/watch?v=AG_REG9p61E" target="_blank" class="c-link w-inline-block" data-edit-link="-7252aede">
                   <h2 class="heading-5" data-edit-text="8b86fcf">Watch Tutorial</h2>
@@ -993,24 +997,20 @@ a {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".hover_video_wrapper").forEach(wrapper => {
-      const video = wrapper.querySelector(".video");
+    document.querySelectorAll(".hover_video_wrapper, .hover_video_wrapper-2").forEach(wrapper => {
+      const video = wrapper.querySelector(".video, .video-m");
       const fallback = wrapper.querySelector(".video-fallback");
 
-      if (!video || !fallback) return; // Ensure elements exist
+      if (!video) return;
 
-      wrapper.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent event bubbling
+      wrapper.addEventListener("mouseenter", function () {
+        video.play();
+        if (fallback) fallback.style.opacity = "0";
+      });
 
-        if (video.paused) {
-          video.play();
-          fallback.style.opacity = "0";
-          setTimeout(() => fallback.style.visibility = "hidden", 500); // Hides after fade-out
-        } else {
-          video.pause();
-          fallback.style.visibility = "visible"; // Ensure fallback is visible before fading in
-          setTimeout(() => fallback.style.opacity = "1", 10);
-        }
+      wrapper.addEventListener("mouseleave", function () {
+        video.pause();
+        if (fallback) fallback.style.opacity = "1";
       });
     });
   });
@@ -1067,24 +1067,20 @@ a {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".hover_video_wrapper").forEach(wrapper => {
-      const video = wrapper.querySelector(".video");
+    document.querySelectorAll(".hover_video_wrapper, .hover_video_wrapper-2").forEach(wrapper => {
+      const video = wrapper.querySelector(".video, .video-m");
       const fallback = wrapper.querySelector(".video-fallback");
 
-      if (!video || !fallback) return; // Ensure elements exist
+      if (!video) return;
 
-      wrapper.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent event bubbling
+      wrapper.addEventListener("mouseenter", function () {
+        video.play();
+        if (fallback) fallback.style.opacity = "0";
+      });
 
-        if (video.paused) {
-          video.play();
-          fallback.style.opacity = "0";
-          setTimeout(() => fallback.style.visibility = "hidden", 500); // Hides after fade-out
-        } else {
-          video.pause();
-          fallback.style.visibility = "visible"; // Ensure fallback is visible before fading in
-          setTimeout(() => fallback.style.opacity = "1", 10);
-        }
+      wrapper.addEventListener("mouseleave", function () {
+        video.pause();
+        if (fallback) fallback.style.opacity = "1";
       });
     });
   });
@@ -1141,24 +1137,20 @@ a {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".hover_video_wrapper").forEach(wrapper => {
-      const video = wrapper.querySelector(".video");
+    document.querySelectorAll(".hover_video_wrapper, .hover_video_wrapper-2").forEach(wrapper => {
+      const video = wrapper.querySelector(".video, .video-m");
       const fallback = wrapper.querySelector(".video-fallback");
 
-      if (!video || !fallback) return; // Ensure elements exist
+      if (!video) return;
 
-      wrapper.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent event bubbling
+      wrapper.addEventListener("mouseenter", function () {
+        video.play();
+        if (fallback) fallback.style.opacity = "0";
+      });
 
-        if (video.paused) {
-          video.play();
-          fallback.style.opacity = "0";
-          setTimeout(() => fallback.style.visibility = "hidden", 500); // Hides after fade-out
-        } else {
-          video.pause();
-          fallback.style.visibility = "visible"; // Ensure fallback is visible before fading in
-          setTimeout(() => fallback.style.opacity = "1", 10);
-        }
+      wrapper.addEventListener("mouseleave", function () {
+        video.pause();
+        if (fallback) fallback.style.opacity = "1";
       });
     });
   });
@@ -1215,24 +1207,20 @@ a {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".hover_video_wrapper").forEach(wrapper => {
-      const video = wrapper.querySelector(".video");
+    document.querySelectorAll(".hover_video_wrapper, .hover_video_wrapper-2").forEach(wrapper => {
+      const video = wrapper.querySelector(".video, .video-m");
       const fallback = wrapper.querySelector(".video-fallback");
 
-      if (!video || !fallback) return; // Ensure elements exist
+      if (!video) return;
 
-      wrapper.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent event bubbling
+      wrapper.addEventListener("mouseenter", function () {
+        video.play();
+        if (fallback) fallback.style.opacity = "0";
+      });
 
-        if (video.paused) {
-          video.play();
-          fallback.style.opacity = "0";
-          setTimeout(() => fallback.style.visibility = "hidden", 500); // Hides after fade-out
-        } else {
-          video.pause();
-          fallback.style.visibility = "visible"; // Ensure fallback is visible before fading in
-          setTimeout(() => fallback.style.opacity = "1", 10);
-        }
+      wrapper.addEventListener("mouseleave", function () {
+        video.pause();
+        if (fallback) fallback.style.opacity = "1";
       });
     });
   });
@@ -1289,24 +1277,20 @@ a {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".hover_video_wrapper").forEach(wrapper => {
-      const video = wrapper.querySelector(".video");
+    document.querySelectorAll(".hover_video_wrapper, .hover_video_wrapper-2").forEach(wrapper => {
+      const video = wrapper.querySelector(".video, .video-m");
       const fallback = wrapper.querySelector(".video-fallback");
 
-      if (!video || !fallback) return; // Ensure elements exist
+      if (!video) return;
 
-      wrapper.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent event bubbling
+      wrapper.addEventListener("mouseenter", function () {
+        video.play();
+        if (fallback) fallback.style.opacity = "0";
+      });
 
-        if (video.paused) {
-          video.play();
-          fallback.style.opacity = "0";
-          setTimeout(() => fallback.style.visibility = "hidden", 500); // Hides after fade-out
-        } else {
-          video.pause();
-          fallback.style.visibility = "visible"; // Ensure fallback is visible before fading in
-          setTimeout(() => fallback.style.opacity = "1", 10);
-        }
+      wrapper.addEventListener("mouseleave", function () {
+        video.pause();
+        if (fallback) fallback.style.opacity = "1";
       });
     });
   });
@@ -1363,24 +1347,20 @@ a {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".hover_video_wrapper").forEach(wrapper => {
-      const video = wrapper.querySelector(".video");
+    document.querySelectorAll(".hover_video_wrapper, .hover_video_wrapper-2").forEach(wrapper => {
+      const video = wrapper.querySelector(".video, .video-m");
       const fallback = wrapper.querySelector(".video-fallback");
 
-      if (!video || !fallback) return; // Ensure elements exist
+      if (!video) return;
 
-      wrapper.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent event bubbling
+      wrapper.addEventListener("mouseenter", function () {
+        video.play();
+        if (fallback) fallback.style.opacity = "0";
+      });
 
-        if (video.paused) {
-          video.play();
-          fallback.style.opacity = "0";
-          setTimeout(() => fallback.style.visibility = "hidden", 500); // Hides after fade-out
-        } else {
-          video.pause();
-          fallback.style.visibility = "visible"; // Ensure fallback is visible before fading in
-          setTimeout(() => fallback.style.opacity = "1", 10);
-        }
+      wrapper.addEventListener("mouseleave", function () {
+        video.pause();
+        if (fallback) fallback.style.opacity = "1";
       });
     });
   });
@@ -1437,24 +1417,20 @@ a {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".hover_video_wrapper").forEach(wrapper => {
-      const video = wrapper.querySelector(".video");
+    document.querySelectorAll(".hover_video_wrapper, .hover_video_wrapper-2").forEach(wrapper => {
+      const video = wrapper.querySelector(".video, .video-m");
       const fallback = wrapper.querySelector(".video-fallback");
 
-      if (!video || !fallback) return; // Ensure elements exist
+      if (!video) return;
 
-      wrapper.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent event bubbling
+      wrapper.addEventListener("mouseenter", function () {
+        video.play();
+        if (fallback) fallback.style.opacity = "0";
+      });
 
-        if (video.paused) {
-          video.play();
-          fallback.style.opacity = "0";
-          setTimeout(() => fallback.style.visibility = "hidden", 500); // Hides after fade-out
-        } else {
-          video.pause();
-          fallback.style.visibility = "visible"; // Ensure fallback is visible before fading in
-          setTimeout(() => fallback.style.opacity = "1", 10);
-        }
+      wrapper.addEventListener("mouseleave", function () {
+        video.pause();
+        if (fallback) fallback.style.opacity = "1";
       });
     });
   });
@@ -1511,24 +1487,20 @@ a {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".hover_video_wrapper").forEach(wrapper => {
-      const video = wrapper.querySelector(".video");
+    document.querySelectorAll(".hover_video_wrapper, .hover_video_wrapper-2").forEach(wrapper => {
+      const video = wrapper.querySelector(".video, .video-m");
       const fallback = wrapper.querySelector(".video-fallback");
 
-      if (!video || !fallback) return; // Ensure elements exist
+      if (!video) return;
 
-      wrapper.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent event bubbling
+      wrapper.addEventListener("mouseenter", function () {
+        video.play();
+        if (fallback) fallback.style.opacity = "0";
+      });
 
-        if (video.paused) {
-          video.play();
-          fallback.style.opacity = "0";
-          setTimeout(() => fallback.style.visibility = "hidden", 500); // Hides after fade-out
-        } else {
-          video.pause();
-          fallback.style.visibility = "visible"; // Ensure fallback is visible before fading in
-          setTimeout(() => fallback.style.opacity = "1", 10);
-        }
+      wrapper.addEventListener("mouseleave", function () {
+        video.pause();
+        if (fallback) fallback.style.opacity = "1";
       });
     });
   });
@@ -1585,24 +1557,20 @@ a {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".hover_video_wrapper").forEach(wrapper => {
-      const video = wrapper.querySelector(".video");
+    document.querySelectorAll(".hover_video_wrapper, .hover_video_wrapper-2").forEach(wrapper => {
+      const video = wrapper.querySelector(".video, .video-m");
       const fallback = wrapper.querySelector(".video-fallback");
 
-      if (!video || !fallback) return; // Ensure elements exist
+      if (!video) return;
 
-      wrapper.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent event bubbling
+      wrapper.addEventListener("mouseenter", function () {
+        video.play();
+        if (fallback) fallback.style.opacity = "0";
+      });
 
-        if (video.paused) {
-          video.play();
-          fallback.style.opacity = "0";
-          setTimeout(() => fallback.style.visibility = "hidden", 500); // Hides after fade-out
-        } else {
-          video.pause();
-          fallback.style.visibility = "visible"; // Ensure fallback is visible before fading in
-          setTimeout(() => fallback.style.opacity = "1", 10);
-        }
+      wrapper.addEventListener("mouseleave", function () {
+        video.pause();
+        if (fallback) fallback.style.opacity = "1";
       });
     });
   });
@@ -1659,24 +1627,20 @@ a {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".hover_video_wrapper").forEach(wrapper => {
-      const video = wrapper.querySelector(".video");
+    document.querySelectorAll(".hover_video_wrapper, .hover_video_wrapper-2").forEach(wrapper => {
+      const video = wrapper.querySelector(".video, .video-m");
       const fallback = wrapper.querySelector(".video-fallback");
 
-      if (!video || !fallback) return; // Ensure elements exist
+      if (!video) return;
 
-      wrapper.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent event bubbling
+      wrapper.addEventListener("mouseenter", function () {
+        video.play();
+        if (fallback) fallback.style.opacity = "0";
+      });
 
-        if (video.paused) {
-          video.play();
-          fallback.style.opacity = "0";
-          setTimeout(() => fallback.style.visibility = "hidden", 500); // Hides after fade-out
-        } else {
-          video.pause();
-          fallback.style.visibility = "visible"; // Ensure fallback is visible before fading in
-          setTimeout(() => fallback.style.opacity = "1", 10);
-        }
+      wrapper.addEventListener("mouseleave", function () {
+        video.pause();
+        if (fallback) fallback.style.opacity = "1";
       });
     });
   });
@@ -1733,24 +1697,20 @@ a {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".hover_video_wrapper").forEach(wrapper => {
-      const video = wrapper.querySelector(".video");
+    document.querySelectorAll(".hover_video_wrapper, .hover_video_wrapper-2").forEach(wrapper => {
+      const video = wrapper.querySelector(".video, .video-m");
       const fallback = wrapper.querySelector(".video-fallback");
 
-      if (!video || !fallback) return; // Ensure elements exist
+      if (!video) return;
 
-      wrapper.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent event bubbling
+      wrapper.addEventListener("mouseenter", function () {
+        video.play();
+        if (fallback) fallback.style.opacity = "0";
+      });
 
-        if (video.paused) {
-          video.play();
-          fallback.style.opacity = "0";
-          setTimeout(() => fallback.style.visibility = "hidden", 500); // Hides after fade-out
-        } else {
-          video.pause();
-          fallback.style.visibility = "visible"; // Ensure fallback is visible before fading in
-          setTimeout(() => fallback.style.opacity = "1", 10);
-        }
+      wrapper.addEventListener("mouseleave", function () {
+        video.pause();
+        if (fallback) fallback.style.opacity = "1";
       });
     });
   });
@@ -1807,24 +1767,20 @@ a {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".hover_video_wrapper").forEach(wrapper => {
-      const video = wrapper.querySelector(".video");
+    document.querySelectorAll(".hover_video_wrapper, .hover_video_wrapper-2").forEach(wrapper => {
+      const video = wrapper.querySelector(".video, .video-m");
       const fallback = wrapper.querySelector(".video-fallback");
 
-      if (!video || !fallback) return; // Ensure elements exist
+      if (!video) return;
 
-      wrapper.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent event bubbling
+      wrapper.addEventListener("mouseenter", function () {
+        video.play();
+        if (fallback) fallback.style.opacity = "0";
+      });
 
-        if (video.paused) {
-          video.play();
-          fallback.style.opacity = "0";
-          setTimeout(() => fallback.style.visibility = "hidden", 500); // Hides after fade-out
-        } else {
-          video.pause();
-          fallback.style.visibility = "visible"; // Ensure fallback is visible before fading in
-          setTimeout(() => fallback.style.opacity = "1", 10);
-        }
+      wrapper.addEventListener("mouseleave", function () {
+        video.pause();
+        if (fallback) fallback.style.opacity = "1";
       });
     });
   });

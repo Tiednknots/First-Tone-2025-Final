@@ -383,66 +383,7 @@ a {
               </div>
             </section>
 
-            {%- if gallery and gallery.length > 0 -%}
-            <style>
-              .home-gallery-container {
-                position: relative;
-                z-index: 9999;
-                background: transparent;
-                width: 100%;
-                padding-top: 4rem;
-                padding-bottom: 4rem;
-              }
-              .home-gallery-inner {
-                max-width: 80rem;
-                margin: 0 auto;
-                padding: 0 1.5rem;
-              }
-              .home-masonry-grid {
-                column-count: 1;
-                column-gap: 1.5rem;
-              }
-              @media (min-width: 640px) {
-                .home-masonry-grid { column-count: 2; }
-              }
-              @media (min-width: 1024px) {
-                .home-masonry-grid { column-count: 3; }
-              }
-              .home-masonry-item {
-                break-inside: avoid;
-                margin-bottom: 1.5rem;
-                border-radius: 1rem;
-                overflow: hidden;
-                background: transparent;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-                transition: transform 0.3s ease;
-              }
-              .home-masonry-item:hover {
-                transform: scale(1.02);
-              }
-              .home-masonry-img {
-                width: 100%;
-                height: auto;
-                object-fit: cover;
-                display: block;
-              }
-            </style>
 
-            <section class="home-gallery-container">
-              <div class="home-gallery-inner">
-                <div class="home-masonry-grid">
-                  {%- for img in gallery limit: 8 -%}
-                  {%- if img.url -%}
-                  <div class="home-masonry-item">
-                    <img src="{{ img.url }}" loading="lazy" alt="{{ img.alt | default: 'First Tone Production Gallery' }}" class="home-masonry-img">
-                  </div>
-                  {%- endif -%}
-                  {%- endfor -%}
-                </div>
-              </div>
-            </section>
-            {%- endif -%}
 
             <section class="mobile-case-studies">
               <div class="secondary-service-tab gg w-clearfix">
@@ -574,24 +515,20 @@ a {
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll(".hover_video_wrapper").forEach(wrapper => {
-      const video = wrapper.querySelector(".video");
+    document.querySelectorAll(".hover_video_wrapper, .hover_video_wrapper-2").forEach(wrapper => {
+      const video = wrapper.querySelector(".video, .video-m");
       const fallback = wrapper.querySelector(".video-fallback");
 
-      if (!video || !fallback) return; // Ensure elements exist
+      if (!video) return;
 
-      wrapper.addEventListener("click", function (event) {
-        event.stopPropagation(); // Prevent event bubbling
+      wrapper.addEventListener("mouseenter", function () {
+        video.play();
+        if (fallback) fallback.style.opacity = "0";
+      });
 
-        if (video.paused) {
-          video.play();
-          fallback.style.opacity = "0";
-          setTimeout(() => fallback.style.visibility = "hidden", 500); // Hides after fade-out
-        } else {
-          video.pause();
-          fallback.style.visibility = "visible"; // Ensure fallback is visible before fading in
-          setTimeout(() => fallback.style.opacity = "1", 10);
-        }
+      wrapper.addEventListener("mouseleave", function () {
+        video.pause();
+        if (fallback) fallback.style.opacity = "1";
       });
     });
   });
