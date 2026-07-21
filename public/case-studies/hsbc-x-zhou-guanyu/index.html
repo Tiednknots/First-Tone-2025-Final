@@ -352,22 +352,39 @@ background:rgba(255, 255, 255, 0);
         <div class="div-block-30 secondary">
           <div class="div-block-33">
             <style>
-              .left-content {
-                height: 100vh !important;
-                position: sticky !important;
-                top: 0 !important;
+              @media screen and (min-width: 992px) {
+                .left-content {
+                  height: 100vh !important;
+                  position: sticky !important;
+                  top: 0 !important;
+                }
+                .div-block-30.secondary {
+                  height: 100% !important;
+                  width: 100% !important;
+                }
+                .div-block-33 {
+                  width: 100% !important;
+                  height: 100% !important;
+                  display: flex !important;
+                  align-items: center !important;
+                  justify-content: center !important;
+                }
               }
-              .div-block-30.secondary {
-                height: 100% !important;
-                width: 100% !important;
+              
+              /* Mobile fallback so it isn't 100vh */
+              @media screen and (max-width: 991px) {
+                .left-content {
+                  padding-top: 40px;
+                  margin-bottom: 20px;
+                }
+                .div-block-30.secondary {
+                  width: 100% !important;
+                }
+                .div-block-33 {
+                  width: 100% !important;
+                }
               }
-              .div-block-33 {
-                width: 100% !important;
-                height: 100% !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-              }
+
               .video-container-sticky {
                 width: 100%;
                 aspect-ratio: 16 / 9;
@@ -418,11 +435,10 @@ background:rgba(255, 255, 255, 0);
     .section-gallery {
       position: relative !important;
       z-index: 9999 !important;
-      background-color: #09090b !important;
+      background: transparent !important;
       width: 100% !important;
       padding-top: 4rem;
       padding-bottom: 4rem;
-      border-top: 1px solid rgba(39, 39, 42, 0.8);
     }
     .gallery-container {
       max-width: 80rem;
@@ -453,8 +469,8 @@ background:rgba(255, 255, 255, 0);
       margin-bottom: 1.5rem;
       border-radius: 1rem;
       overflow: hidden;
-      background-color: #18181b;
-      border: 1px solid rgba(39, 39, 42, 0.8);
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       transition: transform 0.3s ease;
     }

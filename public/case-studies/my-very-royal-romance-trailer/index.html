@@ -352,22 +352,39 @@ background:rgba(255, 255, 255, 0);
         <div class="div-block-30 secondary">
           <div class="div-block-33">
             <style>
-              .left-content {
-                height: 100vh !important;
-                position: sticky !important;
-                top: 0 !important;
+              @media screen and (min-width: 992px) {
+                .left-content {
+                  height: 100vh !important;
+                  position: sticky !important;
+                  top: 0 !important;
+                }
+                .div-block-30.secondary {
+                  height: 100% !important;
+                  width: 100% !important;
+                }
+                .div-block-33 {
+                  width: 100% !important;
+                  height: 100% !important;
+                  display: flex !important;
+                  align-items: center !important;
+                  justify-content: center !important;
+                }
               }
-              .div-block-30.secondary {
-                height: 100% !important;
-                width: 100% !important;
+              
+              /* Mobile fallback so it isn't 100vh */
+              @media screen and (max-width: 991px) {
+                .left-content {
+                  padding-top: 40px;
+                  margin-bottom: 20px;
+                }
+                .div-block-30.secondary {
+                  width: 100% !important;
+                }
+                .div-block-33 {
+                  width: 100% !important;
+                }
               }
-              .div-block-33 {
-                width: 100% !important;
-                height: 100% !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-              }
+
               .video-container-sticky {
                 width: 100%;
                 aspect-ratio: 16 / 9;
