@@ -339,32 +339,32 @@
       
       <!-- Nav Links -->
       <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
-        <a href="#"   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
+        <a href="/admin/" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition {% if currentTab == 'dashboard' %}active-nav{% endif %}">
           <i class="fa-solid fa-chart-line w-5 text-center shrink-0"></i> <span class="sidebar-text">Dashboard</span>
         </a>
-        <a href="#"   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
+        <a href="/admin/inbox/" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition {% if currentTab == 'inbox' %}active-nav{% endif %}">
           <i class="fa-solid fa-envelope w-5 text-center shrink-0"></i> <span class="sidebar-text">Inbox Messages</span>
           <span id="unread-badge" class="ml-auto bg-brand-500 text-white text-xs px-2 py-0.5 rounded-full font-bold hidden">0</span>
         </a>
         <div class="pt-4 pb-2 px-4 sidebar-text">
           <span class="text-xs font-semibold uppercase tracking-wider text-zinc-500">CMS Collections</span>
         </div>
-        <a href="#"   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
+        <a href="/admin/case-studies/" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition {% if currentTab == 'case-studies' %}active-nav{% endif %}">
           <i class="fa-solid fa-clapperboard w-5 text-center shrink-0"></i> <span class="sidebar-text">Projects</span>
         </a>
-        <a href="#"   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
+        <a href="/admin/services/" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition {% if currentTab == 'services' %}active-nav{% endif %}">
           <i class="fa-solid fa-briefcase w-5 text-center shrink-0"></i> <span class="sidebar-text">Services</span>
         </a>
-        <a href="#"   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
+        <a href="/admin/partnerships/" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition {% if currentTab == 'partnerships' %}active-nav{% endif %}">
           <i class="fa-solid fa-handshake w-5 text-center shrink-0"></i> <span class="sidebar-text">Partnerships</span>
         </a>
         <div class="pt-4 pb-2 px-4 sidebar-text">
           <span class="text-xs font-semibold uppercase tracking-wider text-zinc-500">Site Settings</span>
         </div>
-        <a href="#"   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
+        <a href="/admin/home-gallery/" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition {% if currentTab == 'home-gallery' %}active-nav{% endif %}">
           <i class="fa-solid fa-images w-5 text-center shrink-0"></i> <span class="sidebar-text">Home Gallery</span>
         </a>
-        <a href="#"   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
+        <a href="/admin/customization/" class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition {% if currentTab == 'settings' %}active-nav{% endif %}">
           <i class="fa-solid fa-gear w-5 text-center shrink-0"></i> <span class="sidebar-text">Customization</span>
         </a>
       </nav>
