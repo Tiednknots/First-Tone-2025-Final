@@ -1,0 +1,43 @@
+---
+layout: layouts/admin.njk
+currentTab: inbox
+---
+
+<section id="inbox-view" class="tab-view space-y-6">
+          <div class="flex items-center justify-between gap-4">
+            <div class="relative flex-1 max-w-md">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-zinc-500">
+                <i class="fa-solid fa-magnifying-glass"></i>
+              </span>
+              <input type="text" id="inbox-search" placeholder="Search sender, email or company..." class="w-full pl-10 pr-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl focus:outline-none focus:border-brand-500 transition text-sm">
+            </div>
+            <select id="inbox-filter" class="px-4 py-2.5 bg-zinc-950 border border-zinc-800 rounded-xl focus:outline-none focus:border-brand-500 transition text-sm text-zinc-300">
+              <option value="all">All Messages</option>
+              <option value="unread">Unread Only</option>
+              <option value="contact">Contact Forms Only</option>
+              <option value="newsletter">Newsletters Only</option>
+            </select>
+          </div>
+
+          <div class="glass rounded-2xl overflow-hidden">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-zinc-800 bg-zinc-950/30 text-zinc-400 text-xs uppercase tracking-wider">
+                    <th class="p-4">Sender</th>
+                    <th class="p-4">Type</th>
+                    <th class="p-4">Company</th>
+                    <th class="p-4">Date</th>
+                    <th class="p-4">Status</th>
+                    <th class="p-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="messages-table-body" class="divide-y divide-zinc-800/50">
+                  <!-- Generated rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= PROJECTS VIEW ================= -->

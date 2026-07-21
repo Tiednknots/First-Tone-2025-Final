@@ -1,0 +1,3079 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-black text-zinc-100">
+<head>
+  <script>
+    // Global loader-error catcher modal to catch CDN issues or script syntax load errors
+    window.onerror = function(message, source, lineno, colno, error) {
+      alert("CRITICAL LOGIC ERROR IN ADMIN CONSOLE:\n\nMessage: " + message + "\nFile: " + (source ? source.split('/').pop() : 'inline') + "\nLine: " + lineno + ":" + colno);
+      return false;
+    };
+  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>First Tone Productions | Admin Console</title>
+  
+  <!-- CDNs for styling, charting, icons, and Supabase -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff5f5',
+              100: '#ffe3e6',
+              500: '#cd0025',
+              600: '#b30020',
+              700: '#8a0018',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+  
+  <style>
+    /* Premium High-Contrast Pitch Black & Dark Grey editor theme */
+    body, html {
+      background-color: #000000 !important;
+    }
+    aside {
+      background-color: #09090b !important;
+      border-right: 1px solid #18181b !important;
+    }
+    header {
+      background-color: #09090b !important;
+      border-bottom: 1px solid #18181b !important;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #000000;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2e2e2e;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #444444;
+    }
+    .glass {
+      background: #121212 !important;
+      border: 1px solid #27272a !important;
+      border-radius: 16px;
+    }
+    input, select, textarea {
+      background-color: #000000 !important;
+      border: 1px solid #27272a !important;
+      color: #ffffff !important;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #cd0025 !important;
+      outline: none;
+    }
+    tr {
+      border-bottom-color: #18181b !important;
+    }
+    .active-nav {
+      background: rgba(205, 0, 37, 0.15) !important;
+      border-left: 4px solid #cd0025 !important;
+      color: #ffffff !important;
+    }
+    @media (max-width: 768px) {
+      #main-layout {
+        flex-direction: column !important;
+      }
+      aside#main-sidebar {
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        border-right: none !important;
+        border-bottom: 1px solid #27272a !important;
+        padding: 0 !important;
+      }
+      aside#main-sidebar > div.p-6 {
+        display: none !important;
+      }
+      aside#main-sidebar nav {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        padding: 10px 12px !important;
+        gap: 6px !important;
+        -webkit-overflow-scrolling: touch;
+      }
+      aside#main-sidebar nav .sidebar-text {
+        display: inline !important;
+      }
+      aside#main-sidebar nav .nav-item {
+        padding: 8px 14px !important;
+        font-size: 13px !important;
+        border-radius: 12px !important;
+        flex: none !important;
+        border-left: none !important;
+      }
+      aside#main-sidebar nav .active-nav {
+        border-bottom: 3px solid #fe5c00 !important;
+        border-left: none !important;
+        background: rgba(254, 92, 0, 0.15) !important;
+      }
+      aside#main-sidebar > div.border-t {
+        display: none !important;
+      }
+      main {
+        padding: 16px !important;
+      }
+    }
+    #main-sidebar.mini-sidebar {
+      width: 72px !important;
+    }
+    #main-sidebar.mini-sidebar .sidebar-text {
+      display: none !important;
+    }
+    #main-sidebar.mini-sidebar .nav-item {
+      position: relative !important;
+      justify-content: center !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      border-left: 0 !important;
+    }
+    #main-sidebar.mini-sidebar #unread-badge {
+      position: absolute !important;
+      top: 6px !important;
+      right: 14px !important;
+      margin-left: 0 !important;
+      width: 15px !important;
+      height: 15px !important;
+      font-size: 8px !important;
+      line-height: 15px !important;
+      padding: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border: 1.5px solid #09090b !important;
+    }
+    #main-sidebar.mini-sidebar .h-20 {
+      justify-content: center !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    #main-sidebar.mini-sidebar .p-4 {
+      justify-content: center !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    #main-sidebar.mini-sidebar .px-4 {
+      padding-left: 0.5rem !important;
+      padding-right: 0.5rem !important;
+    }
+    @media (max-width: 768px) {
+      #editor-responsive-gate {
+        display: none !important;
+      }
+      #settings-view > div.flex-1 {
+        flex-direction: column !important;
+        overflow-y: auto !important;
+      }
+      #editor-sidebar {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        border-right: none !important;
+        border-bottom: 1px solid #27272a !important;
+      }
+      #preview-frame {
+        min-height: 400px !important;
+        height: 500px !important;
+      }
+    }
+    /* Quill Editor Dark Theme styling */
+    .quill-editor-container {
+      margin-top: 0.5rem;
+    }
+    .ql-toolbar.ql-snow {
+      background-color: #18181b !important;
+      border: 1px solid #27272a !important;
+      border-top-left-radius: 0.75rem !important;
+      border-top-right-radius: 0.75rem !important;
+      padding: 8px 12px !important;
+    }
+    .ql-container.ql-snow {
+      background-color: #09090b !important;
+      border: 1px solid #27272a !important;
+      border-top: 0 !important;
+      border-bottom-left-radius: 0.75rem !important;
+      border-bottom-right-radius: 0.75rem !important;
+      color: #f4f4f5 !important;
+      font-family: inherit !important;
+    }
+    .ql-editor {
+      min-height: 120px;
+      font-size: 0.875rem !important;
+      line-height: 1.5 !important;
+    }
+    .ql-editor.ql-blank::before {
+      color: #71717a !important;
+      font-style: normal !important;
+    }
+    .ql-snow .ql-stroke {
+      stroke: #a1a1aa !important;
+    }
+    .ql-snow .ql-fill {
+      fill: #a1a1aa !important;
+    }
+    .ql-snow .ql-picker {
+      color: #a1a1aa !important;
+    }
+    .ql-snow .ql-picker-options {
+      background-color: #18181b !important;
+      border: 1px solid #27272a !important;
+    }
+    .ql-snow.ql-toolbar button:hover .ql-stroke,
+    .ql-snow.ql-toolbar button:focus .ql-stroke,
+    .ql-snow.ql-toolbar button.ql-active .ql-stroke {
+      stroke: #cd0025 !important;
+    }
+    .ql-snow.ql-toolbar button:hover .ql-fill,
+    .ql-snow.ql-toolbar button:focus .ql-fill,
+    .ql-snow.ql-toolbar button.ql-active .ql-fill {
+      fill: #cd0025 !important;
+    }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans antialiased overflow-hidden">
+
+  <!-- ================= LOADING OVERLAY ================= -->
+  <div id="loading-overlay" class="fixed inset-0 z-[60] flex items-center justify-center bg-zinc-950">
+    <div class="text-center">
+      <i class="fa-solid fa-spinner animate-spin text-4xl text-brand-500 mb-4"></i>
+      <p class="text-zinc-400 text-sm font-semibold">Loading Admin Dashboard...</p>
+    </div>
+  </div>
+
+  <!-- ================= AUTH GATE ================= -->
+  <div id="auth-gate" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md">
+    <div class="glass w-full max-w-md p-8 rounded-2xl shadow-2xl border border-zinc-800">
+      <div class="text-center mb-8">
+        <div class="h-16 w-16 bg-brand-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-brand-500/20">
+          <i class="fa-solid fa-sliders text-brand-500 text-3xl"></i>
+        </div>
+        <h2 class="text-2xl font-bold tracking-tight text-white">First Tone Admin Portal</h2>
+        <p class="text-zinc-400 text-sm mt-1">Please log in to manage CMS, Inbox & Analytics</p>
+      </div>
+      
+      <form id="login-form" class="space-y-5">
+        <div>
+          <label for="login-email" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">Email Address</label>
+          <input type="email" id="login-email" required class="w-full px-4 py-3 bg-zinc-950 border border-zinc-700 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="manager@firsttone.co.uk">
+        </div>
+        <div>
+          <label for="login-password" class="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">Password</label>
+          <input type="password" id="login-password" required class="w-full px-4 py-3 bg-zinc-950 border border-zinc-700 rounded-xl text-white focus:outline-none focus:border-brand-500 transition" placeholder="••••••••">
+        </div>
+        <div id="login-error" class="text-red-500 text-xs mt-2 hidden flex items-center gap-2">
+          <i class="fa-solid fa-circle-exclamation"></i> <span id="login-error-msg">Incorrect credentials</span>
+        </div>
+        <button type="submit" id="login-btn" class="w-full py-3 bg-brand-500 hover:bg-brand-600 active:bg-brand-700 rounded-xl text-white font-medium shadow-lg shadow-brand-500/20 hover:shadow-brand-500/30 transition flex items-center justify-center gap-2">
+          <span>Log In</span> <i class="fa-solid fa-arrow-right text-sm"></i>
+        </button>
+      </form>
+      <script>
+        // Synchronously intercept submit immediately to prevent page reloads
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          if (typeof window.handleLoginSubmit === 'function') {
+            window.handleLoginSubmit(e);
+          } else {
+            console.warn("Main admin logic script not fully loaded yet. Falling back to inline login handler.");
+            // Inline fallback for instant visual preview
+            const email = document.getElementById('login-email').value.trim();
+            const submitBtn = document.getElementById('login-btn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Loading...';
+            setTimeout(async () => {
+              window.user = { email: email || "admin@firsttone.co.uk" };
+              const userEl = document.getElementById('user-email');
+              if (userEl) userEl.innerText = window.user.email;
+              if (typeof window.initMockData === 'function') {
+                await window.initMockData();
+              }
+              const authGate = document.getElementById('auth-gate');
+              const mainLayout = document.getElementById('main-layout');
+              if (authGate) authGate.classList.add('hidden');
+              if (mainLayout) mainLayout.classList.remove('hidden');
+              if (typeof window.loadTab === 'function') {
+                await window.loadTab('dashboard');
+              }
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = '<span>Log In</span> <i class="fa-solid fa-arrow-right text-sm"></i>';
+            }, 600);
+          }
+        });
+      </script>
+    </div>
+  </div>
+
+  <!-- ================= MAIN LAYOUT ================= -->
+  <div id="main-layout" class="h-full flex flex-col md:flex-row overflow-hidden hidden">
+    
+    <!-- Sidebar Navigation -->
+    <aside id="main-sidebar" class="w-full md:w-64 bg-zinc-950 border-r border-zinc-800 flex flex-col shrink-0 transition-all duration-300">
+      <div class="h-20 flex items-center px-6 gap-3 border-b border-zinc-800">
+        <div class="h-10 w-10 bg-brand-500 rounded-xl flex items-center justify-center shadow-lg shadow-brand-500/20 shrink-0">
+          <i class="fa-solid fa-clapperboard text-white text-lg"></i>
+        </div>
+        <div class="sidebar-text">
+          <h1 class="font-bold text-white tracking-wide">First Tone</h1>
+          <span class="text-xs text-brand-100 font-semibold tracking-widest uppercase">Admin Panel</span>
+        </div>
+      </div>
+      
+      <!-- Nav Links -->
+      <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+        <a href="#"   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
+          <i class="fa-solid fa-chart-line w-5 text-center shrink-0"></i> <span class="sidebar-text">Dashboard</span>
+        </a>
+        <a href="#"   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
+          <i class="fa-solid fa-envelope w-5 text-center shrink-0"></i> <span class="sidebar-text">Inbox Messages</span>
+          <span id="unread-badge" class="ml-auto bg-brand-500 text-white text-xs px-2 py-0.5 rounded-full font-bold hidden">0</span>
+        </a>
+        <div class="pt-4 pb-2 px-4 sidebar-text">
+          <span class="text-xs font-semibold uppercase tracking-wider text-zinc-500">CMS Collections</span>
+        </div>
+        <a href="#"   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
+          <i class="fa-solid fa-clapperboard w-5 text-center shrink-0"></i> <span class="sidebar-text">Projects</span>
+        </a>
+        <a href="#"   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
+          <i class="fa-solid fa-briefcase w-5 text-center shrink-0"></i> <span class="sidebar-text">Services</span>
+        </a>
+        <a href="#"   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
+          <i class="fa-solid fa-handshake w-5 text-center shrink-0"></i> <span class="sidebar-text">Partnerships</span>
+        </a>
+        <div class="pt-4 pb-2 px-4 sidebar-text">
+          <span class="text-xs font-semibold uppercase tracking-wider text-zinc-500">Site Settings</span>
+        </div>
+        <a href="#"   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
+          <i class="fa-solid fa-images w-5 text-center shrink-0"></i> <span class="sidebar-text">Home Gallery</span>
+        </a>
+        <a href="#"   class="nav-item flex items-center gap-3 px-4 py-3 rounded-xl text-zinc-300 hover:bg-zinc-900/50 hover:text-white transition">
+          <i class="fa-solid fa-gear w-5 text-center shrink-0"></i> <span class="sidebar-text">Customization</span>
+        </a>
+      </nav>
+      
+      <!-- User Info Footer -->
+      <div class="p-4 border-t border-zinc-800 bg-zinc-950/50 flex items-center gap-3 shrink-0">
+        <div class="h-10 w-10 rounded-full bg-zinc-900 border border-zinc-700 flex items-center justify-center font-bold text-brand-100 shrink-0">
+          A
+        </div>
+        <div class="flex-1 min-w-0 sidebar-text">
+          <h4 class="text-sm font-semibold text-white truncate" id="user-email">admin@firsttone.co.uk</h4>
+          <span id="connection-status" class="text-xs text-emerald-400 flex items-center gap-1 font-semibold"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Online</span>
+        </div>
+        <button id="logout-btn" title="Log Out" class="p-2 hover:bg-zinc-900 rounded-lg text-zinc-400 hover:text-white transition sidebar-text">
+          <i class="fa-solid fa-right-from-bracket"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col bg-black overflow-hidden">
+      
+      <!-- Top header bar -->
+      <header class="h-20 bg-zinc-950/40 border-b border-zinc-800 flex items-center justify-between px-8 shrink-0">
+        <div>
+          <h2 class="text-xl font-bold text-white tracking-wide capitalize" id="current-tab-title">Dashboard Overview</h2>
+        </div>
+        <div class="flex items-center gap-4">
+          <button id="rebuild-btn" class="px-4 py-2 bg-zinc-900 hover:bg-slate-700 active:bg-slate-600 border border-zinc-700 rounded-lg text-sm text-zinc-200 font-semibold transition flex items-center gap-2">
+            <i class="fa-solid fa-rotate"></i> <span>Trigger Rebuild</span>
+          </button>
+          <a href="/" target="_blank" class="px-4 py-2 bg-brand-500 hover:bg-brand-600 rounded-lg text-sm text-white font-semibold transition flex items-center gap-2">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> <span>View Live Site</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <div class="flex-1 overflow-y-auto p-8" id="view-container">
+        {{ content | safe }}
+      </div>
+<!-- ================= MESSAGE DETAIL MODAL ================= -->
+  <div id="message-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center hidden">
+    <div class="glass w-full max-w-2xl p-8 rounded-2xl shadow-2xl border border-zinc-800 space-y-6">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="text-xs text-brand-100 font-bold uppercase tracking-wider" id="msg-detail-type">CONTACT SUBMISSION</span>
+          <h4 class="text-xl font-bold text-white mt-1" id="msg-detail-name">Sender Name</h4>
+          <p class="text-zinc-400 text-sm" id="msg-detail-email">sender@email.com</p>
+        </div>
+        <button onclick="closeMessageModal()" class="text-zinc-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      
+      <div class="grid grid-cols-2 gap-4 text-sm border-y border-zinc-800 py-4">
+        <div>
+          <span class="text-zinc-500 block text-xs uppercase tracking-wider font-semibold">Company / Organisation</span>
+          <span class="text-zinc-200 mt-1 block" id="msg-detail-company">Company XYZ</span>
+        </div>
+        <div>
+          <span class="text-zinc-500 block text-xs uppercase tracking-wider font-semibold">Submission Date</span>
+          <span class="text-zinc-200 mt-1 block" id="msg-detail-date">Jul 16, 2026</span>
+        </div>
+      </div>
+      
+      <div class="space-y-2">
+        <span class="text-zinc-500 text-xs uppercase tracking-wider font-semibold">Message Copy</span>
+        <div class="bg-black border border-zinc-800 p-4 rounded-xl text-zinc-300 text-sm leading-relaxed overflow-y-auto max-h-48 whitespace-pre-wrap" id="msg-detail-body">
+          Detailed project message description goes here.
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center pt-4 border-t border-zinc-800">
+        <button id="msg-delete-btn" class="px-4 py-2 border border-red-500/30 hover:bg-red-500/10 text-red-500 rounded-xl text-sm font-semibold transition flex items-center gap-2">
+          <i class="fa-solid fa-trash-can"></i> Delete Message
+        </button>
+        <div class="flex gap-3">
+          <button onclick="closeMessageModal()" class="px-5 py-2 bg-zinc-900 hover:bg-slate-700 text-zinc-300 rounded-xl text-sm font-semibold transition">Close</button>
+          <a id="msg-reply-btn" class="px-5 py-2 bg-brand-500 hover:bg-brand-600 text-white rounded-xl text-sm font-semibold transition inline-flex items-center gap-2">
+            <i class="fa-solid fa-reply"></i> Reply by Email
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT APP LOGIC ================= -->
+  <script>
+    // Global Error Handler for visual debugging
+    window.onerror = function(message, source, lineno, colno, error) {
+      console.error("Global JS Error caught:", message, "at", source, ":", lineno);
+      const srcFile = (source && typeof source === 'string') ? source.split('/').pop() : 'inline';
+      const errBanner = document.createElement('div');
+      errBanner.className = 'fixed top-0 left-0 right-0 z-[100] bg-red-600 text-white p-4 font-mono text-xs text-center border-b border-red-800 shadow-xl flex items-center justify-center gap-3';
+      errBanner.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-sm"></i> <span><strong>JavaScript Error Caught:</strong> ${message} (Line ${lineno}:${colno} of ${srcFile})</span> <button onclick="this.parentElement.remove()" class="bg-red-800 hover:bg-red-900 px-2 py-0.5 rounded text-[10px] font-bold">Dismiss</button>`;
+      document.body.appendChild(errBanner);
+      return false;
+    };
+    
+    // Register layout hooks immediately on window to prevent Reference/TypeErrors
+    window.loadTab = loadTab;
+    window.handleLoginSubmit = handleLoginSubmit;
+    window.initMockData = initMockData;
+    
+    // Meta mappings to display user-friendly descriptions instead of raw Webflow hashes in customization
+    const TEXT_METADATA = {
+      "54757733": { label: "Homepage Hero Title Part 1 (Two Cultures)", category: "Homepage" },
+      "7f22a713": { label: "Homepage Hero Title Part 2 (One Frame)", category: "Homepage" },
+      "23223320": { label: "Homepage Hero Subtitle Suffix", category: "Homepage" },
+      "30496645": { label: "Homepage Hero Subtitle (Production Partner)", category: "Homepage" },
+      "-35caffb8": { label: "Homepage Hero Top Label (Connecting)", category: "Homepage" },
+      "783fa1c9": { label: "Homepage Hero Top Highlight (China)", category: "Homepage" },
+      "41d29f0e": { label: "Homepage Hero Top Highlight (and the UK)", category: "Homepage" },
+      "5b92444f": { label: "Homepage Hero Top Sublabel (through moving images)", category: "Homepage" },
+      "-53713b45": { label: "Homepage Hero Core Intro Paragraph", category: "Homepage" },
+      "-4275b267": { label: "Homepage Hero Intro Paragraph Suffix", category: "Homepage" },
+      "31f08219": { label: "Expertise Section Headline (Bridging Cultures...)", category: "Homepage" },
+      "-655a1f91": { label: "Expertise Section Highlight (High-Quality Video Services)", category: "Homepage" },
+      "1abff7ea": { label: "Expertise Section Text Body", category: "Homepage" },
+      "1b571f88": { label: "Founder: Hui Zhang - Name", category: "About (Team)" },
+      "113a21cf": { label: "Founder: Hui Zhang - Job Title", category: "About (Team)" },
+      "4be8d22e": { label: "Founder: Hui Zhang - Biography Paragraph 1", category: "About (Team)" },
+      "-b7e30f1": { label: "Founder: Hui Zhang - Biography Paragraph 2", category: "About (Team)" },
+      "29cc49c4": { label: "Founder: Hui Zhang - Biography Paragraph 3", category: "About (Team)" },
+      "-73d9e17a": { label: "Founder: Hui Zhang - Biography Paragraph 4", category: "About (Team)" },
+      "281b9918": { label: "Founder: Hui Zhang - Contact link / Social label", category: "About (Team)" },
+      "-2401eb60": { label: "Founder: Zhizi Hao - Name", category: "About (Team)" },
+      "-5d4bbac2": { label: "Founder: Zhizi Hao - Biography Paragraph 1", category: "About (Team)" },
+      "603f372d": { label: "Founder: Zhizi Hao - Biography Paragraph 2", category: "About (Team)" },
+      "-19db48e5": { label: "Founder: Zhizi Hao - Biography Paragraph 3", category: "About (Team)" },
+      "19857190": { label: "Founder: Zhizi Hao - Biography Paragraph 4", category: "About (Team)" },
+      "281b96b2": { label: "Founder: Zhizi Hao - Contact link / Social label", category: "About (Team)" },
+      "75b036fa": { label: "Contact Us - Public Email Address", category: "Contact & Footer" },
+      "629334dc": { label: "Footer - Company Brand Name", category: "Contact & Footer" },
+      "7242e6b": { label: "Footer - Office Name (Venture X)", category: "Contact & Footer" },
+      "556412df": { label: "Footer - Address Line 1 (1 Ariel Way)", category: "Contact & Footer" },
+      "7d52c0be": { label: "Footer - Address Line 2 (White City)", category: "Contact & Footer" },
+      "-219c8080": { label: "Footer - Address Line 3 (London W12 7SL)", category: "Contact & Footer" },
+      "71575750": { label: "Footer - Newsletter Email Input Placeholder", category: "Contact & Footer" },
+      "36c5eb8": { label: "Contact Form - Privacy Agreement Consent Copy", category: "Contact & Footer" },
+      "-311e78a9": { label: "Call To Action - Button Label (Let's Talk)", category: "General UI" },
+      "2268ff": { label: "Navigation - Menu Link (Home)", category: "General UI" },
+      "3647cb57": { label: "Navigation - Menu Link (Case studies)", category: "General UI" },
+      "560f747e": { label: "Navigation - Menu Link (Services)", category: "General UI" },
+      "-6bd89d24": { label: "Navigation - Menu Link (Who are we)", category: "General UI" },
+      "3ac1ee49": { label: "Navigation - Menu Link (Work with us)", category: "General UI" },
+      "78426027": { label: "Contact Form - Submit Button Label", category: "General UI" }
+    };
+
+    const LINK_METADATA = {
+      "-7252aede": { label: "Homepage Hero Background Video / Showreel (Vimeo or YouTube URL)", category: "Homepage" },
+      "125cfbd6": { label: "Social - WhatsApp Business Link", category: "Socials" },
+      "16fe6362": { label: "Social - Instagram Business Profile Link", category: "Socials" },
+      "142013bb": { label: "Social - Vimeo Channel Link", category: "Socials" },
+      "79af8d6f": { label: "Social - Hui Zhang Instagram Profile Link", category: "Socials" },
+      "-668041b6": { label: "Social - Zhizi Hao Instagram Profile Link", category: "Socials" },
+      "-19de50fe": { label: "Contact - Main Mailto Email Link", category: "Contact" },
+      "7f22fa2e": { label: "Internal Redirect - Our Work Page Link", category: "Navigation" },
+      "-661a1d7f": { label: "Internal Redirect - Our Services Page Link", category: "Navigation" },
+      "-766f6c3e": { label: "Internal Redirect - About Us Page Link", category: "Navigation" },
+      "-12ebc4c9": { label: "Internal Redirect - Work With Us Page Link", category: "Navigation" }
+    };
+
+    const IMAGE_METADATA = {
+      "34718693": { label: "Global Brand Logo (Light Backgrounds)", category: "Branding" },
+      "i63ad4c8e": { label: "Global Brand Logo (Dark Backgrounds / White Text)", category: "Branding" },
+      "i35d2dc00": { label: "About Us - Team Group Photo", category: "Branding" },
+      "7bd1c037": { label: "Decorative SVG Graphic Asset", category: "Miscellaneous" }
+    };
+
+    // App State Configuration
+    let SUPABASE_URL = "";
+    let SUPABASE_ANON_KEY = "";
+    let supabaseClient = null;
+    let isDemo = false;
+    
+    // Loaded CMS Data caches
+    let messages = [];
+    let projects = [];
+    let services = [];
+    let partnerships = [];
+    let texts = {};
+    let colors = {};
+    let links = {};
+    let images = {};
+    let currentProjectGallery = [];
+    let currentHomeGallery = [];
+
+    // Current logged in user
+    let user = null;
+
+    // Charts references
+    let trafficChartInstance = null;
+    let devicesChartInstance = null;
+
+    // Initialize application configuration
+    async function initConfig() {
+      try {
+        const res = await fetch('/api/config');
+        if (!res.ok) throw new Error("Could not fetch API configuration");
+        
+        const config = await res.json();
+        
+        if (config.error || !config.supabaseUrl || !config.supabaseAnonKey) {
+          throw new Error("No supabase settings defined.");
+        }
+
+        SUPABASE_URL = config.supabaseUrl;
+        SUPABASE_ANON_KEY = config.supabaseAnonKey;
+        
+        // Initialize Supabase Client using the window namespace with explicit session persistence config
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true
+          }
+        });
+        
+        // Check session
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (session) {
+          user = session.user;
+          document.getElementById('user-email').innerText = user.email;
+          showLayout();
+          loadTab('dashboard');
+        } else {
+          showAuthGate();
+        }
+      } catch (err) {
+        console.warn("API config missing or error. Falling back to Demo/Mock Mode:", err.message);
+        isDemo = true;
+        document.getElementById('connection-status').innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span> Demo Mode';
+        document.getElementById('connection-status').className = "text-xs text-amber-400 flex items-center gap-1 font-semibold";
+        showAuthGate();
+      } finally {
+        // Dismiss loading screen after routing is decided
+        const loader = document.getElementById('loading-overlay');
+        if (loader) loader.classList.add('hidden');
+      }
+    }
+
+    let quillProjectDesc = null;
+    let quillProjectClientDetails = null;
+    let quillProjectChallenge = null;
+    let quillServiceBody = null;
+
+    function initQuillEditors() {
+      const toolbarOptions = [
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        ['link', 'clean']
+      ];
+
+      quillProjectDesc = new Quill('#project-desc-editor', {
+        theme: 'snow',
+        modules: { toolbar: toolbarOptions }
+      });
+
+      quillProjectClientDetails = new Quill('#project-client-details-editor', {
+        theme: 'snow',
+        modules: { toolbar: toolbarOptions }
+      });
+
+      quillProjectChallenge = new Quill('#project-challenge-editor', {
+        theme: 'snow',
+        modules: { toolbar: toolbarOptions }
+      });
+
+      quillServiceBody = new Quill('#service-body-editor', {
+        theme: 'snow',
+        modules: { toolbar: toolbarOptions }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initQuillEditors();
+      initConfig();
+    });
+
+    // Toggle Screen Gates
+    function showAuthGate() {
+      document.getElementById('auth-gate').classList.remove('hidden');
+      document.getElementById('main-layout').classList.add('hidden');
+    }
+    
+    function showLayout() {
+      const authGate = document.getElementById('auth-gate');
+      const mainLayout = document.getElementById('main-layout');
+      if (authGate) authGate.classList.add('hidden');
+      if (mainLayout) mainLayout.classList.remove('hidden');
+    }
+    window.showLayout = showLayout;
+
+    // Handle Login Submit
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const errorDiv = document.getElementById('login-error');
+      const errorMsg = document.getElementById('login-error-msg');
+      const submitBtn = document.getElementById('login-btn');
+      
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Validating...';
+      errorDiv.classList.add('hidden');
+
+      if (isDemo) {
+        // Log in instantly in demo mode
+        setTimeout(async () => {
+          user = { email: email || "admin@firsttone.co.uk" };
+          document.getElementById('user-email').innerText = user.email;
+          await initMockData();
+          showLayout();
+          loadTab('dashboard');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Log In</span> <i class="fa-solid fa-arrow-right text-sm"></i>';
+        }, 800);
+        return;
+      }
+
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        
+        user = data.user;
+        document.getElementById('user-email').innerText = user.email;
+        showLayout();
+        loadTab('dashboard');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>Log In</span> <i class="fa-solid fa-arrow-right text-sm"></i>';
+      } catch (err) {
+        errorMsg.innerText = err.message || "Incorrect email or password";
+        errorDiv.classList.remove('hidden');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>Log In</span> <i class="fa-solid fa-arrow-right text-sm"></i>';
+      }
+    }
+
+    // Handle Logout
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+      if (confirm("Are you sure you want to log out?")) {
+        if (!isDemo) await supabaseClient.auth.signOut();
+        user = null;
+        showAuthGate();
+      }
+    });
+
+    function showBrandNotification(title, message, type = 'success') {
+      let container = document.getElementById('brand-toast-container');
+      if (!container) {
+        container = document.createElement('div');
+        container.id = 'brand-toast-container';
+        container.className = 'fixed bottom-6 right-6 z-50 flex flex-col space-y-3 pointer-events-none';
+        document.body.appendChild(container);
+      }
+
+      const toast = document.createElement('div');
+      const borderClass = type === 'error' ? 'border-red-500/50 bg-red-950/90 text-white' : 'border-brand-500/50 bg-zinc-950/95 text-white';
+      const iconClass = type === 'error' ? 'fa-solid fa-triangle-exclamation text-red-400' : 'fa-solid fa-circle-check text-brand-500';
+      const iconBg = type === 'error' ? 'bg-red-500/10 border-red-500/20' : 'bg-brand-500/10 border-brand-500/20';
+
+      toast.className = `pointer-events-auto max-w-sm w-full border ${borderClass} rounded-2xl p-4 shadow-2xl backdrop-blur-xl transition-all duration-300 transform translate-y-4 opacity-0 flex items-start gap-3.5`;
+
+      toast.innerHTML = `
+        <div class="h-10 w-10 rounded-xl ${iconBg} border flex items-center justify-center shrink-0 mt-0.5">
+          <i class="${iconClass} text-lg"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-white">${title}</h4>
+          <p class="text-xs text-zinc-300 mt-1 leading-relaxed">${message}</p>
+        </div>
+        <button type="button" onclick="this.closest('.pointer-events-auto').remove()" class="text-zinc-500 hover:text-white transition p-1 shrink-0">
+          <i class="fa-solid fa-xmark text-sm"></i>
+        </button>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-4', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+      });
+
+      setTimeout(() => {
+        if (toast.parentElement) {
+          toast.classList.remove('translate-y-0', 'opacity-100');
+          toast.classList.add('translate-y-4', 'opacity-0');
+          setTimeout(() => toast.remove(), 300);
+        }
+      }, 5000);
+    }
+
+    // Trigger Rebuild
+    const rebuildBtnEl = document.getElementById('rebuild-btn') || document.getElementById('rebuild-trigger-btn');
+    if (rebuildBtnEl) {
+      rebuildBtnEl.addEventListener('click', async (e) => {
+        const btn = e.currentTarget;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> <span>Triggering Update...</span>';
+
+        if (isDemo) {
+          setTimeout(() => {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-rotate"></i> <span>Trigger Rebuild</span>';
+            showBrandNotification("First Tone Live Site Build", "Simulated build triggered successfully! Your live site changes will be published in about 1 minute.", "success");
+          }, 1000);
+          return;
+        }
+
+        try {
+          const { data: { session } } = await supabaseClient.auth.getSession();
+          const token = session ? session.access_token : "";
+
+          const res = await fetch('/api/rebuild', {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || "Failed to trigger rebuild");
+          
+          showBrandNotification("First Tone Live Site Build", "Site updates triggered successfully! Your live website changes are now building and will be published live in about 1 minute.", "success");
+        } catch (err) {
+          showBrandNotification("Build Trigger Issue", err.message, "error");
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-rotate"></i> <span>Trigger Rebuild</span>';
+        }
+      });
+    }
+
+    // Load active tab view
+    async function loadTab(tab) {
+      try {
+        const titleEl = document.getElementById('current-tab-title');
+        if (titleEl) titleEl.innerText = tab.replace('-', ' ') + " Management";
+
+        const viewContainer = document.getElementById('view-container');
+        if (viewContainer) {
+          if (tab === 'settings') {
+            viewContainer.classList.remove('p-8');
+            viewContainer.classList.add('p-0', 'h-full');
+          } else {
+            viewContainer.classList.remove('p-0');
+            viewContainer.classList.add('p-8');
+          }
+        }
+
+        document.querySelectorAll('.tab-view').forEach(view => view.classList.add('hidden'));
+
+        const targetView = document.getElementById(`${tab}-view`);
+        if (targetView) {
+          targetView.classList.remove('hidden');
+        } else {
+          console.error("Tab view element not found:", `${tab}-view`);
+        }
+
+        const mainSidebar = document.getElementById('main-sidebar');
+        if (mainSidebar) {
+          if (tab === 'settings') {
+            mainSidebar.classList.add('mini-sidebar');
+          } else {
+            mainSidebar.classList.remove('mini-sidebar');
+          }
+        }
+
+        document.querySelectorAll('.nav-item').forEach(i => {
+          if (i.getAttribute('data-tab') === tab) {
+            i.classList.add('active-nav');
+          } else {
+            i.classList.remove('active-nav');
+          }
+        });
+
+        if (tab === 'dashboard') {
+          await renderDashboardTab();
+        } else if (tab === 'inbox') {
+          await renderInboxTab();
+        } else if (tab === 'case-studies') {
+          await renderProjectsTab();
+        } else if (tab === 'services') {
+          await renderServicesTab();
+        } else if (tab === 'partnerships') {
+          await renderPartnershipsTab();
+        } else if (tab === 'home-gallery') {
+          await renderHomeGalleryTab();
+        } else if (tab === 'settings') {
+          await renderSettingsTab();
+        }
+      } catch (err) {
+        console.error("Error loading tab:", tab, err);
+      }
+    }
+
+    // ================= TAB: DASHBOARD LOGIC =================
+    async function renderDashboardTab() {
+      let stats = {};
+      let totalViews = 0;
+      let projectCount = 0;
+      let messageCount = 0;
+      let unreadCount = 0;
+      let newsletterCount = 0;
+
+      if (isDemo) {
+        totalViews = 1420;
+        projectCount = projects.length;
+        messageCount = messages.length;
+        unreadCount = messages.filter(m => !m.is_read).length;
+        newsletterCount = messages.filter(m => m.form_type === 'newsletter').length;
+        
+        // Generate mock analytics structure
+        stats = {
+          totalViews: 1420,
+          daily: [
+            { date: "Jul 10", count: 32 },
+            { date: "Jul 11", count: 45 },
+            { date: "Jul 12", count: 56 },
+            { date: "Jul 13", count: 48 },
+            { date: "Jul 14", count: 70 },
+            { date: "Jul 15", count: 85 },
+            { date: "Jul 16", count: 98 }
+          ],
+          pages: [
+            { name: "/", count: 680 },
+            { name: "/our-work/", count: 340 },
+            { name: "/our-services/", count: 210 },
+            { name: "/about-us/", count: 120 },
+            { name: "/work-with-us/", count: 70 }
+          ],
+          referrers: [
+            { name: "Direct / Bookmark", count: 540 },
+            { name: "google.com", count: 420 },
+            { name: "instagram.com", count: 280 },
+            { name: "vimeo.com", count: 110 },
+            { name: "youtube.com", count: 70 }
+          ],
+          devices: [
+            { name: "Desktop", count: 850 },
+            { name: "Mobile", count: 480 },
+            { name: "Tablet", count: 90 }
+          ]
+        };
+      } else {
+        try {
+          const { data: { session } } = await supabaseClient.auth.getSession();
+          const token = session ? session.access_token : "";
+
+          const res = await fetch('/api/get-analytics', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (!res.ok) throw new Error("Could not load analytics");
+          stats = await res.json();
+
+          const { count: projCount } = await supabaseClient.from('case_studies').select('*', { count: 'exact', head: true });
+          const { count: msgCount } = await supabaseClient.from('messages').select('*', { count: 'exact', head: true });
+          const { count: unCount } = await supabaseClient.from('messages').select('*', { count: 'exact', head: true }).eq('is_read', false);
+          const { count: newsCount } = await supabaseClient.from('messages').select('*', { count: 'exact', head: true }).eq('form_type', 'newsletter');
+
+          totalViews = stats.totalViews || 0;
+          projectCount = projCount || 0;
+          messageCount = msgCount || 0;
+          unreadCount = unCount || 0;
+          newsletterCount = newsCount || 0;
+        } catch (err) {
+          console.error("Dashboard data load error:", err.message);
+        }
+      }
+
+      // Update metrics UI
+      document.getElementById('metric-views').innerText = totalViews;
+      document.getElementById('metric-messages').innerText = messageCount;
+      document.getElementById('metric-projects').innerText = projectCount;
+      document.getElementById('metric-news').innerText = newsletterCount;
+
+      // Inbox badge
+      const badge = document.getElementById('unread-badge');
+      if (unreadCount > 0) {
+        badge.innerText = unreadCount;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+
+      // Render Top Pages
+      const topPagesTable = document.getElementById('top-pages-table');
+      topPagesTable.innerHTML = stats.pages.length > 0 
+        ? stats.pages.map(p => `<tr class="border-b border-slate-900/50 text-sm"><td class="py-2.5 text-zinc-300 font-mono">${p.name}</td><td class="py-2.5 text-right font-bold text-zinc-100">${p.count}</td></tr>`).join('')
+        : '<tr><td colspan="2" class="py-4 text-center text-xs text-zinc-500">No visitors tracked yet</td></tr>';
+
+      // Render Top Referrers
+      const topReferrersTable = document.getElementById('top-referrers-table');
+      topReferrersTable.innerHTML = stats.referrers.length > 0 
+        ? stats.referrers.map(r => `<tr class="border-b border-slate-900/50 text-sm"><td class="py-2.5 text-zinc-300">${r.name}</td><td class="py-2.5 text-right font-bold text-zinc-100">${r.count}</td></tr>`).join('')
+        : '<tr><td colspan="2" class="py-4 text-center text-xs text-zinc-500">No external referrers tracked</td></tr>';
+
+      // Render Chart.js: Traffic Views
+      if (typeof Chart !== 'undefined') {
+        if (trafficChartInstance) trafficChartInstance.destroy();
+        const ctxTraffic = document.getElementById('traffic-chart').getContext('2d');
+        
+        const dailyData = stats.daily || [];
+        const labels = dailyData.map(d => d.date);
+        const counts = dailyData.map(d => d.count);
+
+        trafficChartInstance = new Chart(ctxTraffic, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Page Views',
+              data: counts,
+              borderColor: '#cd0025',
+              backgroundColor: 'rgba(205, 0, 37, 0.04)',
+              borderWidth: 2,
+              fill: true,
+              pointBackgroundColor: '#cd0025',
+              pointBorderColor: '#000000',
+              pointHoverBackgroundColor: '#ffffff',
+              pointHoverBorderColor: '#cd0025',
+              tension: 0.35
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: { 
+                grid: { color: '#18181b' }, 
+                ticks: { color: '#71717a', font: { family: 'sans-serif', size: 10 } } 
+              },
+              x: { 
+                grid: { color: '#18181b' }, 
+                ticks: { color: '#71717a', font: { family: 'sans-serif', size: 10 } } 
+              }
+            },
+            plugins: { 
+              legend: { display: false } 
+            }
+          }
+        });
+      } else {
+        console.warn("Chart.js not loaded. Skipping traffic line chart.");
+      }
+
+      // Render Chart.js: Devices
+      if (typeof Chart !== 'undefined') {
+        if (devicesChartInstance) devicesChartInstance.destroy();
+        const ctxDevices = document.getElementById('devices-chart').getContext('2d');
+        const deviceData = stats.devices || [];
+
+        devicesChartInstance = new Chart(ctxDevices, {
+          type: 'doughnut',
+          data: {
+            labels: deviceData.map(d => d.name),
+            datasets: [{
+              data: deviceData.map(d => d.count),
+              backgroundColor: ['#cd0025', '#27272a', '#52525b', '#a1a1aa'],
+              borderWidth: 1,
+              borderColor: '#000000'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { 
+                position: 'bottom', 
+                labels: { 
+                  color: '#a1a1aa',
+                  font: { family: 'sans-serif', size: 10 },
+                  boxWidth: 12
+                } 
+              }
+            }
+          }
+        });
+      } else {
+        console.warn("Chart.js not loaded. Skipping devices doughnut chart.");
+      }
+    }
+
+    // ================= TAB: INBOX LOGIC =================
+    async function renderInboxTab() {
+      if (!isDemo) {
+        try {
+          const { data: { session } } = await supabaseClient.auth.getSession();
+          const token = session ? session.access_token : "";
+
+          const res = await fetch('/api/get-messages', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (!res.ok) throw new Error("Could not load messages.");
+          messages = await res.json();
+        } catch (err) {
+          console.error("Inbox rendering failed:", err.message);
+        }
+      }
+      applyInboxFilter();
+    }
+
+    document.getElementById('inbox-search').addEventListener('input', applyInboxFilter);
+    document.getElementById('inbox-filter').addEventListener('change', applyInboxFilter);
+
+    function applyInboxFilter() {
+      const searchVal = document.getElementById('inbox-search').value.toLowerCase();
+      const filterVal = document.getElementById('inbox-filter').value;
+      const tbody = document.getElementById('messages-table-body');
+      
+      let filtered = messages.filter(msg => {
+        const matchSearch = 
+          (msg.name && msg.name.toLowerCase().includes(searchVal)) ||
+          (msg.email && msg.email.toLowerCase().includes(searchVal)) ||
+          (msg.company && msg.company.toLowerCase().includes(searchVal)) ||
+          (msg.message && msg.message.toLowerCase().includes(searchVal));
+
+        let matchFilter = true;
+        if (filterVal === 'unread') matchFilter = !msg.is_read;
+        else if (filterVal === 'contact') matchFilter = msg.form_type === 'contact';
+        else if (filterVal === 'newsletter') matchFilter = msg.form_type === 'newsletter';
+
+        return matchSearch && matchFilter;
+      });
+
+      tbody.innerHTML = filtered.length > 0 
+        ? filtered.map(msg => {
+            const dateStr = new Date(msg.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            return `
+              <tr class="hover:bg-zinc-950/20 transition cursor-pointer text-sm ${!msg.is_read ? 'font-bold text-white bg-brand-500/5' : 'text-zinc-300'}" onclick="openMessageModal('${msg.id}')">
+                <td class="p-4">${msg.name} ${msg.surname || ''}<br><span class="text-xs text-zinc-500">${msg.email}</span></td>
+                <td class="p-4"><span class="px-2 py-0.5 rounded text-xs uppercase font-bold ${msg.form_type === 'newsletter' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' : 'bg-brand-500/10 text-brand-100 border border-brand-500/20'}">${msg.form_type}</span></td>
+                <td class="p-4">${msg.company || '-'}</td>
+                <td class="p-4 text-xs text-zinc-500">${dateStr}</td>
+                <td class="p-4">
+                  <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-semibold ${msg.is_read ? 'bg-zinc-900 text-zinc-400' : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'}">
+                    <span class="h-1.5 w-1.5 rounded-full ${msg.is_read ? 'bg-slate-500' : 'bg-emerald-400'}"></span>
+                    ${msg.is_read ? 'Read' : 'New'}
+                  </span>
+                </td>
+                <td class="p-4 text-right" onclick="event.stopPropagation()">
+                  <button onclick="deleteMessage('${msg.id}')" class="p-2 text-zinc-500 hover:text-red-500 transition" title="Delete"><i class="fa-solid fa-trash-can"></i></button>
+                </td>
+              </tr>
+            `;
+          }).join('')
+        : `<tr><td colspan="6" class="p-8 text-center text-sm text-zinc-500"><i class="fa-solid fa-folder-open text-2xl mb-2 block"></i> No messages found.</td></tr>`;
+    }
+
+    async function openMessageModal(id) {
+      // Find matching message (works for string/numeric IDs)
+      const msg = messages.find(m => String(m.id) === String(id));
+      if (!msg) return;
+
+      document.getElementById('msg-detail-name').innerText = `${msg.name} ${msg.surname || ''}`;
+      document.getElementById('msg-detail-email').innerText = msg.email;
+      document.getElementById('msg-detail-company').innerText = msg.company || '-';
+      document.getElementById('msg-detail-type').innerText = msg.form_type + " submission";
+      document.getElementById('msg-detail-date').innerText = new Date(msg.created_at).toLocaleString();
+      document.getElementById('msg-detail-body').innerText = msg.message || '(Empty message)';
+      
+      const subject = encodeURIComponent("Reply from First Tone Productions");
+      document.getElementById('msg-reply-btn').href = `mailto:${msg.email}?subject=${subject}`;
+      
+      document.getElementById('msg-delete-btn').onclick = async () => {
+        if (confirm("Delete this submission permanently?")) {
+          await deleteMessage(msg.id);
+          closeMessageModal();
+        }
+      };
+
+      document.getElementById('message-modal').classList.remove('hidden');
+
+      if (!msg.is_read) {
+        msg.is_read = true;
+        applyInboxFilter();
+        
+        if (!isDemo) {
+          const { data: { session } } = await supabaseClient.auth.getSession();
+          const token = session ? session.access_token : "";
+          
+          await fetch('/api/get-messages', {
+            method: 'POST',
+            headers: { 
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ action: 'read', id: msg.id })
+          });
+        }
+      }
+    }
+
+    function closeMessageModal() {
+      document.getElementById('message-modal').classList.add('hidden');
+    }
+
+    async function deleteMessage(id) {
+      if (isDemo) {
+        messages = messages.filter(m => String(m.id) !== String(id));
+        applyInboxFilter();
+        return;
+      }
+
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      const token = session ? session.access_token : "";
+
+      const res = await fetch('/api/get-messages', {
+        method: 'POST',
+        headers: { 
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ action: 'delete', id: id })
+      });
+
+      if (res.ok) {
+        messages = messages.filter(m => m.id !== id);
+        applyInboxFilter();
+      }
+    }
+
+    // ================= TAB: PROJECTS LOGIC =================
+    async function renderProjectsTab() {
+      const grid = document.getElementById('projects-grid');
+      
+      if (!isDemo) {
+        const { data, error } = await supabaseClient.from('case_studies').select('*').order('home_video_order', { ascending: true });
+        if (error) {
+          grid.innerHTML = `<div class="text-red-500 text-sm">Failed to load projects: ${error.message}</div>`;
+          return;
+        }
+        projects = data;
+      }
+      
+      grid.innerHTML = projects.map(proj => {
+        let imgUrl = proj.main_image?.url || proj.mobile_image?.url || '';
+        const vimeoId = proj.link_to_video;
+        const imgId = `proj-img-${proj.slug}`;
+
+        if (!imgUrl && vimeoId) {
+          // Placeholder spinner before thumbnail resolution
+          imgUrl = '/assets/images/inner-circle.svg';
+          
+          fetch(`https://vimeo.com/api/v2/video/${vimeoId}.json`)
+            .then(res => res.json())
+            .then(data => {
+              if (data && data[0] && data[0].thumbnail_large) {
+                const imgEl = document.getElementById(imgId);
+                if (imgEl) imgEl.src = data[0].thumbnail_large;
+              }
+            })
+            .catch(err => console.warn(`Vimeo thumbnail load failed for ${proj.slug}:`, err));
+        }
+
+        if (!imgUrl) {
+          imgUrl = '/assets/images/inner-circle.svg';
+        }
+
+        return `
+          <div class="glass rounded-2xl overflow-hidden flex flex-col border border-zinc-800 hover:border-brand-500/50 transition">
+            <div class="aspect-video bg-zinc-950 relative">
+              <img id="${imgId}" src="${imgUrl}" class="w-full h-full object-cover">
+              <div class="absolute top-2 right-2 flex gap-1">
+                <span class="bg-black/80 text-brand-400 text-[10px] font-bold px-2 py-0.5 rounded border border-brand-500/30" title="Home Page Order">Home #${proj.home_video_order || '-'}</span>
+                <span class="bg-black/80 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded border border-emerald-500/30" title="Our Work Page Order">Work #${proj.work_video_order || '-'}</span>
+              </div>
+            </div>
+            <div class="p-5 flex-1 flex flex-col justify-between space-y-4">
+              <div>
+                <h4 class="font-bold text-white text-md truncate">${proj.title}</h4>
+                <p class="text-zinc-400 text-xs mt-1 line-clamp-2">${proj.short_desc || 'No description'}</p>
+              </div>
+              <div class="flex gap-2 justify-end border-t border-zinc-800/50 pt-4">
+                <button onclick="openProjectEditor('${proj.slug}')" class="px-3.5 py-1.5 bg-zinc-900 hover:bg-zinc-800 rounded-lg text-xs font-semibold text-zinc-200 border border-zinc-800 hover:border-zinc-700 transition"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                <button onclick="deleteProject('${proj.slug}')" class="px-3.5 py-1.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 rounded-lg text-xs font-semibold text-red-400 transition"><i class="fa-solid fa-trash-can"></i> Delete</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderProjectGalleryPreviews() {
+      const container = document.getElementById('project-gallery-previews');
+      if (!container) return;
+      if (currentProjectGallery.length === 0) {
+        container.innerHTML = '<p class="col-span-full text-xs text-zinc-500 text-center py-2">No gallery photos added yet.</p>';
+        return;
+      }
+      container.innerHTML = currentProjectGallery.map((item, index) => `
+        <div class="relative group bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden aspect-video flex items-center justify-center">
+          <img src="${item.url}" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-1.5 p-2">
+            ${index > 0 ? `<button type="button" onclick="moveProjectGalleryPhoto(${index}, -1)" title="Move Left" class="p-1.5 bg-zinc-800 hover:bg-brand-500 rounded-lg text-white text-xs transition"><i class="fa-solid fa-chevron-left"></i></button>` : ''}
+            ${index < currentProjectGallery.length - 1 ? `<button type="button" onclick="moveProjectGalleryPhoto(${index}, 1)" title="Move Right" class="p-1.5 bg-zinc-800 hover:bg-brand-500 rounded-lg text-white text-xs transition"><i class="fa-solid fa-chevron-right"></i></button>` : ''}
+            <button type="button" onclick="deleteProjectGalleryPhoto(${index})" title="Remove Photo" class="p-1.5 bg-red-500/80 hover:bg-red-600 rounded-lg text-white text-xs transition"><i class="fa-solid fa-trash-can"></i></button>
+          </div>
+          <span class="absolute top-1 left-1.5 text-[10px] font-bold text-white bg-black/70 px-1.5 py-0.5 rounded">#${index + 1}</span>
+        </div>
+      `).join('');
+    }
+
+    function moveProjectGalleryPhoto(index, direction) {
+      const newIndex = index + direction;
+      if (newIndex < 0 || newIndex >= currentProjectGallery.length) return;
+      const temp = currentProjectGallery[index];
+      currentProjectGallery[index] = currentProjectGallery[newIndex];
+      currentProjectGallery[newIndex] = temp;
+      renderProjectGalleryPreviews();
+    }
+
+    function deleteProjectGalleryPhoto(index) {
+      currentProjectGallery.splice(index, 1);
+      renderProjectGalleryPreviews();
+    }
+
+    async function renderHomeGalleryTab() {
+      if (!isDemo && currentHomeGallery.length === 0) {
+        try {
+          const { data, error } = await supabaseClient.from('images').select('*').eq('key', 'home_gallery').single();
+          if (data && data.url) {
+            let galleryData = data.url;
+            if (typeof galleryData === 'string') {
+              try { galleryData = JSON.parse(galleryData); } catch(e) {}
+            }
+            if (Array.isArray(galleryData)) {
+              currentHomeGallery = galleryData.map(img => typeof img === 'string' ? { url: img } : img);
+            }
+          }
+        } catch (e) {
+          console.warn("Could not fetch home gallery from Supabase:", e.message);
+        }
+      }
+
+      const grid = document.getElementById('home-gallery-previews') || document.getElementById('home-gallery-grid');
+      const countEl = document.getElementById('home-gallery-count-badge') || document.getElementById('home-gallery-count');
+      if (countEl) countEl.innerText = `${currentHomeGallery.length} / 8 Photos`;
+      if (!grid) return;
+      if (currentHomeGallery.length === 0) {
+        grid.innerHTML = '<p class="col-span-full text-xs text-zinc-500 text-center py-8">No home gallery photos uploaded yet. Click or drag photos into the box above (Max 8 photos).</p>';
+        return;
+      }
+      grid.innerHTML = currentHomeGallery.map((item, index) => `
+        <div class="relative group bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden aspect-video flex items-center justify-center shadow-lg">
+          <img src="${item.url}" class="w-full h-full object-cover">
+          <div class="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition flex items-center justify-center gap-2 p-2">
+            ${index > 0 ? `<button type="button" onclick="moveHomeGalleryPhoto(${index}, -1)" title="Move Left" class="p-2 bg-zinc-800 hover:bg-brand-500 rounded-xl text-white text-xs transition"><i class="fa-solid fa-chevron-left"></i></button>` : ''}
+            ${index < currentHomeGallery.length - 1 ? `<button type="button" onclick="moveHomeGalleryPhoto(${index}, 1)" title="Move Right" class="p-2 bg-zinc-800 hover:bg-brand-500 rounded-xl text-white text-xs transition"><i class="fa-solid fa-chevron-right"></i></button>` : ''}
+            <button type="button" onclick="deleteHomeGalleryPhoto(${index})" title="Remove Photo" class="p-2 bg-red-500 hover:bg-red-600 rounded-xl text-white text-xs transition"><i class="fa-solid fa-trash-can"></i></button>
+          </div>
+          <span class="absolute top-2 left-2 text-xs font-bold text-white bg-black/80 px-2 py-0.5 rounded-lg border border-zinc-800">#${index + 1}</span>
+        </div>
+      `).join('');
+    }
+
+    function moveHomeGalleryPhoto(index, direction) {
+      const newIndex = index + direction;
+      if (newIndex < 0 || newIndex >= currentHomeGallery.length) return;
+      const temp = currentHomeGallery[index];
+      currentHomeGallery[index] = currentHomeGallery[newIndex];
+      currentHomeGallery[newIndex] = temp;
+      renderHomeGalleryTab();
+    }
+
+    function deleteHomeGalleryPhoto(index) {
+      currentHomeGallery.splice(index, 1);
+      renderHomeGalleryTab();
+    }
+
+    async function saveHomeGallery() {
+      if (isDemo) {
+        alert("Demo Mode: Home Gallery saved successfully!");
+        return;
+      }
+      try {
+        const payload = {
+          key: 'home_gallery',
+          url: JSON.stringify(currentHomeGallery),
+          alt: 'Home Masonry Gallery'
+        };
+        const { error } = await supabaseClient.from('images').upsert(payload);
+        if (error) throw error;
+        alert("Success: Home Gallery saved successfully!");
+      } catch (err) {
+        alert("Error saving Home Gallery: " + err.message);
+      }
+    }
+
+    // Media Dropzones Setup
+    document.querySelectorAll('.drop-zone').forEach(zone => {
+      const fileInput = zone.querySelector('.file-input');
+      if (!fileInput) return;
+
+      zone.onclick = (e) => {
+        if (e.target.tagName === 'INPUT') return;
+        fileInput.click();
+      };
+      
+      zone.ondragover = (e) => {
+        e.preventDefault();
+        zone.classList.add('border-brand-500');
+      };
+      zone.ondragleave = () => zone.classList.remove('border-brand-500');
+      
+      zone.ondrop = async (e) => {
+        e.preventDefault();
+        zone.classList.remove('border-brand-500');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+          await handleFileUpload(files, zone);
+        }
+      };
+
+      fileInput.onchange = async () => {
+        if (fileInput.files.length > 0) {
+          await handleFileUpload(fileInput.files, zone);
+        }
+      };
+    });
+
+    async function uploadSingleFile(file) {
+      if (isDemo) {
+        return URL.createObjectURL(file);
+      }
+
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}_${Math.random().toString(36).substring(2)}.${fileExt}`;
+      const candidateBuckets = ['assets', 'cms', 'media', 'public', 'uploads', 'images'];
+
+      for (const bucket of candidateBuckets) {
+        try {
+          const { data, error } = await supabaseClient.storage.from(bucket).upload(fileName, file, {
+            cacheControl: '3600',
+            upsert: false
+          });
+          if (!error && data) {
+            const { data: { publicUrl } } = supabaseClient.storage.from(bucket).getPublicUrl(fileName);
+            if (publicUrl) return publicUrl;
+          }
+        } catch (e) {
+          // Attempt next candidate bucket
+        }
+      }
+
+      // Resilient fallback: Convert to Base64 Data URL so uploads NEVER fail or block saving
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.onerror = () => resolve(null);
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function handleFileUpload(files, zone) {
+      const field = zone.getAttribute('data-field');
+      
+      if (field === 'project-gallery-images' || field === 'home-gallery-uploader') {
+        const isHome = (field === 'home-gallery-uploader');
+        for (let i = 0; i < files.length; i++) {
+          if (isHome && currentHomeGallery.length >= 8) {
+            alert("Maximum limit of 8 photos reached for the Home Gallery.");
+            break;
+          }
+          const uploadedUrl = await uploadSingleFile(files[i]);
+          if (uploadedUrl) {
+            if (isHome) {
+              currentHomeGallery.push({ url: uploadedUrl, alt: files[i].name });
+            } else {
+              currentProjectGallery.push({ url: uploadedUrl, alt: files[i].name });
+            }
+          }
+        }
+        if (isHome) renderHomeGalleryTab();
+        else renderProjectGalleryPreviews();
+        return;
+      }
+
+      const previewContainer = zone.querySelector('.preview-img-container');
+      const content = zone.querySelector('.drop-zone-content');
+      if (!previewContainer) return;
+      
+      if (content) content.innerHTML = '<i class="fa-solid fa-spinner animate-spin text-brand-500 text-3xl mb-3"></i><span class="text-sm">Uploading...</span>';
+      
+      const uploadedUrl = await uploadSingleFile(files[0]);
+      if (uploadedUrl) {
+        const previewImg = previewContainer.querySelector('img') || previewContainer.querySelector('video');
+        if (previewImg) previewImg.src = uploadedUrl;
+        previewContainer.classList.remove('hidden');
+        zone.setAttribute('data-uploaded-url', uploadedUrl);
+        updateProjectPreview();
+      } else if (content) {
+        content.innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-brand-500 text-3xl mb-3"></i><span class="text-sm font-semibold">Drag & Drop or Click</span>';
+      }
+    }
+
+    function clearDropZone(event) {
+      if (event) event.stopPropagation();
+      const btn = event ? (event.currentTarget || event.target) : null;
+      const zone = btn ? btn.closest('.drop-zone') : null;
+      if (!zone) return;
+
+      const previewContainer = zone.querySelector('.preview-img-container');
+      const content = zone.querySelector('.drop-zone-content');
+      const fileInput = zone.querySelector('.file-input');
+
+      if (fileInput) fileInput.value = "";
+      zone.removeAttribute('data-uploaded-url');
+      if (previewContainer) previewContainer.classList.add('hidden');
+      if (content) {
+        content.innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-brand-500 text-3xl mb-3"></i><span class="text-sm font-semibold">Drag & Drop or Click</span>';
+      }
+      updateProjectPreview();
+    }
+
+    function updateProjectPreview() {
+      const title = document.getElementById('project-title').value || 'Project Title';
+      const desc = document.getElementById('project-short-desc').value || 'Brief project description summary...';
+      const mainImageZone = document.querySelector('[data-field="main-image"]');
+      const uploadedUrl = (mainImageZone && mainImageZone.getAttribute('data-uploaded-url')) ? mainImageZone.getAttribute('data-uploaded-url') : '/assets/images/firsttonelogos-01_1.avif';
+      const homeOrder = document.getElementById('project-video-order').value;
+      const workOrder = document.getElementById('project-work-video-order').value;
+      const videoUrl = document.getElementById('project-video-url').value;
+
+      const mockTitle = document.getElementById('mock-title');
+      const mockDesc = document.getElementById('mock-desc');
+      const mockImg = document.getElementById('mock-image');
+
+      if (mockTitle) mockTitle.innerText = title;
+      if (mockDesc) mockDesc.innerText = desc;
+      if (mockImg) mockImg.src = uploadedUrl;
+    }
+
+    function openProjectEditor(slug = null) {
+      const modal = document.getElementById('project-editor-modal');
+      const form = document.getElementById('project-form');
+      form.reset();
+      
+      document.querySelectorAll('.preview-img-container').forEach(c => c.classList.add('hidden'));
+      document.querySelectorAll('.drop-zone').forEach(z => {
+        z.removeAttribute('data-uploaded-url');
+        z.querySelector('.drop-zone-content').innerHTML = '<i class="fa-solid fa-cloud-arrow-up text-brand-500 text-3xl mb-3"></i><span class="text-sm font-semibold">Drag & Drop or Click</span>';
+      });
+
+      if (slug) {
+        document.getElementById('project-editor-title').innerText = "Edit Project Settings";
+        const proj = projects.find(p => p.slug === slug);
+        if (proj) {
+          document.getElementById('project-id').value = proj.slug;
+          document.getElementById('project-title').value = proj.title;
+          document.getElementById('project-slug').value = proj.slug;
+          document.getElementById('project-slug').readOnly = true;
+          document.getElementById('project-video-order').value = proj.home_video_order || '';
+          document.getElementById('project-work-video-order').value = proj.work_video_order || '';
+          document.getElementById('project-link-video').value = proj.link_to_video || '';
+          document.getElementById('project-video-url').value = proj.video_url || '';
+          document.getElementById('project-short-desc').value = proj.short_desc || '';
+          document.getElementById('project-desc').value = proj.body || '';
+          document.getElementById('project-client-details').value = proj.client_details || '';
+          document.getElementById('project-challenge').value = proj.challenge || '';
+          
+          quillProjectDesc.root.innerHTML = proj.body ? marked.parse(proj.body) : '';
+          quillProjectClientDetails.root.innerHTML = proj.client_details ? marked.parse(proj.client_details) : '';
+          quillProjectChallenge.root.innerHTML = proj.challenge ? marked.parse(proj.challenge) : '';
+          
+          if (proj.main_image?.url) {
+            const zone = document.querySelector('[data-field="main-image"]');
+            if (zone) {
+              zone.setAttribute('data-uploaded-url', proj.main_image.url);
+              const preview = zone.querySelector('.preview-img-container');
+              if (preview) {
+                const img = preview.querySelector('img');
+                if (img) img.src = proj.main_image.url;
+                preview.classList.remove('hidden');
+              }
+            }
+          }
+
+          currentProjectGallery = (proj && Array.isArray(proj.gallery_images)) ? [...proj.gallery_images] : [];
+          renderProjectGalleryPreviews();
+        }
+      } else {
+        document.getElementById('project-editor-title').innerText = "Add New Project";
+        document.getElementById('project-id').value = "";
+        document.getElementById('project-slug').readOnly = false;
+        document.getElementById('project-work-video-order').value = "";
+        
+        quillProjectDesc.root.innerHTML = '';
+        quillProjectClientDetails.root.innerHTML = '';
+        quillProjectChallenge.root.innerHTML = '';
+
+        currentProjectGallery = [];
+        renderProjectGalleryPreviews();
+      }
+      
+      updateProjectPreview();
+      modal.classList.remove('hidden');
+    }
+
+    function closeProjectEditor() {
+      document.getElementById('project-editor-modal').classList.add('hidden');
+    }
+
+    document.getElementById('project-save-btn').addEventListener('click', async () => {
+      const editSlug = document.getElementById('project-id').value;
+      const slug = document.getElementById('project-slug').value.trim();
+      const title = document.getElementById('project-title').value.trim();
+      const videoOrder = document.getElementById('project-video-order').value;
+      const workVideoOrder = document.getElementById('project-work-video-order').value;
+      const linkVideo = document.getElementById('project-link-video').value.trim();
+      const videoUrl = document.getElementById('project-video-url').value.trim();
+      const shortDesc = document.getElementById('project-short-desc').value.trim();
+      document.getElementById('project-desc').value = quillProjectDesc.root.innerHTML;
+      document.getElementById('project-client-details').value = quillProjectClientDetails.root.innerHTML;
+      document.getElementById('project-challenge').value = quillProjectChallenge.root.innerHTML;
+
+      const body = document.getElementById('project-desc').value;
+      const clientDetails = document.getElementById('project-client-details').value;
+      const challenge = document.getElementById('project-challenge').value;
+
+      if (!slug || !title) {
+        alert("Title and Slug are required fields.");
+        return;
+      }
+
+      const mainImageZone = document.querySelector('[data-field="main-image"]');
+      
+      const payload = {
+        title,
+        slug,
+        home_video_order: videoOrder ? Number(videoOrder) : null,
+        work_video_order: workVideoOrder ? Number(workVideoOrder) : null,
+        link_to_video: linkVideo || null,
+        video_url: videoUrl || null,
+        short_desc: shortDesc || null,
+        body: body || '',
+        client_details: clientDetails || null,
+        challenge: challenge || null,
+        main_image: (mainImageZone && mainImageZone.getAttribute('data-uploaded-url')) ? { url: mainImageZone.getAttribute('data-uploaded-url'), alt: "" } : null,
+        gallery_images: currentProjectGallery,
+        updated_on: new Date().toISOString()
+      };
+
+      if (isDemo) {
+        if (editSlug) {
+          projects = projects.map(p => p.slug === editSlug ? { ...p, ...payload } : p);
+        } else {
+          payload.created_on = new Date().toISOString();
+          payload.published_on = new Date().toISOString();
+          projects.push(payload);
+        }
+        closeProjectEditor();
+        renderProjectsTab();
+        return;
+      }
+
+      let { error } = await supabaseClient.from('case_studies').upsert(payload);
+      if (error && error.message.includes('work_video_order')) {
+        console.warn("work_video_order column not in Supabase schema yet. Retrying save without work_video_order field.");
+        delete payload.work_video_order;
+        const retry = await supabaseClient.from('case_studies').upsert(payload);
+        error = retry.error;
+      }
+
+      if (error) {
+        alert("Failed to save project: " + error.message);
+      } else {
+        closeProjectEditor();
+        renderProjectsTab();
+      }
+    });
+
+    async function deleteProject(slug) {
+      if (confirm("Delete this project permanently?")) {
+        if (isDemo) {
+          projects = projects.filter(p => p.slug !== slug);
+          renderProjectsTab();
+          return;
+        }
+
+        const { error } = await supabaseClient.from('case_studies').delete().eq('slug', slug);
+        if (error) alert("Failed: " + error.message);
+        else renderProjectsTab();
+      }
+    }
+
+    // ================= TAB: SERVICES LOGIC =================
+    async function renderServicesTab() {
+      const list = document.getElementById('services-list');
+      
+      if (!isDemo) {
+        const { data, error } = await supabaseClient.from('services').select('*').order('title');
+        if (error) {
+          list.innerHTML = `<div class="text-red-500 text-sm">Failed to load services: ${error.message}</div>`;
+          return;
+        }
+        services = data;
+      }
+
+      list.innerHTML = services.map(ser => {
+        const imgUrl = ser.f_image?.url || '/assets/images/inner-circle.svg';
+        return `
+          <div class="glass p-5 rounded-2xl flex gap-4 border border-zinc-800 hover:border-brand-500/50 transition">
+            <div class="h-24 w-24 bg-zinc-950 rounded-xl overflow-hidden shrink-0">
+              <img src="${imgUrl}" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 flex flex-col justify-between">
+              <div>
+                <h4 class="font-bold text-white text-md">${ser.title}</h4>
+                <p class="text-zinc-400 text-xs mt-1 line-clamp-2">${ser.f_short_description || ''}</p>
+              </div>
+              <div class="flex gap-2 justify-end mt-2">
+                <button onclick="openServiceEditor('${ser.slug}')" class="px-3 py-1 bg-zinc-900 hover:bg-slate-700 rounded-lg text-xs font-semibold text-zinc-200 transition">Edit</button>
+                <button onclick="deleteService('${ser.slug}')" class="px-3 py-1 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 rounded-lg text-xs font-semibold text-red-400 transition">Delete</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openServiceEditor(slug = null) {
+      const modal = document.getElementById('service-editor-modal');
+      const form = document.getElementById('service-form');
+      form.reset();
+
+      const zone = document.querySelector('[data-field="service-image"]');
+      zone.removeAttribute('data-uploaded-url');
+      zone.querySelector('.preview-img-container').classList.add('hidden');
+      zone.querySelector('.drop-zone-content').innerHTML = '<i class="fa-solid fa-image text-brand-500 text-3xl mb-3"></i><span class="text-sm">Drag & Drop or Click</span>';
+
+      if (slug) {
+        document.getElementById('service-editor-title').innerText = "Edit Service Settings";
+        const ser = services.find(s => s.slug === slug);
+        if (ser) {
+          document.getElementById('service-id').value = ser.slug;
+          document.getElementById('service-title').value = ser.title;
+          document.getElementById('service-slug').value = ser.slug;
+          document.getElementById('service-slug').readOnly = true;
+          document.getElementById('service-short-desc').value = ser.f_short_description || '';
+          document.getElementById('service-body').value = ser.body || '';
+          quillServiceBody.root.innerHTML = ser.body ? marked.parse(ser.body) : '';
+
+          if (ser.f_image?.url) {
+            zone.setAttribute('data-uploaded-url', ser.f_image.url);
+            zone.querySelector('.preview-img-container img').src = ser.f_image.url;
+            zone.querySelector('.preview-img-container').classList.remove('hidden');
+          }
+        }
+      } else {
+        document.getElementById('service-editor-title').innerText = "Add New Service";
+        document.getElementById('service-id').value = "";
+        document.getElementById('service-slug').readOnly = false;
+        quillServiceBody.root.innerHTML = '';
+      }
+      modal.classList.remove('hidden');
+    }
+
+    function closeServiceEditor() {
+      document.getElementById('service-editor-modal').classList.add('hidden');
+    }
+
+    document.getElementById('service-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const editSlug = document.getElementById('service-id').value;
+      const slug = document.getElementById('service-slug').value.trim();
+      const title = document.getElementById('service-title').value.trim();
+      const shortDesc = document.getElementById('service-short-desc').value.trim();
+      document.getElementById('service-body').value = quillServiceBody.root.innerHTML;
+      const body = document.getElementById('service-body').value;
+      const imageZone = document.querySelector('[data-field="service-image"]');
+
+      const payload = {
+        title,
+        slug,
+        f_short_description: shortDesc,
+        body: body || '',
+        f_image: imageZone.getAttribute('data-uploaded-url') ? { url: imageZone.getAttribute('data-uploaded-url'), alt: "" } : null,
+        updated_on: new Date().toISOString()
+      };
+
+      if (isDemo) {
+        if (editSlug) {
+          services = services.map(s => s.slug === editSlug ? { ...s, ...payload } : s);
+        } else {
+          payload.created_on = new Date().toISOString();
+          services.push(payload);
+        }
+        closeServiceEditor();
+        renderServicesTab();
+        return;
+      }
+
+      const { error } = await supabaseClient.from('services').upsert(payload);
+      if (error) alert("Failed: " + error.message);
+      else {
+        closeServiceEditor();
+        renderServicesTab();
+      }
+    });
+
+    async function deleteService(slug) {
+      if (confirm("Delete this service?")) {
+        if (isDemo) {
+          services = services.filter(s => s.slug !== slug);
+          renderServicesTab();
+          return;
+        }
+
+        const { error } = await supabaseClient.from('services').delete().eq('slug', slug);
+        if (error) alert("Failed: " + error.message);
+        else renderServicesTab();
+      }
+    }
+
+    // ================= TAB: PARTNERSHIPS LOGIC =================
+    async function renderPartnershipsTab() {
+      const list = document.getElementById('partnerships-list');
+      
+      if (!isDemo) {
+        const { data, error } = await supabaseClient.from('partnerships').select('*').order('title');
+        if (error) {
+          list.innerHTML = `<div class="text-red-500 text-sm col-span-4">Failed: ${error.message}</div>`;
+          return;
+        }
+        partnerships = data;
+      }
+
+      list.innerHTML = partnerships.map(part => {
+        const imgUrl = part.f_image?.url || '/assets/images/inner-circle.svg';
+        return `
+          <div class="glass p-5 rounded-2xl flex flex-col items-center border border-zinc-800 hover:border-brand-500/50 transition relative">
+            <button onclick="deletePartnership('${part.slug}')" class="absolute top-2 right-2 p-1 text-zinc-500 hover:text-red-500 transition" title="Delete"><i class="fa-solid fa-trash-can text-sm"></i></button>
+            <div class="h-20 w-32 bg-zinc-950 rounded-xl overflow-hidden flex items-center justify-center p-2">
+              <img src="${imgUrl}" class="max-h-full max-w-full object-contain">
+            </div>
+            <h4 class="font-semibold text-white text-xs mt-3 text-center truncate w-full">${part.title}</h4>
+            <button onclick="openPartnershipEditor('${part.slug}')" class="w-full mt-3 py-1 bg-zinc-900 hover:bg-slate-700 rounded-lg text-xs font-semibold text-zinc-200 transition">Edit</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openPartnershipEditor(slug = null) {
+      const modal = document.getElementById('partnership-editor-modal');
+      const form = document.getElementById('partnership-form');
+      form.reset();
+
+      const zone = document.querySelector('[data-field="partnership-image"]');
+      zone.removeAttribute('data-uploaded-url');
+      zone.querySelector('.preview-img-container').classList.add('hidden');
+      zone.querySelector('.drop-zone-content').innerHTML = '<i class="fa-solid fa-image text-brand-500 text-3xl mb-3"></i><span class="text-sm">Drag & Drop or Click</span>';
+
+      if (slug) {
+        document.getElementById('partnership-editor-title').innerText = "Edit Partnership logo";
+        const part = partnerships.find(p => p.slug === slug);
+        if (part) {
+          document.getElementById('partnership-id').value = part.slug;
+          document.getElementById('partnership-title').value = part.title;
+          document.getElementById('partnership-slug').value = part.slug;
+          document.getElementById('partnership-slug').readOnly = true;
+
+          if (part.f_image?.url) {
+            zone.setAttribute('data-uploaded-url', part.f_image.url);
+            zone.querySelector('.preview-img-container img').src = part.f_image.url;
+            zone.querySelector('.preview-img-container').classList.remove('hidden');
+          }
+        }
+      } else {
+        document.getElementById('partnership-editor-title').innerText = "Add New Partnership";
+        document.getElementById('partnership-id').value = "";
+        document.getElementById('partnership-slug').readOnly = false;
+      }
+      modal.classList.remove('hidden');
+    }
+
+    function closePartnershipEditor() {
+      document.getElementById('partnership-editor-modal').classList.add('hidden');
+    }
+
+    document.getElementById('partnership-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const editSlug = document.getElementById('partnership-id').value;
+      const slug = document.getElementById('partnership-slug').value.trim();
+      const title = document.getElementById('partnership-title').value.trim();
+      const imageZone = document.querySelector('[data-field="partnership-image"]');
+
+      const payload = {
+        title,
+        slug,
+        f_image: imageZone.getAttribute('data-uploaded-url') ? { url: imageZone.getAttribute('data-uploaded-url'), alt: "" } : null,
+        updated_on: new Date().toISOString()
+      };
+
+      if (isDemo) {
+        if (editSlug) {
+          partnerships = partnerships.map(p => p.slug === editSlug ? { ...p, ...payload } : p);
+        } else {
+          payload.created_on = new Date().toISOString();
+          partnerships.push(payload);
+        }
+        closePartnershipEditor();
+        renderPartnershipsTab();
+        return;
+      }
+
+      const { error } = await supabaseClient.from('partnerships').upsert(payload);
+      if (error) alert("Failed: " + error.message);
+      else {
+        closePartnershipEditor();
+        renderPartnershipsTab();
+      }
+    });
+
+    async function deletePartnership(slug) {
+      if (confirm("Delete this partner logo?")) {
+        if (isDemo) {
+          partnerships = partnerships.filter(p => p.slug !== slug);
+          renderPartnershipsTab();
+          return;
+        }
+
+        const { error } = await supabaseClient.from('partnerships').delete().eq('slug', slug);
+        if (error) alert("Failed: " + error.message);
+        else renderPartnershipsTab();
+      }
+    }
+
+    // ================= TAB: SETTINGS LOGIC =================
+    async function renderSettingsTab() {
+      document.querySelectorAll('.subtab-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = btn.getAttribute('data-subtab');
+          
+          document.querySelectorAll('.subtab-btn').forEach(b => {
+            b.classList.remove('border-brand-500', 'text-white');
+            b.classList.add('border-transparent', 'text-zinc-400');
+          });
+          btn.classList.remove('border-transparent', 'text-zinc-400');
+          btn.classList.add('border-brand-500', 'text-white');
+
+          document.querySelectorAll('.subtab-content').forEach(c => c.classList.add('hidden'));
+          document.getElementById(`settings-${target}-tab`).classList.remove('hidden');
+        });
+      });
+
+      if (!isDemo) {
+        try {
+          const { data: colorsData } = await supabaseClient.from('colors').select('*');
+          const { data: linksData } = await supabaseClient.from('links').select('*');
+          const { data: textsData } = await supabaseClient.from('texts').select('*');
+          const { data: imagesData } = await supabaseClient.from('images').select('*');
+
+          if (colorsData && Array.isArray(colorsData)) {
+            colors = {}; colorsData.forEach(row => colors[row.key] = row.hex);
+          }
+          if (linksData && Array.isArray(linksData)) {
+            links = {}; linksData.forEach(row => links[row.key] = row.url);
+          }
+          if (textsData && Array.isArray(textsData)) {
+            texts = {}; textsData.forEach(row => texts[row.key] = row.current_text);
+          }
+          if (imagesData && Array.isArray(imagesData)) {
+            images = {}; imagesData.forEach(row => images[row.key] = { url: row.url, alt: row.alt });
+          }
+        } catch (e) {
+          console.warn("Could not fetch settings data from Supabase:", e.message);
+        }
+      }
+
+      // Render Colors
+      const colorsContainer = document.getElementById('colors-list-inputs');
+      if (Object.keys(colors).length === 0) {
+        colors = { primary: "#cd0025", secondary: "#2e2e2e", background: "#000000" };
+      }
+      colorsContainer.innerHTML = Object.entries(colors).map(([key, val]) => `
+        <div class="flex items-center justify-between gap-4">
+          <label class="text-sm font-semibold capitalize text-zinc-300">${key} Color</label>
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-zinc-400 font-mono select-all">${val}</span>
+            <input type="color" data-color-key="${key}" value="${val}" oninput="updateMockColors()" class="w-10 h-10 border border-zinc-700 bg-transparent rounded cursor-pointer">
+          </div>
+        </div>
+      `).join('');
+      updateMockColors();
+
+      // Render Links
+      const linksContainer = document.getElementById('links-list-inputs');
+      linksContainer.innerHTML = Object.entries(links).map(([key, val]) => {
+        const meta = LINK_METADATA[key] || { label: "Website Link Asset", category: "Miscellaneous" };
+        return `
+          <div class="bg-black/20 p-4 rounded-xl border border-zinc-800 flex flex-col gap-2">
+            <label class="block text-xs font-bold text-zinc-300 truncate">${meta.label}</label>
+            <div class="text-[10px] text-zinc-600 font-mono select-all">Key: ${key} | Category: ${meta.category}</div>
+            <input type="text" data-link-key="${key}" value="${val}" class="w-full px-4 py-2.5 bg-black border border-zinc-800 rounded-xl text-sm focus:outline-none focus:border-brand-500 transition text-zinc-200">
+          </div>
+        `;
+      }).join('');
+
+      // Render Texts (Dictionary)
+      applyTextsFilter();
+
+      // Render Images (Logos)
+      const imagesContainer = document.getElementById('images-list-inputs');
+      imagesContainer.innerHTML = Object.entries(images).map(([key, val]) => {
+        const meta = IMAGE_METADATA[key] || { label: "Branding Media Asset", category: "Branding" };
+        return `
+          <div class="flex flex-col gap-2 bg-black/20 p-4 rounded-xl border border-zinc-800">
+            <label class="text-xs font-bold text-zinc-300 truncate">${meta.label}</label>
+            <div class="text-[10px] text-zinc-600 font-mono select-all">Key: ${key} | Category: ${meta.category}</div>
+            <div class="drop-zone border border-zinc-800 hover:border-brand-500/50 rounded-2xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center bg-black/40 relative min-h-[140px]" data-settings-img-key="${key}">
+              <input type="file" class="hidden file-input" accept="image/*">
+              <div class="preview-img-container ${val.url ? '' : 'hidden'} absolute inset-0 rounded-2xl overflow-hidden bg-zinc-950 flex items-center justify-center p-4">
+                <img src="${val.url || ''}" class="max-h-full max-w-full object-contain">
+                <button type="button" onclick="clearDropZone(event)" class="absolute top-2 right-2 bg-black/80 hover:bg-red-500 p-2 rounded-full text-white transition"><i class="fa-solid fa-trash-can text-xs"></i></button>
+              </div>
+              <div class="drop-zone-content flex flex-col items-center ${val.url ? 'hidden' : ''}">
+                <i class="fa-solid fa-cloud-arrow-up text-zinc-600 text-2xl mb-2"></i>
+                <span class="text-xs text-zinc-500">Upload Image/Logo</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // File triggers for dynamic inputs
+      document.querySelectorAll('#images-list-inputs .drop-zone').forEach(zone => {
+        const fileInput = zone.querySelector('.file-input');
+        zone.onclick = () => fileInput.click();
+        fileInput.onchange = async () => {
+          if (fileInput.files.length > 0) {
+            await handleFileUpload(fileInput.files[0], zone);
+          }
+        };
+      });
+    }
+
+    function updateMockColors() {
+      const primaryInput = document.querySelector('[data-color-key="primary"]');
+      const primaryColor = primaryInput ? primaryInput.value : '#cd0025';
+      
+      document.querySelectorAll('.preview-color-txt').forEach(el => el.style.color = primaryColor);
+      document.querySelectorAll('.preview-color-bg').forEach(el => el.style.backgroundColor = primaryColor);
+    }
+
+    async function saveColors() {
+      const dataToSave = [];
+      document.querySelectorAll('[data-color-key]').forEach(input => {
+        const key = input.getAttribute('data-color-key');
+        const hex = input.value;
+        colors[key] = hex;
+        dataToSave.push({ key, hex });
+      });
+
+      if (isDemo) {
+        alert("Demo Mode: Colors saved in memory!");
+        return;
+      }
+
+      const { error } = await supabaseClient.from('colors').upsert(dataToSave);
+      if (error) alert("Failed: " + error.message);
+      else alert("Colors saved successfully!");
+    }
+
+    async function saveLinks() {
+      const dataToSave = [];
+      document.querySelectorAll('[data-link-key]').forEach(input => {
+        const key = input.getAttribute('data-link-key');
+        const url = input.value;
+        links[key] = url;
+        dataToSave.push({ key, url });
+      });
+
+      if (isDemo) {
+        alert("Demo Mode: Links saved in memory!");
+        return;
+      }
+
+      const { error } = await supabaseClient.from('links').upsert(dataToSave);
+      if (error) alert("Failed: " + error.message);
+      else alert("Links saved successfully!");
+    }
+
+    // Filter translation list
+    document.getElementById('texts-search').addEventListener('input', applyTextsFilter);
+
+    // Component Group Definitions (Multi-Attribute visual grouping)
+    const COMPONENT_GROUPS = [
+      {
+        name: "Case Studies CTA Button",
+        keys: ["7127d38b", "7f22fa2e"],
+        triggerKeys: ["7127d38b", "7f22fa2e"]
+      },
+      {
+        name: "Contact Us CTA Button",
+        keys: ["7f274abe", "-12ebc4c9"],
+        triggerKeys: ["7f274abe", "-12ebc4c9"]
+      },
+      {
+        name: "Founder Profile: Hui Zhang",
+        keys: ["1b571f88", "113a21cf", "4be8d22e", "-b7e30f1", "29cc49c4", "-73d9e17a", "281b9918", "79af8d6f"],
+        triggerKeys: ["1b571f88", "113a21cf", "4be8d22e", "-b7e30f1", "29cc49c4", "-73d9e17a", "281b9918", "79af8d6f"]
+      },
+      {
+        name: "Founder Profile: Zhizi Hao",
+        keys: ["-2401eb60", "-5d4bbac2", "603f372d", "-19db48e5", "19857190", "281b96b2", "-668041b6"],
+        triggerKeys: ["-2401eb60", "-5d4bbac2", "603f372d", "-19db48e5", "19857190", "281b96b2", "-668041b6"]
+      },
+      {
+        name: "Homepage Hero Title & Introduction",
+        keys: ["-35caffb8", "783fa1c9", "41d29f0e", "5b92444f", "-53713b45", "-4275b267", "-7252aede"],
+        triggerKeys: ["-35caffb8", "783fa1c9", "41d29f0e", "5b92444f", "-53713b45", "-4275b267", "-7252aede"]
+      }
+    ];
+
+    // Helper: Query active DOM inside preview iframe to filter page-specific keys
+    function getKeysOnCurrentPage() {
+      const iframe = document.getElementById('preview-frame');
+      if (!iframe || !iframe.contentWindow) return null;
+      
+      const textKeys = new Set();
+      const linkKeys = new Set();
+      
+      try {
+        iframe.contentWindow.document.querySelectorAll('[data-edit-text]').forEach(el => {
+          textKeys.add(el.getAttribute('data-edit-text'));
+        });
+        iframe.contentWindow.document.querySelectorAll('[data-edit-link]').forEach(el => {
+          linkKeys.add(el.getAttribute('data-edit-link'));
+        });
+      } catch (err) {
+        // Cross-origin fallback if loaded outside local server
+      }
+      return { textKeys, linkKeys };
+    }
+
+    function applyTextsFilter() {
+      const searchVal = document.getElementById('texts-search') ? document.getElementById('texts-search').value.toLowerCase() : '';
+      const container = document.getElementById('texts-list-inputs');
+      if (!container) return;
+      
+      const activeKeys = getKeysOnCurrentPage();
+
+      let filtered = Object.entries(texts).filter(([key, val]) => {
+        const meta = TEXT_METADATA[key] || { label: "Additional Copy ID: " + key, category: "Miscellaneous" };
+        
+        // 1. Context filter: only show elements present on active page
+        if (activeKeys && !activeKeys.textKeys.has(key)) {
+          return false;
+        }
+
+        const matchesSearch = key.toLowerCase().includes(searchVal) || 
+                              (val && val.toLowerCase().includes(searchVal)) ||
+                              meta.label.toLowerCase().includes(searchVal);
+        return matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="p-4 text-center text-xs text-zinc-500">No copy items found on this page</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(([key, val]) => {
+        const meta = TEXT_METADATA[key] || { label: "Custom Text Segment (" + key + ")", category: "Miscellaneous" };
+        const isLong = val && val.length > 65;
+        const inputField = isLong 
+          ? `<textarea data-text-key="${key}" rows="3" oninput="sendLivePreviewUpdate('text', '${key}', this.value)" class="w-full px-3 py-2 bg-black border border-zinc-850 rounded-lg text-xs text-zinc-100 focus:outline-none focus:border-brand-500 transition">${val || ''}</textarea>`
+          : `<input type="text" data-text-key="${key}" value="${val || ''}" oninput="sendLivePreviewUpdate('text', '${key}', this.value)" class="w-full px-3 py-2 bg-black border border-zinc-850 rounded-lg text-xs text-zinc-100 focus:outline-none focus:border-brand-500 transition">`;
+        
+        return `
+          <div id="editor-block-${key}" class="p-3 bg-zinc-950/40 hover:bg-zinc-900/30 transition flex flex-col gap-2 border-b border-zinc-900">
+            <div>
+              <div class="font-semibold text-zinc-200 text-[11px]">${meta.label}</div>
+              <div class="text-[9px] text-zinc-600 font-mono mt-0.5 select-all">ID: ${key}</div>
+            </div>
+            ${inputField}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Custom dropdown link target selector
+    function renderLinkSelector(key, val) {
+      const standardPages = [
+        { name: "Homepage", value: "/" },
+        { name: "Case Studies Page", value: "/our-work/" },
+        { name: "Services Page", value: "/our-services/" },
+        { name: "Who are we Page", value: "/about-us/" },
+        { name: "Work with us Page", value: "/work-with-us/" }
+      ];
+
+      const isStandard = standardPages.some(p => p.value === val);
+      const selectVal = isStandard ? val : "custom";
+
+      const optionsMarkup = standardPages.map(p => 
+        `<option value="${p.value}" ${selectVal === p.value ? 'selected' : ''}>Link to: ${p.name}</option>`
+      ).join('');
+
+      return `
+        <div class="space-y-2">
+          <select onchange="handleLinkDropdownChange('${key}', this.value)" class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-xs text-zinc-300 focus:outline-none focus:border-brand-500 transition">
+            ${optionsMarkup}
+            <option value="custom" ${selectVal === 'custom' ? 'selected' : ''}>Link to: Custom URL / Social Link</option>
+          </select>
+          <input type="text" data-link-key="${key}" value="${val}" oninput="sendLivePreviewUpdate('link', '${key}', this.value)" class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-xs text-zinc-200 focus:outline-none focus:border-brand-500 transition ${isStandard ? 'hidden' : ''}">
+        </div>
+      `;
+    }
+
+    function handleLinkDropdownChange(key, val) {
+      const inputEl = document.querySelector(`input[data-link-key="${key}"]`);
+      if (inputEl) {
+        if (val === 'custom') {
+          inputEl.classList.remove('hidden');
+          inputEl.focus();
+        } else {
+          inputEl.classList.add('hidden');
+          inputEl.value = val;
+          links[key] = val;
+          sendLivePreviewUpdate('link', key, val);
+        }
+      }
+    }
+
+    function renderActivePageLinksAndImages() {
+      const activeKeys = getKeysOnCurrentPage();
+      const linksContainer = document.getElementById('links-list-inputs');
+      const imagesContainer = document.getElementById('images-list-inputs');
+      if (!linksContainer || !imagesContainer) return;
+
+      // Filter Links
+      let pageLinks = Object.entries(links);
+      if (activeKeys) {
+        pageLinks = pageLinks.filter(([key]) => activeKeys.linkKeys.has(key));
+      }
+      
+      linksContainer.innerHTML = pageLinks.map(([key, val]) => {
+        const meta = LINK_METADATA[key] || { label: "Website Link Asset", category: "Miscellaneous" };
+        return `
+          <div class="bg-black/20 p-3 rounded-xl border border-zinc-900 flex flex-col gap-2">
+            <label class="block text-[11px] font-bold text-zinc-300 truncate">${meta.label}</label>
+            <div class="text-[9px] text-zinc-600 font-mono select-all mb-1">ID: ${key}</div>
+            ${renderLinkSelector(key, val)}
+          </div>
+        `;
+      }).join('');
+
+      if (pageLinks.length === 0) {
+        linksContainer.innerHTML = `<div class="text-center text-xs text-zinc-500 p-4">No link assets found on this page</div>`;
+      }
+
+      // Filter Branding Images
+      let pageImages = Object.entries(images);
+      if (activeKeys) {
+        const iframe = document.getElementById('preview-frame');
+        const iframeImgKeys = new Set();
+        if (iframe && iframe.contentWindow) {
+          iframe.contentWindow.document.querySelectorAll('[data-settings-img-key], img').forEach(img => {
+            const key = img.getAttribute('data-settings-img-key');
+            if (key) iframeImgKeys.add(key);
+            const src = img.getAttribute('src');
+            if (src) {
+              for (const [k, v] of Object.entries(images)) {
+                if (v.url && src.includes(v.url)) {
+                  iframeImgKeys.add(k);
+                }
+              }
+            }
+          });
+        }
+        if (iframeImgKeys.size > 0) {
+          pageImages = pageImages.filter(([key]) => iframeImgKeys.has(key));
+        }
+      }
+
+      imagesContainer.innerHTML = pageImages.map(([key, val]) => {
+        const meta = IMAGE_METADATA[key] || { label: "Branding Media Asset", category: "Branding" };
+        return `
+          <div class="flex flex-col gap-2 bg-black/20 p-3 rounded-xl border border-zinc-900">
+            <label class="text-[11px] font-bold text-zinc-300 truncate">${meta.label}</label>
+            <div class="text-[9px] text-zinc-600 font-mono select-all">ID: ${key}</div>
+            <div class="drop-zone border border-zinc-800 hover:border-brand-500/50 rounded-2xl p-6 text-center cursor-pointer transition flex flex-col items-center justify-center bg-black/40 relative min-h-[120px]" data-settings-img-key="${key}">
+              <input type="file" class="hidden file-input" accept="image/*">
+              <div class="preview-img-container ${val.url ? '' : 'hidden'} absolute inset-0 rounded-2xl overflow-hidden bg-zinc-950 flex items-center justify-center p-4">
+                <img src="${val.url || ''}" class="max-h-full max-w-full object-contain">
+                <button type="button" onclick="clearDropZone(event)" class="absolute top-2 right-2 bg-black/80 hover:bg-red-500 p-2 rounded-full text-white transition"><i class="fa-solid fa-trash-can text-xs"></i></button>
+              </div>
+              <div class="drop-zone-content flex flex-col items-center ${val.url ? 'hidden' : ''}">
+                <i class="fa-solid fa-cloud-arrow-up text-zinc-600 text-xl mb-2"></i>
+                <span class="text-[10px] text-zinc-500">Upload Image/Logo</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (pageImages.length === 0) {
+        imagesContainer.innerHTML = `<div class="text-center text-xs text-zinc-500 p-4">No image assets found on this page</div>`;
+      }
+
+      // Wire triggers
+      document.querySelectorAll('#images-list-inputs .drop-zone').forEach(zone => {
+        const fileInput = zone.querySelector('.file-input');
+        zone.onclick = () => fileInput.click();
+        fileInput.onchange = async () => {
+          if (fileInput.files.length > 0) {
+            await handleFileUpload(fileInput.files[0], zone);
+          }
+        };
+      });
+    }
+
+    // Expandable sidebar accordions toggler
+    function toggleAccordion(section) {
+      const content = document.getElementById(`acc-content-${section}`);
+      const arrow = document.getElementById(`arrow-${section}`);
+      if (!content || !arrow) return;
+      
+      const isHidden = content.classList.contains('hidden');
+      
+      // Close all accordions for single-active-panel feed
+      document.querySelectorAll('[id^="acc-content-"]').forEach(c => c.classList.add('hidden'));
+      document.querySelectorAll('[id^="arrow-"]').forEach(a => a.classList.remove('rotate-180'));
+      
+      if (isHidden) {
+        content.classList.remove('hidden');
+        arrow.classList.add('rotate-180');
+      }
+    }
+
+    // Visual Editor Helper Functions
+    function toggleEditorSidebar() {
+      const sidebar = document.getElementById('editor-sidebar');
+      const expandBtn = document.getElementById('editor-sidebar-expand-btn');
+      if (!sidebar) return;
+
+      if (sidebar.classList.contains('w-80')) {
+        sidebar.classList.remove('w-80');
+        sidebar.classList.add('w-0', 'overflow-hidden');
+        expandBtn.classList.remove('hidden');
+      } else {
+        sidebar.classList.remove('w-0', 'overflow-hidden');
+        sidebar.classList.add('w-80');
+        expandBtn.classList.add('hidden');
+      }
+    }
+
+    function exitVisualEditor() {
+      const mainSidebar = document.getElementById('main-sidebar');
+      if (mainSidebar) {
+        mainSidebar.classList.remove('mini-sidebar');
+      }
+      loadTab('dashboard');
+    }
+
+    function navigatePreviewFrame(path) {
+      const iframe = document.getElementById('preview-frame');
+      if (iframe) {
+        iframe.src = path;
+      }
+    }
+
+    // Sync preview page selector and refresh context keys on iframe navigation
+    document.getElementById('preview-frame').addEventListener('load', () => {
+      try {
+        const iframe = document.getElementById('preview-frame');
+        const pathname = iframe.contentWindow.location.pathname;
+        const pageSelect = document.getElementById('editor-page-select');
+        if (pageSelect && pathname) {
+          const optionExists = Array.from(pageSelect.options).some(opt => opt.value === pathname);
+          if (optionExists) {
+            pageSelect.value = pathname;
+          }
+        }
+      } catch (err) {
+        // Cross-origin safe fallback
+      }
+      // Refresh Visual Editor sidebar keys to match page context
+      applyTextsFilter();
+      renderActivePageLinksAndImages();
+    });
+
+    function switchEditorSubtab(tab) {
+      document.querySelectorAll('.editor-sub-content').forEach(c => c.classList.add('hidden'));
+      const activeContent = document.getElementById(`editor-${tab}-content`);
+      if (activeContent) activeContent.classList.remove('hidden');
+    }
+
+    function sendLivePreviewUpdate(type, key, value) {
+      const iframe = document.getElementById('preview-frame');
+      if (iframe && iframe.contentWindow) {
+        if (type === 'text') {
+          iframe.contentWindow.postMessage({ type: 'FT_UPDATE_TEXT', key: key, value: value }, '*');
+        } else if (type === 'link') {
+          iframe.contentWindow.postMessage({ type: 'FT_UPDATE_LINK', key: key, value: value }, '*');
+        }
+      }
+    }
+
+    function closeComponentGroupEditor() {
+      document.getElementById('component-group-editor').classList.add('hidden');
+      document.getElementById('editor-guide-tip').classList.remove('hidden');
+    }
+
+    // Dynamic component group input sync handlers
+    function updateComponentVal(type, key, value) {
+      if (type === 'text') {
+        texts[key] = value;
+        // Sync to main sidebar input list
+        const mainInput = document.querySelector(`[data-text-key="${key}"]`);
+        if (mainInput) mainInput.value = value;
+      } else if (type === 'link') {
+        links[key] = value;
+        // Sync to main sidebar links list
+        const mainInput = document.querySelector(`[data-link-key="${key}"]`);
+        if (mainInput) mainInput.value = value;
+      }
+      sendLivePreviewUpdate(type, key, value);
+    }
+
+    // Listen to selection events sent from inside the preview iframe
+    window.addEventListener('message', (e) => {
+      if (e.data && (e.data.type === 'FT_SELECT_TEXT' || e.data.type === 'FT_SELECT_LINK')) {
+        const key = e.data.key;
+        
+        // Check for visual component grouping
+        const group = COMPONENT_GROUPS.find(g => g.triggerKeys.includes(key));
+        if (group) {
+          document.getElementById('component-group-editor').classList.remove('hidden');
+          document.getElementById('editor-guide-tip').classList.add('hidden');
+          document.getElementById('comp-group-title').innerText = group.name;
+          
+          const fieldsContainer = document.getElementById('comp-group-fields');
+          fieldsContainer.innerHTML = group.keys.map(k => {
+            if (texts[k] !== undefined) {
+              const meta = TEXT_METADATA[k] || { label: "Text Field " + k, category: "General" };
+              const isLong = texts[k].length > 65;
+              return `
+                <div>
+                  <label class="block text-[10px] font-bold text-zinc-400 mb-1.5">${meta.label}</label>
+                  ${isLong 
+                    ? `<textarea data-comp-text-key="${k}" rows="3" oninput="updateComponentVal('text', '${k}', this.value)" class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-xs text-zinc-100 focus:outline-none focus:border-brand-500 transition">${texts[k] || ''}</textarea>`
+                    : `<input type="text" data-comp-text-key="${k}" value="${texts[k] || ''}" oninput="updateComponentVal('text', '${k}', this.value)" class="w-full px-3 py-2 bg-black border border-zinc-800 rounded-lg text-xs text-zinc-100 focus:outline-none focus:border-brand-500 transition">`
+                  }
+                </div>
+              `;
+            }
+            if (links[k] !== undefined) {
+              const meta = LINK_METADATA[k] || { label: "Redirect URL " + k, category: "Navigation" };
+              return `
+                <div>
+                  <label class="block text-[10px] font-bold text-zinc-400 mb-1.5">${meta.label}</label>
+                  ${renderLinkSelector(k, links[k])}
+                </div>
+              `;
+            }
+            if (images[k] !== undefined) {
+              const meta = IMAGE_METADATA[k] || { label: "Branding Media " + k, category: "Branding" };
+              return `
+                <div>
+                  <label class="block text-[10px] font-bold text-zinc-400 mb-1.5">${meta.label}</label>
+                  <div class="px-3 py-2 bg-zinc-950 border border-zinc-800 rounded-lg text-xs text-zinc-500 flex items-center justify-between">
+                    <span>${images[k].url ? 'Image Asset Uploaded' : 'No Asset'}</span>
+                    <button type="button" onclick="toggleAccordion('images'); document.querySelector('[data-settings-img-key=\\'${k}\\']').scrollIntoView({behavior:\\'smooth\\'});" class="text-brand-500 hover:text-brand-400 font-semibold text-[10px]">Configure Upload</button>
+                  </div>
+                </div>
+              `;
+            }
+            return '';
+          }).join('');
+
+          // Scroll parent scroll view to top to focus the component editor
+          document.getElementById('component-group-editor').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          closeComponentGroupEditor();
+        }
+
+        // Accordion auto-expand selection focus
+        if (e.data.type === 'FT_SELECT_TEXT') {
+          toggleAccordion('texts');
+          const mainInput = document.querySelector(`[data-text-key="${key}"]`);
+          if (mainInput) {
+            mainInput.focus();
+            const block = document.getElementById(`editor-block-${key}`);
+            if (block) {
+              block.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              block.classList.add('bg-zinc-800/40');
+              setTimeout(() => block.classList.remove('bg-zinc-800/40'), 1500);
+            }
+          }
+        } else if (e.data.type === 'FT_SELECT_LINK') {
+          toggleAccordion('links');
+          const mainInput = document.querySelector(`[data-link-key="${key}"]`);
+          if (mainInput) {
+            mainInput.focus();
+            mainInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            mainInput.classList.add('border-brand-500');
+            setTimeout(() => mainInput.classList.remove('border-brand-500'), 1500);
+          }
+        }
+      }
+    });
+
+    async function saveTexts() {
+      const dataToSave = [];
+      document.querySelectorAll('[data-text-key]').forEach(input => {
+        const key = input.getAttribute('data-text-key');
+        const val = input.value;
+        texts[key] = val;
+        dataToSave.push({ key, current_text: val, original_text: val, category: 'General' });
+      });
+
+      if (isDemo) {
+        alert("Demo Mode: Custom texts saved in memory!");
+        return;
+      }
+
+      const { error } = await supabaseClient.from('texts').upsert(dataToSave);
+      if (error) alert("Failed: " + error.message);
+      else alert("Copy dictionary updated successfully!");
+    }
+
+    async function saveImagesSettings() {
+      const dataToSave = [];
+      document.querySelectorAll('[data-settings-img-key]').forEach(zone => {
+        const key = zone.getAttribute('data-settings-img-key');
+        const url = zone.getAttribute('data-uploaded-url') || (zone.querySelector('.preview-img-container img') ? zone.querySelector('.preview-img-container img').src : '');
+        images[key] = { url, alt: "" };
+        dataToSave.push({ key, url, alt: "" });
+      });
+
+      if (isDemo) {
+        alert("Demo Mode: Images saved in memory!");
+        return;
+      }
+
+      const { error } = await supabaseClient.from('images').upsert(dataToSave);
+      if (error) alert("Failed: " + error.message);
+      else alert("Global images saved successfully!");
+    }
+
+    // Seed mock data globally
+    window.initMockData = initMockData;
+
+    // ================= SEED DATA: MOCK PREVIEW LOGIC =================
+    async function initMockData() {
+      console.log("Seeding mock dataset for Demo Mode...");
+      
+      // Seed texts, colors, links, images from compiled filesystem
+      texts = {
+  "574": ", ",
+  "2190": "←",
+  "2192": "→",
+  "19857190": "His previous works have been included in and awarded by various international film festivals, including Shanghai International Film Festival (2021), London Short Film Festival (2019) and Scottish Queer Film Festival (2019).",
+  "23223320": " – stories that work from London to Shanghai.",
+  "30496645": "Your China-UK and Global Creative Production Partner",
+  "54757733": "Two Cultures,",
+  "58465041": " to meet diverse client needs. Big ideas or tight budgets, First Tone delivers with ",
+  "71575750": "Email address",
+  "2268ff": "Home",
+  "3647cb57": "Case studies",
+  "560f747e": "Services",
+  "-6bd89d24": "Who are we",
+  "3ac1ee49": "Work with us",
+  "-667f9cc9": "Case Studies",
+  "-3a25c024": "Who We Are ",
+  "52710bde": "Contact Us  ",
+  "4dc0b803": "Follow our socials",
+  "-35caffb8": "Connecting ",
+  "783fa1c9": "China ",
+  "41d29f0e": "and the UK",
+  "5b92444f": " through moving images",
+  "-53713b45": "We are your premier China-UK and global video production partner. We craft films, ads, and vertical series through ",
+  "7f8f21f1": "Expertise",
+  "3a26f17a": "Cultural Insight",
+  "4d05ec9d": ", and ",
+  "-3ca2ed76": "Worldwide Collaboration",
+  "-4275b267": " – transforming visionary stories into unforgettable screen experiences. Bridging cultures, frame by frame.",
+  "7127d38b": "our case studies",
+  "7f274abe": "Contact us",
+  "-4c4e5413": "EXPERTISE | CONNECT | INSPIRE",
+  "-22fca8ad": "Two cultures,",
+  "7f22a713": "One frame",
+  "31f08219": "Bridging Cultures with ",
+  "-655a1f91": "High-Quality Video Services",
+  "1abff7ea": "At First Tone, BAFTA-recognised craft meets seamless China-UK execution. Our ",
+  "79e5beda": "bilingual team",
+  "1f0b149": " and ",
+  "-24277d53": "dual-market",
+  "110a2193": " networks handle logistics, regulations, and narratives that captivate ",
+  "142bbe38": "locally",
+  "-20494b90": "globally",
+  "60849c11": "about us",
+  "2c7c7737": "case studies",
+  "8b86fcf": "Watch Tutorial",
+  "-25eb5e8d": "At First Tone, we offer ",
+  "1e10dab7": "tailored cross-border services",
+  "-db4aae7": "flexibility",
+  "544cd608": "ingenuity,",
+  "-1f6f2f48": "dedication",
+  "2e": ".",
+  "162aefac": "View Work",
+  "3d503d2b": "No items found.",
+  "-61473034": "view Work",
+  "21a740d2": "view case studies",
+  "fcf0ad2": "Our services",
+  "5f129695": "At First Tone, we connect China and the UK through cross-border video production, offering tailored services to meet diverse client needs. Big ideas or tight budgets, First Tone delivers with flexibility, ingenuity, and dedication.",
+  "-4579809f": "Vertical Shorts",
+  "-1947a9b7": "Commercials",
+  "-71c3d755": "Documentaries",
+  "5183c3ef": "Customisable Solutions",
+  "-787ef576": "Moving Images",
+  "-129698db": "Vertical Short Series",
+  "15b57bd": "The first company to ever deliver a vertical series in the UK. Efficient, reliable, and resourceful – we set the standard for seamless productions. Let the drama stay on screen, not in the production.",
+  "31997f7f": "Read more",
+  "576db4e8": "Meticulously crafted videos created with expertise and an unwavering focus on quality. Imaginative, polished, and striking – we bring your vision to life with style and precision.",
+  "5c3468ad": "Crafted with cultural insight and a passion for storytelling. Authentic, thoughtful, and resonant – from multilingual interviews to capturing unheard stories, we create films that connect with global audiences.",
+  "4fa07f77": "From full production support to local crew, our flexibility sets us apart. Adaptable, collaborative, and dependable – we provide the resources and expertise to bring your vision to life.",
+  "-21d5d767": "Moving Images Without Borders",
+  "-26e57e7a": "End-to-end support tailored to the demands of cross-border filmmaking. Organised, dynamic, and detail driven – we unite creativity and logistics to deliver productions that exceed expectations.",
+  "-70d4fbcf": "ABOUT US",
+  "-1ae33c44": "We handle permits, casting, and cultural nuance so you don’t have to. Whether it’s a UK ad campaign requiring China shoots, a Chinese brand expanding to Europe, or a documentary bridging both markets – we deliver on time, on budget, and without lost-in-translation moments.",
+  "-311e78a9": "Let’s Talk",
+  "-11df96cf": "Whether you would like our services, or you would like to work with us as a collaborator. You can also simply email ",
+  "75b036fa": "info@firsttone.co.uk",
+  "69b3163b": "First Name",
+  "-1416662b": "Last Name",
+  "-64202ba3": "Company",
+  "-6263ac48": "(if any)",
+  "-6b1d2ef2": "Additional Message",
+  "2ba8b14": "0/300",
+  "36c5eb8": "By pressing the submit button, I agree to Designership comtacting me by email and/or phone to share opportunities exclusively available to Select or Enterprise customes. I also understand that any information I’ve shared in this form is subject to Designership Privacy Policy.",
+  "5a0ea5a1": "Thank you! Your submission has been received!",
+  "-7c112e99": "Oops! Something went wrong while submitting the form.",
+  "629334dc": "First Tone productions",
+  "-7242e6b": "Venture X ",
+  "556412df": "1 Ariel Way",
+  "-7d52c0be": "White City",
+  "-219c8080": "London W12 7SL",
+  "-4ff119d1": "about us ",
+  "5235105e": "services",
+  "772ccdb2": "Whatsapp",
+  "792b2792": "Instagram",
+  "4ed4624": "Vimeo",
+  "-1adce92e": "Leave us a message!",
+  "30899c52": "Slick Carousel Example",
+  "-2e53e67b": "Link to Vimeo",
+  "-34f363bd": "Challenge",
+  "2d8596e0": "Project Overview",
+  "cb0d35": "Project Description",
+  "63126fc9": "case studies ",
+  "318af39f": "Read More",
+  "-3463687a": "From the UK’s first 3M-view vertical series to unearthing Chinese archives for documentaries, we thrive on creative challenges – big budgets, lean ones, and everything in between. Whether streamlining UK government campaigns or amplifying indie visions, we adapt to deliver.",
+  "-4110f170": "View Project →",
+  "30f69a29": "work with us",
+  "-77bf3872": "other Services",
+  "-66fec729": "  Whether you are looking for a Chinese-speaking team to carry out your film shoot in the UK, professional help with landing your commercial idea in China, or simply someone to translate your videos, First Tone has you covered.",
+  "-3f24a8f1": "We enable this with our knowledge, insight and expertise in both industries, our international collaborators based in both countries, and our dedication to bringing these two cultures closer together. ",
+  "1326fb92": "Read more about us",
+  "5374a35d": "What does it mean,",
+  "4b71fe80": "“First Tone”?",
+  "91233f1": "  There are four tones in mandarin Chinese. The high and flat first tone is the starting point of learning this language – whether you are a native speaker or a foreign learner. ",
+  "4e321cfd": "Its elegant simplicity provides an easy yet satisfactory entrance to a rich culture. First Tone aims to unlock barriers to easier, smoother,  more accessible communication between the video production and film industries in China and the UK.",
+  "254a0ec4": "Founders",
+  "-7cc3b6db": "Hui and Hao both have wealth of experience in both China and the UK’s film industries. This provides them with the essential insight to go on and create First Tone.",
+  "1b571f88": "Hui Zhang",
+  "113a21cf": "Founder, director",
+  "4be8d22e": "Hui Zhang graduated from London Film School with distinction in 2021. She then worked as a freelance production designer before the launch of First Tone. ",
+  "-b7e30f1": "Before moving to the UK, Hui worked for seven years in China as a producer-director. As well as sharpening her skills to communicate and plan, such experience also trained her to become a detail-oriented person.",
+  "29cc49c4": "With a creative problem-solving mind, Hui has managed to produce lots of high-quality output while working within challenging circumstances, which includes short films, HETV, commercials and documentaries. ",
+  "-73d9e17a": "Hui loves travelling and exploring other cultures when not at work, which always sparks inspiration for her.",
+  "281b9918": "Connect with Hui",
+  "-2401eb60": "Zhizi Hao",
+  "-5d4bbac2": "Zhizi Hao is a Chinese writer/director based in London. In 2017, thanks to the BAFTA China-UK Scholarship, he moved to London to pursue an MA in filmmaking at London Film School. There, he refined his voice as a storyteller and sharpened his skills as a writer/director.",
+  "603f372d": "Born into a military family as an only gay son, raised in a place where neither of his parents came from, and now living abroad, Hao is familiar with the feeling of being an outsider. This rootlessness defines his perspective and has become a motif in the stories he tells.",
+  "-19db48e5": "Hao is experienced as an assistant director and a sound person. ",
+  "281b96b2": "Connect with Hao",
+  "-74be77ac": "A worldwide network",
+  "c938": "404",
+  "-48afe6de": "sorry, this page cannot be found",
+  "739525fa": "Message received",
+  "-3c2bec7": "Thank you for reaching out. One of our crew members will be in contact with you shortly. If you need more immediate or urgent correspondence, please use the email below. ",
+  "5c1e142": "Thank you for your patience. ",
+  "-3a032344": "First Tone Productions",
+  "4ecdcb07": "← Take me back home "
+};
+      colors = {};
+      links = {
+  "23": "#",
+  "2f": "/",
+  "7f22fa2e": "/our-work/",
+  "-661a1d7f": "/our-services/",
+  "-766f6c3e": "/about-us/",
+  "125cfbd6": "https://wa.me/447761921122",
+  "16fe6362": "https://www.instagram.com/firsttone_productions/",
+  "142013bb": "https://vimeo.com/firsttone",
+  "-12ebc4c9": "/work-with-us/",
+  "-7252aede": "https://www.youtube.com/watch?v=AG_REG9p61E",
+  "-2248b181": "#form-section",
+  "-19de50fe": "mailto:info@firsttone.co.uk",
+  "79af8d6f": "http://instagram.com/messyh.z",
+  "-668041b6": "https://www.instagram.com/haochonger"
+};
+      images = {
+  "34718693": {
+    "url": "/assets/images/firsttonelogosquared-02_1.avif",
+    "alt": ""
+  },
+  "i63ad4c8e": {
+    "url": "/assets/images/firsttonelogosquared-03_1.avif",
+    "alt": ""
+  },
+  "i35d2dc00": {
+    "url": "/assets/images/0011group-photo-1_1.avif",
+    "alt": ""
+  },
+  "7bd1c037": {
+    "url": "/assets/images/inner-circle.svg",
+    "alt": ""
+  }
+};
+
+      // Seed mock projects list (Extracted from Markdown templates)
+      projects = [
+  {
+    "slug": "ecomaat-2024",
+    "title": "ECOMAAT Brand Documentary 2024",
+    "home_video_order": 1,
+    "short_desc": "A stunning ECOMAAT campaign showcasing Bulgarian rose fields under a tight deadline.",
+    "main_image": null,
+    "mobile_image": {
+      "url": "/assets/external/67b421b02e4234c4bba69973_screenshot202025-02-1720at2021.03.46.avif",
+      "alt": null
+    },
+    "body": "\n<div style=\"padding:56.25% 0 0 0;position:relative;\"><iframe src=\"https://player.vimeo.com/video/997670994?badge=0&amp;autopause=0&amp;player\\_id=0&amp;app\\_id=58479\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\" title=\"ECOMAAT 2023\"></iframe></div><script src=\"https://player.vimeo.com/api/player.js\"><\/script>\n",
+    "client_details": "**Client**: ECOMAAT (Beauty Product Brand) \n\n**Production Countries**: France \n\n**Project Type**: Brand documentary \n\n**Service Type**: Remote production",
+    "challenge": "To remotely produce a segment of ECOMAAT's brand documentary in Paris amid travel restrictions, while assembling a lean, cost-effective team capable of capturing the brand's essence without compromising quality.",
+    "link_to_video": "1054981278",
+    "video_url": "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3c5c5efefa0a45620f130_ECOMAAT2024-transcode.mp4",
+    "created_on": "2025-02-05T23:17:22.659Z",
+    "tags": [
+      "case-studies"
+    ]
+  },
+  {
+    "slug": "chinatown-2023-summer-campaign",
+    "title": "Chinatown 2023 Summer Campaign",
+    "home_video_order": 2,
+    "short_desc": "A vibrant fusion of Chinese art and London’s modern energy.",
+    "main_image": null,
+    "mobile_image": {
+      "url": "/assets/external/67ba14c332007415b4ae7635_screenshot202025-02-2220at2010.16.51.avif",
+      "alt": null
+    },
+    "body": "\n<div style=\"padding:56.25% 0 0 0;position:relative;\"><iframe src=\"https://player.vimeo.com/video/997755019?badge=0&amp;autopause=0&amp;player\\_id=0&amp;app\\_id=58479\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\" title=\"Chinatown Summer Campaign 2023\"></iframe></div><script src=\"https://player.vimeo.com/api/player.js\"><\/script>\n",
+    "client_details": "**Client:** HYLink (Marketing Agency)\n\n**Production Countries:** China, UK\n\n**Project Type:** Social Media Video Campaign\n\n**Service Type:** One-Stop Solution",
+    "challenge": "To create an authentic and engaging video that seamlessly blended traditional Chinese art with the modern vibrancy of London Chinatown. The project required a nuanced understanding of cultural sensitivities and local business dynamics to resonate with a cross-cultural audience.",
+    "link_to_video": "997755019",
+    "video_url": "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a2e7d633509650a29124cc_Chinatown-transcode.mp4",
+    "created_on": "2024-12-17T04:14:37.733Z",
+    "tags": [
+      "case-studies"
+    ]
+  },
+  {
+    "slug": "momcozy-international-womens-day-campaign",
+    "title": "Momcozy International Women's Day Campaign",
+    "home_video_order": 3,
+    "short_desc": "International Womens Day",
+    "main_image": null,
+    "mobile_image": {
+      "url": "/assets/external/67b4223077b1a1486d2c0d01_screenshot202025-02-1720at2021.05.20.avif",
+      "alt": null
+    },
+    "body": "\n<div style=\"padding:56.25% 0 0 0;position:relative;\"><iframe src=\"https://player.vimeo.com/video/997679349?badge=0&amp;autopause=0&amp;player\\_id=0&amp;app\\_id=58479\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\" title=\"Momcozy International Women's Day Campaign\"></iframe></div><script src=\"https://player.vimeo.com/api/player.js\"><\/script>\n",
+    "client_details": "**Client**: NotJustAgency \n\n**Production Country**: UK \n\n**Project Type**: Social Media Commerical \n\n**Service Type**: One-stop solution",
+    "challenge": "To fulfill the client's request for a director who is also a mother to authentically capture real-life stories, while merging raw, personal narratives with polished artistic visuals ‒ translating their abstract vision into a cohesive social media campaign.",
+    "link_to_video": "997679349",
+    "video_url": "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ed60abac29870f828bf1_Momcozy-transcode.mp4",
+    "created_on": "2024-12-17T04:20:12.153Z",
+    "tags": [
+      "case-studies"
+    ]
+  },
+  {
+    "slug": "my-very-royal-romance-trailer",
+    "title": "My Very Royal Romance ",
+    "home_video_order": 4,
+    "short_desc": "Produced the UK's first English vertical short series",
+    "main_image": null,
+    "mobile_image": {
+      "url": "/assets/external/67ba162ebf65d7c71002f808_screenshot202025-02-2220at2010.22.42.avif",
+      "alt": null
+    },
+    "body": "\n<div style=\"padding:177.78% 0 0 0;position:relative;\"><iframe src=\"https://player.vimeo.com/video/997685344?badge=0&amp;autopause=0&amp;player\\_id=0&amp;app\\_id=58479\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\" title=\"My Very Royal Romance - Trailer\"></iframe></div><script src=\"https://player.vimeo.com/api/player.js\"><\/script>\n",
+    "client_details": "**Client:** KalosTV and Minishorts\n\n**Production Country:** UK\n\n**Project Type:** Vertical Short Series\n\n**Service Type:** Full Production",
+    "challenge": "To produce the UK’s first-ever English vertical short series, tackling the unique demands of a completely new storytelling format while assembling a capable team in an untested market.",
+    "link_to_video": "997685344",
+    "video_url": "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ebf5bde49f8ae758d746_My%20Very%20Royal%20Romance-transcode.mp4",
+    "created_on": "2024-12-17T04:19:06.109Z",
+    "tags": [
+      "case-studies"
+    ]
+  },
+  {
+    "slug": "heart-strings",
+    "title": "Heart & Strings",
+    "home_video_order": 5,
+    "short_desc": "A queer vertical series redefining modern British storytelling.",
+    "main_image": null,
+    "mobile_image": {
+      "url": "/assets/external/67ba152084b37ae06028b592_screenshot202025-02-2220at2010.18.27.avif",
+      "alt": null
+    },
+    "body": "\n<div style=\"padding:177.78% 0 0 0;position:relative;\"><iframe src=\"https://player.vimeo.com/video/997685582?badge=0&amp;autopause=0&amp;player\\_id=0&amp;app\\_id=58479\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\" title=\"Heart &amp; Strings – Trailer\"></iframe></div><script src=\"https://player.vimeo.com/api/player.js\"><\/script>\n",
+    "client_details": "**Client**: KalosTV and Minishorts \n\n**Production Country**: UK \n\n**Project Type**: Vertical Short Series \n\n**Service Type**: Full Production",
+    "challenge": null,
+    "link_to_video": "997685582",
+    "video_url": "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ed4e1db799d19bfa32e5_Heart%20%26%20Strings-transcode.mp4",
+    "created_on": "2024-12-17T04:17:47.481Z",
+    "tags": [
+      "case-studies"
+    ]
+  },
+  {
+    "slug": "ecomaat-2023",
+    "title": "ECOMAAT Commercial",
+    "home_video_order": 6,
+    "short_desc": "First Tone produced a captivating video to help ECOMAAT expand into the Chinese market using its global network.",
+    "main_image": null,
+    "mobile_image": {
+      "url": "/assets/external/67ba2075e492bbc49f2b9bb8_screenshot202025-02-1720at2021.03.37.avif",
+      "alt": null
+    },
+    "body": "\n<div style=\"padding:56.25% 0 0 0;position:relative;\"><iframe src=\"https://player.vimeo.com/video/997670994?badge=0&amp;autopause=0&amp;player\\_id=0&amp;app\\_id=58479\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\" title=\"ECOMAAT 2023\"></iframe></div><script src=\"https://player.vimeo.com/api/player.js\"><\/script>\n",
+    "client_details": "**Client:** ECOMAAT (Beauty Product Brand)\n\n**Production Countries:** Bulgaria, UK, China\n\n**Project Type:** Commercial\n\n**Service Type:** One-Stop Solution #culturalinsights #BridgingtheUKandChina",
+    "challenge": "Quickly adapt and execute a high-quality project for an international brand with a global reach.",
+    "link_to_video": "997670994",
+    "video_url": "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3c5a82662bdd7093ab1f2_Ecomaat-transcode.mp4",
+    "created_on": "2024-12-17T04:21:22.781Z",
+    "tags": [
+      "case-studies"
+    ]
+  },
+  {
+    "slug": "genesis-x-esquire",
+    "title": "Genesis × Esquire",
+    "home_video_order": 7,
+    "short_desc": "Luxury cars meet fashion in a stunning, fast-tracked documentary.",
+    "main_image": null,
+    "mobile_image": {
+      "url": "/assets/external/67b420eb0c5f464f896ccc57_screenshot202025-02-1720at2021.03.57.avif",
+      "alt": null
+    },
+    "body": "\n\n",
+    "client_details": "**Client:** Esquire Magazine & Genesis China \n\n**Production Country:** UK \n\n**Project Type:** Brand documentary \n\n**Service Type:** One-Stop Solution",
+    "challenge": "To craft a documentary fusing Esquire's fashion identity with Genesis' luxury cars in London ‒ despite the client's lack of location direction, a non-existent shooting plan, and a 7-day countdown to the editor-in-chief's arrival.",
+    "link_to_video": "750912177",
+    "video_url": "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3c5d6b88e9fb9e8381d99_Genesis-transcode.mp4",
+    "created_on": "2025-02-12T00:02:47.643Z",
+    "tags": [
+      "case-studies"
+    ]
+  },
+  {
+    "slug": "in-conversation-with-ashley-pierce",
+    "title": "In Conversation with Ashley Pierce ‒ Xiaomi Promo",
+    "home_video_order": 7,
+    "short_desc": "Mini Documentary for XIAOMI IMAGERY AWARDS 2022",
+    "main_image": null,
+    "mobile_image": {
+      "url": "/assets/external/67b421e72e4234c4bba6c4ee_screenshot202025-02-1720at2021.03.18.avif",
+      "alt": null
+    },
+    "body": "\n<div style=\"padding:56.25% 0 0 0;position:relative;\"><iframe src=\"https://player.vimeo.com/video/997656630?badge=0&amp;autopause=0&amp;player\\_id=0&amp;app\\_id=58479\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\" title=\"In conversation with Ashley Pearce\"></iframe></div><script src=\"https://player.vimeo.com/api/player.js\"><\/script>\n",
+    "client_details": "**Client**: Qi Jian Ji Hua Productions\n\n**Production Countries**: UK, China, USA\n\n**Project Type**: Brand documentary\n\n**Service Type**: Remote Filming",
+    "challenge": "To produce a cohesive four-part documentary series for Xiaomi's photography award judges across three countries during COVID travel bans, ensuring aesthetic consistency and creative alignment without the series director's physical presence.",
+    "link_to_video": "997656630",
+    "video_url": "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a2d5444cb50ce92b3a73aa_Ashley%20Pierce-transcode.mp4",
+    "created_on": "2024-12-17T04:23:03.076Z",
+    "tags": [
+      "case-studies"
+    ]
+  },
+  {
+    "slug": "in-conversation-with-matthew-lloyd",
+    "title": "In conversation with Matthew Lloyd - Xiaomi Promo",
+    "home_video_order": 8,
+    "short_desc": "Mini Documentary for XIAOMI IMAGERY AWARDS 2022",
+    "main_image": null,
+    "mobile_image": {
+      "url": "/assets/external/67b42205bb26043450dfec1a_screenshot202025-02-1720at2021.05.39.avif",
+      "alt": null
+    },
+    "body": "\n<div style=\"padding:56.25% 0 0 0;position:relative;\"><iframe src=\"https://player.vimeo.com/video/997656731?badge=0&amp;autopause=0&amp;player\\_id=0&amp;app\\_id=58479\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\" title=\"In conversation with Matthew Lloyd\"></iframe></div><script src=\"https://player.vimeo.com/api/player.js\"><\/script>\n",
+    "client_details": "**Client**: Qi Jian Ji Hua Productions\n\n**Production Countries**: UK, China, USA\n\n**Project Type**: Brand documentary\n\n**Service Type**: Remote Filming",
+    "challenge": "To produce a cohesive four-part documentary series for Xiaomi's photography award judges across three countries during COVID travel bans, ensuring aesthetic consistency and creative alignment without the series director's physical presence. \n\n‍",
+    "link_to_video": "997656731",
+    "video_url": "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ed6d024a1fe0f5d5650d_Matthew%20Lloyd%20Export-transcode.mp4",
+    "created_on": "2024-12-17T04:22:20.722Z",
+    "tags": [
+      "case-studies"
+    ]
+  },
+  {
+    "slug": "hsbc-x-zhou-guanyu",
+    "title": "HSBC × Zhou Guanyu",
+    "home_video_order": 9,
+    "short_desc": "Bilingual crew ensured a seamless, culturally rich branding video.",
+    "main_image": {
+      "url": "/assets/external/67abf17b8a73686e0cf53ba0_cmhsbc-c397-zhou-guanyu-screengrab-1-no-video-so-has-to-be-images.avif",
+      "alt": null
+    },
+    "mobile_image": {
+      "url": "/assets/external/67abf17b8a73686e0cf53ba0_cmhsbc-c397-zhou-guanyu-screengrab-1-no-video-so-has-to-be-images.avif",
+      "alt": null
+    },
+    "body": "\n\n",
+    "client_details": "**Client**: IMG Media (Global Media Company) \n\n**Production Countries**: UK, China \n\n**Project Type**: Branding Video \n\n**Service Type**: Bilingual crew supply",
+    "challenge": "Create an authentic, engaging video that coherently melds traditional Chinese art with a modern London city vibe.",
+    "link_to_video": null,
+    "video_url": null,
+    "created_on": "2025-02-11T20:34:54.138Z",
+    "tags": [
+      "case-studies"
+    ]
+  },
+  {
+    "slug": "sport-is-great",
+    "title": "Sport is GREAT",
+    "home_video_order": 10,
+    "short_desc": "Remote production turned global footage into a cohesive, powerful film.",
+    "main_image": null,
+    "mobile_image": {
+      "url": "/assets/external/67ba15af1004321958f75994_screenshot202025-02-1720at2021.06.32.avif",
+      "alt": null
+    },
+    "body": "\n<div style=\"padding:56.25% 0 0 0;position:relative;\"><iframe src=\"https://player.vimeo.com/video/998228840?badge=0&amp;autopause=0&amp;player\\_id=0&amp;app\\_id=58479\" frameborder=\"0\" allow=\"autoplay; fullscreen; picture-in-picture; clipboard-write\" style=\"position:absolute;top:0;left:0;width:100%;height:100%;\" title=\"Motorsport - Sport is GREAT\"></iframe></div><script src=\"https://player.vimeo.com/api/player.js\"><\/script>\n",
+    "client_details": "**Client:** Ping Pong Digital\n\n**Production Countries:** UK, China \n\n**Project Type:** government promotional video \n\n**Service Type:** one-stop solution",
+    "challenge": "To produce the UK Department for International Trade's “GREAT” campaign during strict COVID lockdowns—without physical filming access—while coordinating a global stakeholder network and ensuring aesthetic cohesion across 100+ hours of crowdsourced footage.",
+    "link_to_video": "998228779",
+    "video_url": "https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67abe9f1aa707f0ee0197d9d_Sport%20is%20GREAT-transcode.mp4",
+    "created_on": "2024-12-17T04:10:06.886Z",
+    "tags": [
+      "case-studies"
+    ]
+  }
+];
+
+      // Seed mock services (Extracted from Markdown templates)
+      services = [
+  {
+    "slug": "commercials",
+    "title": "Commercial",
+    "f_short_description": "Expertly crafted commercials that bring your vision to life with style, precision, and unwavering quality.",
+    "body": "\nWe specialize in meticulously crafted commercials, created with expertise and an unwavering focus on quality. Imaginative, polished, and striking, we bring your vision to life with precision and style, ensuring every detail stands out.\n",
+    "f_image": {
+      "url": "/assets/external/67a4765e1ec35523f88e5c04_services20e2809320commercial.avif",
+      "alt": null
+    },
+    "created_on": "2025-01-02T22:15:22.798Z"
+  },
+  {
+    "slug": "customisable-solutions",
+    "title": "Customisable Solutions",
+    "f_short_description": "Customizable solutions offering full production support and local crew, delivering adaptable, dependable, and collaborative expertise.",
+    "body": "\nWe offer fully customizable solutions, from complete production support to assembling local crews. Adaptable, collaborative, and dependable, we provide the resources and expertise necessary to bring your vision to life, no matter the challenge.\n",
+    "f_image": {
+      "url": "/assets/external/67a47805af5544b0e98ec850_services20e2809320customisable.avif",
+      "alt": null
+    },
+    "created_on": "2025-01-02T22:13:22.361Z"
+  },
+  {
+    "slug": "documentaries",
+    "title": "Documentaries",
+    "f_short_description": "Documentaries crafted with cultural insight and passion, telling authentic, resonant stories that connect with global audiences.",
+    "body": "\nOur documentaries are crafted with deep cultural insight and a passion for storytelling. Authentic, thoughtful, and resonant, we bring unheard stories to life through multilingual interviews and compelling narratives, creating films that truly connect with audiences around the world.\n",
+    "f_image": {
+      "url": "/assets/external/67a477bf2fa417ff4d3b98be_67a4776fbaf63b83ec0fd92d_services20e2809320documentaries201.avif",
+      "alt": null
+    },
+    "created_on": "2025-01-02T22:14:08.427Z"
+  },
+  {
+    "slug": "moving-images",
+    "title": "Moving Image",
+    "f_short_description": "End-to-end support for cross-border filmmaking, uniting creativity and logistics to exceed expectations.",
+    "body": "\nWe offer end-to-end support tailored to the unique demands of cross-border filmmaking. Organised, dynamic, and detail-driven, we combine creativity with logistics to deliver productions that consistently exceed expectations.\n",
+    "f_image": {
+      "url": "/assets/external/67a478465b00b963b0e59f7a_services20e2809320borders.avif",
+      "alt": null
+    },
+    "created_on": "2025-01-02T22:11:21.890Z"
+  },
+  {
+    "slug": "vertical-series",
+    "title": "Vertical Series",
+    "f_short_description": "Pioneering the first vertical series in the UK. Efficient, reliable, and seamless productions—drama stays on screen, not behind the scenes.",
+    "body": "\nAs the first company to deliver a vertical series in the UK, we set the standard for innovative and seamless productions. Known for being efficient, reliable, and resourceful, we ensure that every project is executed flawlessly—so the drama stays on screen, not in the production process.\n",
+    "f_image": {
+      "url": "/assets/external/67a475d6bb75f193f3f82b9f_services20e2809320vertical.avif",
+      "alt": null
+    },
+    "created_on": "2025-01-02T22:19:27.867Z"
+  }
+];
+
+      // Seed mock partnerships (Extracted from Markdown templates)
+      partnerships = [
+  {
+    "slug": "esquire",
+    "title": "Esquire ",
+    "f_image": {
+      "url": "/assets/external/66ca33e5dcb5b7160d9dc7a8_uuhartboard2010.avif",
+      "alt": null
+    },
+    "created_on": "2024-08-22T16:14:02.980Z"
+  },
+  {
+    "slug": "genesis",
+    "title": "Genesis",
+    "f_image": {
+      "url": "/assets/external/66ca33a25b68dbd4f50bb521_uuhartboard2011.avif",
+      "alt": null
+    },
+    "created_on": "2024-08-22T16:16:41.240Z"
+  },
+  {
+    "slug": "ping-pong-digital",
+    "title": "Ping Pong Digital ",
+    "f_image": {
+      "url": "/assets/external/66ca33b6acee61aab77b7df1_uuhartboard208.avif",
+      "alt": null
+    },
+    "created_on": "2024-08-22T16:16:20.386Z"
+  },
+  {
+    "slug": "xiaomi",
+    "title": "Xiaomi",
+    "f_image": {
+      "url": "/assets/external/66ca33c561f75b074d8bacc3_uuhartboard209.avif",
+      "alt": null
+    },
+    "created_on": "2024-08-22T16:14:50.129Z"
+  }
+];
+
+      // Seed mock messages
+      messages = [
+        {
+          id: "msg-101",
+          name: "Darren",
+          surname: "Smith",
+          email: "d.smith@vogue.co.uk",
+          company: "Vogue UK",
+          message: "Hello Hao and Hui, we love your China-UK cross-border video production portfolio! We would like to request a discovery call to plan a co-produced brand film shoot scheduled for next September in London and Shanghai.",
+          form_type: "contact",
+          created_at: new Date(Date.now() - 3600000 * 2).toISOString(),
+          is_read: false
+        },
+        {
+          id: "msg-102",
+          name: "Linh",
+          surname: "Nguyen",
+          email: "linh@pingpongdigital.com",
+          company: "Ping Pong Digital",
+          message: "Subscribed to newsletter updates.",
+          form_type: "newsletter",
+          created_at: new Date(Date.now() - 3600000 * 28).toISOString(),
+          is_read: true
+        },
+        {
+          id: "msg-103",
+          name: "Ming",
+          surname: "Chen",
+          email: "chen.ming@xiaomi.com",
+          company: "Xiaomi Global Marketing",
+          message: "Greetings, we have a project request for customisable vertical shorts series targeting Chinese audiences in the UK. Please let us know your team availability and production rates.",
+          form_type: "contact",
+          created_at: new Date(Date.now() - 3600000 * 75).toISOString(),
+          is_read: true
+        }
+      ];
+    }
+  
+    // Auto-load the current tab on page load
+    document.addEventListener("DOMContentLoaded", () => {
+      const tab = '{{ currentTab }}';
+      if (tab === 'dashboard') renderDashboardTab().catch(console.error);
+      else if (tab === 'inbox') renderInboxTab().catch(console.error);
+      else if (tab === 'case-studies') renderProjectsTab().catch(console.error);
+      else if (tab === 'services') renderServicesTab().catch(console.error);
+      else if (tab === 'partnerships') renderPartnershipsTab().catch(console.error);
+      else if (tab === 'home-gallery') renderHomeGalleryTab().catch(console.error);
+      else if (tab === 'settings') {
+        const viewContainer = document.getElementById('view-container');
+        if (viewContainer) {
+          viewContainer.classList.remove('p-8');
+          viewContainer.classList.add('p-0', 'h-full');
+        }
+        const mainSidebar = document.getElementById('main-sidebar');
+        if (mainSidebar) mainSidebar.classList.add('mini-sidebar');
+        
+        renderSettingsTab().catch(console.error);
+      }
+      
+      const titleEl = document.getElementById('current-tab-title');
+      if (titleEl) titleEl.innerText = tab.replace('-', ' ') + " Management";
+    });
+  </script>
+</body>
+</html>
