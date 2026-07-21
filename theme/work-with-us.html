@@ -246,8 +246,26 @@ background:rgba(255, 255, 255, 0);
       </div>
       <div id="Contact-Us-First-Tone-Production" class="form-block-2 w-form">
         <style>
-          .udesly-text-fiel-contact, .w-input, .udesly-textarea, .textarea, .text-field, .text-field-2 {
+          /* Premium form feedback styling */
+          .w-form-done {
+            background: rgba(25, 25, 25, 0.6) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 20px !important;
+            border-radius: 12px !important;
+            color: #fff !important;
+            text-align: center;
+            font-weight: 500;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+          }
+          /* Form input text color rules */
+          input.udesly-text-fiel-contact, input.w-input, input.text-field, input.text-field-2 {
             color: #ffffff !important;
+          }
+          textarea.udesly-textarea, textarea.textarea, textarea.w-input {
+            color: #000000 !important;
           }
         </style>
         <form name="contact_us_first_tone_production" action="/message-received" method="post" data-netlify="true">

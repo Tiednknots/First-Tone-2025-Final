@@ -188,12 +188,6 @@
 </url>
 <url>
 
-<loc>/admin/case-studies/</loc>
-
-<lastmod>2026-07-21T00:44:10.823Z</lastmod>
-</url>
-<url>
-
 <loc>/admin/services/</loc>
 
 <lastmod>2026-07-21T00:44:10.824Z</lastmod>
@@ -215,5 +209,11 @@
 <loc>/admin/home-gallery/</loc>
 
 <lastmod>2026-07-21T00:44:10.828Z</lastmod>
+</url>
+<url>
+
+<loc>/admin/case-studies/</loc>
+
+<lastmod>2026-07-21T06:00:22.653Z</lastmod>
 </url>
 </urlset>
