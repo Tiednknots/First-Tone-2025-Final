@@ -1528,6 +1528,14 @@
       
       if (field === 'project-gallery-images' || field === 'home-gallery-uploader') {
         const isHome = (field === 'home-gallery-uploader');
+        
+        const uploadBtn = isHome ? document.getElementById('home-upload-btn') : document.getElementById('project-upload-btn');
+        const originalText = uploadBtn ? uploadBtn.innerHTML : '';
+        if (uploadBtn) {
+          uploadBtn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Uploading...';
+          uploadBtn.disabled = true;
+        }
+
         for (let i = 0; i < files.length; i++) {
           if (isHome && currentHomeGallery.length >= 8) {
             alert("Maximum limit of 8 photos reached for the Home Gallery.");
@@ -1542,6 +1550,12 @@
             }
           }
         }
+        
+        if (uploadBtn) {
+          uploadBtn.innerHTML = originalText;
+          uploadBtn.disabled = false;
+        }
+        
         if (isHome) renderHomeGalleryTab();
         else renderProjectGalleryPreviews();
         return;
@@ -1637,13 +1651,22 @@
           if (proj.main_image?.url) {
             const zone = document.querySelector('[data-field="main-image"]');
             if (zone) {
+              const previewContainer = zone.querySelector('.preview-img-container');
+              const previewImg = previewContainer.querySelector('img');
+              if (previewImg) previewImg.src = proj.main_image.url;
+              previewContainer.classList.remove('hidden');
               zone.setAttribute('data-uploaded-url', proj.main_image.url);
-              const preview = zone.querySelector('.preview-img-container');
-              if (preview) {
-                const img = preview.querySelector('img');
-                if (img) img.src = proj.main_image.url;
-                preview.classList.remove('hidden');
-              }
+            }
+          }
+          
+          if (proj.video_url) {
+            const videoZone = document.querySelector('[data-field="project-video-file"]');
+            if (videoZone) {
+              const previewContainer = videoZone.querySelector('.preview-img-container');
+              const previewVideo = previewContainer.querySelector('video');
+              if (previewVideo) previewVideo.src = proj.video_url;
+              previewContainer.classList.remove('hidden');
+              videoZone.setAttribute('data-uploaded-url', proj.video_url);
             }
           }
 
@@ -1694,6 +1717,10 @@
         return;
       }
 
+      const videoFileZone = document.querySelector('[data-field="project-video-file"]');
+      const uploadedVideoFile = (videoFileZone && videoFileZone.getAttribute('data-uploaded-url')) ? videoFileZone.getAttribute('data-uploaded-url') : null;
+      const finalVideoUrl = videoUrl || uploadedVideoFile || null;
+
       const mainImageZone = document.querySelector('[data-field="main-image"]');
       
       const payload = {
@@ -1702,7 +1729,7 @@
         home_video_order: videoOrder ? Number(videoOrder) : null,
         work_video_order: workVideoOrder ? Number(workVideoOrder) : null,
         link_to_video: linkVideo || null,
-        video_url: videoUrl || null,
+        video_url: finalVideoUrl,
         short_desc: shortDesc || null,
         body: body || '',
         client_details: clientDetails || null,

@@ -384,13 +384,58 @@ a {
             </section>
 
             {%- if gallery and gallery.length > 0 -%}
-            <section class="home-masonry-gallery-section my-16 px-4 py-8">
-              <div class="max-w-7xl mx-auto">
-                <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+            <style>
+              .home-gallery-container {
+                position: relative;
+                z-index: 9999;
+                background: transparent;
+                width: 100%;
+                padding-top: 4rem;
+                padding-bottom: 4rem;
+              }
+              .home-gallery-inner {
+                max-width: 80rem;
+                margin: 0 auto;
+                padding: 0 1.5rem;
+              }
+              .home-masonry-grid {
+                column-count: 1;
+                column-gap: 1.5rem;
+              }
+              @media (min-width: 640px) {
+                .home-masonry-grid { column-count: 2; }
+              }
+              @media (min-width: 1024px) {
+                .home-masonry-grid { column-count: 3; }
+              }
+              .home-masonry-item {
+                break-inside: avoid;
+                margin-bottom: 1.5rem;
+                border-radius: 1rem;
+                overflow: hidden;
+                background: transparent;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+                transition: transform 0.3s ease;
+              }
+              .home-masonry-item:hover {
+                transform: scale(1.02);
+              }
+              .home-masonry-img {
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+                display: block;
+              }
+            </style>
+
+            <section class="home-gallery-container">
+              <div class="home-gallery-inner">
+                <div class="home-masonry-grid">
                   {%- for img in gallery limit: 8 -%}
                   {%- if img.url -%}
-                  <div class="break-inside-avoid rounded-2xl overflow-hidden shadow-2xl border border-zinc-800/80 bg-zinc-950 group transition duration-300">
-                    <img src="{{ img.url }}" loading="lazy" alt="{{ img.alt | default: 'First Tone Production Gallery' }}" class="w-full h-auto object-cover group-hover:scale-105 transition duration-500">
+                  <div class="home-masonry-item">
+                    <img src="{{ img.url }}" loading="lazy" alt="{{ img.alt | default: 'First Tone Production Gallery' }}" class="home-masonry-img">
                   </div>
                   {%- endif -%}
                   {%- endfor -%}
@@ -721,6 +766,7 @@ a {
     width: 100%;  /* Set width to 60% of viewport width */
     height: 100%; /* Set height to 60% of viewport height */
     overflow: hidden; /* Ensure no overflow occurs */
+    border-radius: 16px; /* Added rounded corners as requested */
   }
   .video-container iframe {
     position: absolute;
