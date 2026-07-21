@@ -291,10 +291,10 @@ background:rgba(255, 255, 255, 0);
             </style>
 
             <div class="video-container-sticky">
-              {%- if f_link-to-video -%}
+              {%- if f_video-url -%}
+                <video src="{{ f_video-url }}" class="w-full h-full object-cover" autoplay loop muted playsinline></video>
+              {%- elsif f_link-to-video -%}
                 <iframe src="https://player.vimeo.com/video/{{ f_link-to-video }}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen=""></iframe>
-              {%- elsif f_video_url -%}
-                <video src="{{ f_video_url }}" class="w-full h-full object-cover" autoplay loop muted playsinline></video>
               {%- elsif f_main-image.url -%}
                 <img src="{{ f_main-image.url }}" alt="{{ title }}" loading="lazy">
               {%- elsif f_mobile-image.url -%}
@@ -325,10 +325,12 @@ background:rgba(255, 255, 255, 0);
           <div class="rich-text-block-3 secondary w-richtext">{{ f_project-description | markdown }}</div>
         </div>{%- endunless -%}
       </div>
-    </div>
-
-    <div class="video-back-ground">
-      {%- if f_link-to-video -%}
+      <div class="video-back-ground">
+      {%- if f_video-url -%}
+      <div class="custom-video-container" style="position:relative; width:200vw; height:100vh; margin:0 auto;">
+        <video src="{{ f_video-url }}" class="w-full h-full object-cover opacity-30" autoplay loop muted playsinline></video>
+      </div>
+      {%- elsif f_link-to-video -%}
       <div class="code-embed-3 w-embed w-iframe">
         <div class="custom-video-container">
           <iframe src="https://player.vimeo.com/video/{{ f_link-to-video }}?autoplay=1&amp;controls=0&amp;muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen=""></iframe>
@@ -347,10 +349,6 @@ background:rgba(255, 255, 255, 0);
           }
         </style>
       </div>
-      {%- elsif f_video_url -%}
-      <div class="custom-video-container" style="position:relative; width:200vw; height:100vh; margin:0 auto;">
-        <video src="{{ f_video_url }}" class="w-full h-full object-cover opacity-30" autoplay loop muted playsinline></video>
-      </div>
       {%- elsif f_main-image.url -%}
       <div class="custom-video-container" style="position:relative; width:200vw; height:100vh; margin:0 auto;">
         <img src="{{ f_main-image.url }}" alt="" class="w-full h-full object-cover opacity-30">
@@ -360,6 +358,7 @@ background:rgba(255, 255, 255, 0);
         <img src="{{ f_mobile-image.url }}" alt="" class="w-full h-full object-cover opacity-30">
       </div>
       {%- endif -%}
+    </div>
       <div class="div-block-35"></div>
     </div>
   </section>
