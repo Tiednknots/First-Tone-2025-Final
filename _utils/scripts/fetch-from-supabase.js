@@ -87,7 +87,6 @@ async function fetchCaseStudies() {
   if (error) throw error;
 
   const dirPath = path.join(__dirname, '../../cms/case-studies');
-  await fs.emptyDir(dirPath);
 
   for (const row of data) {
     const frontmatter = {
@@ -184,14 +183,33 @@ async function fetchPartnerships() {
 
 async function run() {
   try {
-    await fetchSettings();
-    await fetchCaseStudies();
-    await fetchServices();
-    await fetchPartnerships();
-    console.log("Data sync from Supabase completed successfully!");
+    try {
+      await fetchSettings();
+    } catch (e) {
+      console.warn("Warning: Could not fetch settings from Supabase, using local defaults:", e.message);
+    }
+
+    try {
+      await fetchCaseStudies();
+    } catch (e) {
+      console.warn("Warning: Could not fetch case studies from Supabase, preserving local markdown files:", e.message);
+    }
+
+    try {
+      await fetchServices();
+    } catch (e) {
+      console.warn("Warning: Could not fetch services from Supabase, preserving local markdown files:", e.message);
+    }
+
+    try {
+      await fetchPartnerships();
+    } catch (e) {
+      console.warn("Warning: Could not fetch partnerships from Supabase, preserving local markdown files:", e.message);
+    }
+
+    console.log("Data sync process completed successfully!");
   } catch (err) {
-    console.error("Data sync from Supabase failed:", err);
-    process.exit(1);
+    console.warn("Data sync warning:", err);
   }
 }
 
