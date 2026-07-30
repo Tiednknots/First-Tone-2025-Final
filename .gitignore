@@ -5,3 +5,10 @@ public/
 
 # Local Netlify folder
 .netlify
+
+# Media files & heavy video binaries (prevent Git push timeouts & GitHub 100MB limits)
+*.mp4
+*.mov
+*.avi
+*.mkv
+theme/assets/website_bits/**/*.mp4
