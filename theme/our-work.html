@@ -242,7 +242,7 @@ background:rgba(255, 255, 255, 0);
         <h2 class="heading-5" data-edit-text="8b86fcf">{{ texts.8b86fcf }}</h2>
       </a>
       <h2 class="heading-3 left-align labells" data-edit-text="3647cb57">{{ texts.3647cb57 }}</h2>
-      <p class="udesly-paragraph-large other" data-edit-text="-3463687a">{{ texts.-3463687a }}</p>
+      <p class="udesly-paragraph-large other">National Film Award-winning vertical series. BAFTA Connect members. Commercials, documentaries, and cross-border productions that travel. Big budgets, lean ones, and everything in between – we thrive on creative challenges and deliver globally.</p>
     </div>
     <div class="slider_contain auto">
       {%- assign collection = collections.case-studies | sort: "f_work-video-order" -%}<div class="wrapper all w-dyn-list">
@@ -274,6 +274,9 @@ background:rgba(255, 255, 255, 0);
                 {%- if item.data.f_main-image.url -%}<img src="{{ item.data.f_main-image.url }}" loading="lazy" alt="" class="image-11">{%- endif -%}
                 {%- endif -%}
                 <h4 style="opacity:0;-webkit-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="heading-4 jj">{{ item.data.title }}</h4>
+                {%- if item.data.f_short-desc -%}
+                <div class="short-summary-desc" style="color: rgba(255,255,255,0.85); font-size: 0.85rem; margin-top: 0.25rem; font-family: sans-serif;">{{ item.data.f_short-desc }}</div>
+                {%- endif -%}
                 <div style="-webkit-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="button main sdf sd">
                   <div data-edit-text="-61473034">{{ texts.-61473034 }}</div>
                 </div>

@@ -1499,9 +1499,10 @@
         return URL.createObjectURL(file);
       }
 
+      const isVideoOrLarge = (file.type && file.type.startsWith('video/')) || file.size > 2 * 1024 * 1024;
       const fileExt = file.name.split('.').pop();
       const fileName = `${Date.now()}_${Math.random().toString(36).substring(2)}.${fileExt}`;
-      const candidateBuckets = ['assets', 'cms', 'media', 'public', 'uploads', 'images'];
+      const candidateBuckets = ['assets', 'cms', 'media', 'public', 'uploads', 'images', 'project-videos', 'case-studies-media'];
 
       for (const bucket of candidateBuckets) {
         try {
@@ -1518,7 +1519,12 @@
         }
       }
 
-      // Resilient fallback: Convert to Base64 Data URL so uploads NEVER fail or block saving
+      if (isVideoOrLarge) {
+        alert("Video upload failed to store in Supabase storage bucket. Please ensure your bucket (e.g. 'media' or 'public') exists with public permissions, or provide a direct video URL link.");
+        return null;
+      }
+
+      // Base64 Data URL fallback only for small images (< 2MB)
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.onload = (e) => resolve(e.target.result);
@@ -1659,14 +1665,17 @@
           document.getElementById('project-work-video-order').value = proj.work_video_order || '';
           document.getElementById('project-link-video').value = proj.link_to_video || '';
           document.getElementById('project-video-url').value = proj.video_url || '';
-          document.getElementById('project-short-desc').value = proj.short_desc || '';
-          document.getElementById('project-desc').value = proj.body || '';
-          document.getElementById('project-client-details').value = proj.client_details || '';
-          document.getElementById('project-challenge').value = proj.challenge || '';
+          const projectDescContent = proj.body || proj.project_overview || proj.project_description || proj.f_project_overview || proj['f_project-overview'] || proj['f_project-description'] || '';
+          const projectChallengeContent = proj.challenge || proj.highlights || proj.f_challenge || proj.f_highlights || '';
+
+          document.getElementById('project-short-desc').value = proj.short_desc || proj['f_short-desc'] || '';
+          document.getElementById('project-desc').value = projectDescContent;
+          document.getElementById('project-client-details').value = proj.client_details || proj['f_client-details'] || '';
+          document.getElementById('project-challenge').value = projectChallengeContent;
           
-          quillProjectDesc.root.innerHTML = proj.body ? marked.parse(proj.body) : '';
-          quillProjectClientDetails.root.innerHTML = proj.client_details ? marked.parse(proj.client_details) : '';
-          quillProjectChallenge.root.innerHTML = proj.challenge ? marked.parse(proj.challenge) : '';
+          quillProjectDesc.root.innerHTML = projectDescContent ? (typeof marked !== 'undefined' ? marked.parse(projectDescContent) : projectDescContent) : '';
+          quillProjectClientDetails.root.innerHTML = proj.client_details ? (typeof marked !== 'undefined' ? marked.parse(proj.client_details) : proj.client_details) : '';
+          quillProjectChallenge.root.innerHTML = projectChallengeContent ? (typeof marked !== 'undefined' ? marked.parse(projectChallengeContent) : projectChallengeContent) : '';
           
           if (proj.main_image?.url) {
             const zone = document.querySelector('[data-field="main-image"]');
@@ -1751,11 +1760,20 @@
         link_to_video: linkVideo || null,
         video_url: finalVideoUrl,
         short_desc: shortDesc || null,
+        'f_short-desc': shortDesc || null,
         body: body || '',
+        project_overview: body || '',
+        'f_project-overview': body || '',
+        'f_project-description': body || '',
         client_details: clientDetails || null,
+        'f_client-details': clientDetails || null,
         challenge: challenge || null,
+        f_challenge: challenge || null,
+        highlights: challenge || null,
         main_image: (mainImageZone && mainImageZone.getAttribute('data-uploaded-url')) ? { url: mainImageZone.getAttribute('data-uploaded-url'), alt: "" } : null,
+        'f_main-image': (mainImageZone && mainImageZone.getAttribute('data-uploaded-url')) ? { url: mainImageZone.getAttribute('data-uploaded-url'), alt: "" } : null,
         gallery_images: currentProjectGallery,
+        'f_gallery-images': currentProjectGallery,
         updated_on: new Date().toISOString()
       };
 
