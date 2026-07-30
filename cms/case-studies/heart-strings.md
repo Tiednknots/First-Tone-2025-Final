@@ -14,12 +14,12 @@ f_mobile-image:
   alt: null
   url: /assets/external/67ba152084b37ae06028b592_screenshot202025-02-2220at2010.18.27.avif
 f_gallery-images:
-  - url: "/assets/website_bits/%234_%20Heart%20%26%20Strings/DSC09845.jpg"
-  - url: "/assets/website_bits/%234_%20Heart%20%26%20Strings/HS1.jpg"
-  - url: "/assets/website_bits/%234_%20Heart%20%26%20Strings/HS2.jpg"
-  - url: "/assets/website_bits/%234_%20Heart%20%26%20Strings/HS3.jpg"
-  - url: "/assets/website_bits/%234_%20Heart%20%26%20Strings/HS4.jpg"
-  - url: "/assets/website_bits/%234_%20Heart%20%26%20Strings/HS5.jpg"
+  - url: "/assets/website_bits/project_4_heart_and_strings/DSC09845.jpg"
+  - url: "/assets/website_bits/project_4_heart_and_strings/HS1.jpg"
+  - url: "/assets/website_bits/project_4_heart_and_strings/HS2.jpg"
+  - url: "/assets/website_bits/project_4_heart_and_strings/HS3.jpg"
+  - url: "/assets/website_bits/project_4_heart_and_strings/HS4.jpg"
+  - url: "/assets/website_bits/project_4_heart_and_strings/HS5.jpg"
 f_home-video-order: 4
 f_work-video-order: 4
 layout: '[case-studies].html'

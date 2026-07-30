@@ -14,12 +14,12 @@ f_mobile-image:
   alt: null
   url: /assets/external/67ba162ebf65d7c71002f808_screenshot202025-02-2220at2010.22.42.avif
 f_gallery-images:
-  - url: "/assets/website_bits/%233_%20My%20Very%20Royal%20Romance/Gallery%201.jpg"
-  - url: "/assets/website_bits/%233_%20My%20Very%20Royal%20Romance/Gallery%202.jpg"
-  - url: "/assets/website_bits/%233_%20My%20Very%20Royal%20Romance/Gallery%203.jpg"
-  - url: "/assets/website_bits/%233_%20My%20Very%20Royal%20Romance/Gallery%204.jpg"
-  - url: "/assets/website_bits/%233_%20My%20Very%20Royal%20Romance/Gallery%205.jpg"
-  - url: "/assets/website_bits/%233_%20My%20Very%20Royal%20Romance/Gallery%206.jpg"
+  - url: "/assets/website_bits/project_3_my_very_royal_romance/Gallery%201.jpg"
+  - url: "/assets/website_bits/project_3_my_very_royal_romance/Gallery%202.jpg"
+  - url: "/assets/website_bits/project_3_my_very_royal_romance/Gallery%203.jpg"
+  - url: "/assets/website_bits/project_3_my_very_royal_romance/Gallery%204.jpg"
+  - url: "/assets/website_bits/project_3_my_very_royal_romance/Gallery%205.jpg"
+  - url: "/assets/website_bits/project_3_my_very_royal_romance/Gallery%206.jpg"
 f_home-video-order: 3
 f_work-video-order: 3
 layout: '[case-studies].html'
