@@ -1,6 +1,6 @@
 ---
 title: ECOMAAT Commercial
-slug: ecomaat-2023
+slug: ecomaat-commercial
 created-on: '2024-12-17T04:21:22.781+00:00'
 updated-on: '2026-07-20T22:42:09.477+00:00'
 published-on: '2025-04-11T05:06:43.588+00:00'
@@ -52,8 +52,8 @@ f_gallery-images: []
 f_mobile-image:
   alt: null
   url: /assets/external/67ba2075e492bbc49f2b9bb8_screenshot202025-02-1720at2021.03.37.avif
-f_home-video-order: 6
-f_work-video-order: 99
+f_home-video-order: 9
+f_work-video-order: 9
 f_short-desc: First Tone produced a captivating video to help ECOMAAT expand into the Chinese market using its global network.
 f_link-to-service: []
 layout: '[case-studies].html'

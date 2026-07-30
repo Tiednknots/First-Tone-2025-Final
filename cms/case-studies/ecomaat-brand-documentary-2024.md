@@ -1,6 +1,6 @@
 ---
 title: ECOMAAT Brand Documentary 2024
-slug: ecomaat-2024
+slug: ecomaat-brand-documentary-2024
 created-on: '2025-02-05T23:17:22.659+00:00'
 updated-on: '2026-07-20T20:39:47.74+00:00'
 published-on: '2025-04-11T05:06:43.588+00:00'
@@ -24,8 +24,8 @@ f_gallery-images: []
 f_mobile-image:
   alt: ''
   url: /assets/external/67b421b02e4234c4bba69973_screenshot202025-02-1720at2021.03.46.avif
-f_home-video-order: 1
-f_work-video-order: 1
+f_home-video-order: 16
+f_work-video-order: 16
 f_short-desc: A stunning ECOMAAT campaign showcasing Bulgarian rose fields under a tight deadline.
 f_link-to-service: []
 layout: '[case-studies].html'

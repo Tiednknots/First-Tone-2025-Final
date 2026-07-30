@@ -1,6 +1,6 @@
 ---
 title: Sport is GREAT
-slug: sport-is-great
+slug: sports-is-great
 created-on: '2024-12-17T04:10:06.886+00:00'
 updated-on: '2025-02-22T19:09:12.325+00:00'
 published-on: '2025-04-11T05:06:43.588+00:00'
@@ -16,8 +16,8 @@ f_gallery-images: []
 f_mobile-image:
   alt: null
   url: /assets/external/67ba15af1004321958f75994_screenshot202025-02-1720at2021.06.32.avif
-f_home-video-order: 10
-f_work-video-order: 99
+f_home-video-order: 18
+f_work-video-order: 18
 f_short-desc: 'Remote production turned global footage into a cohesive, powerful film.'
 f_link-to-service: []
 layout: '[case-studies].html'
