@@ -22,8 +22,8 @@ f_gallery-images:
 f_mobile-image:
   alt: null
   url: /assets/external/67abf17b8a73686e0cf53ba0_cmhsbc-c397-zhou-guanyu-screengrab-1-no-video-so-has-to-be-images.avif
-f_home-video-order: 9
-f_work-video-order: 99
+f_home-video-order: 8
+f_work-video-order: 8
 f_short-desc: 'Bilingual crew ensured a seamless, culturally rich branding video.'
 f_link-to-service: []
 layout: '[case-studies].html'

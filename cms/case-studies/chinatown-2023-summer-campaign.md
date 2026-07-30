@@ -31,8 +31,8 @@ f_gallery-images: []
 f_mobile-image:
   alt: null
   url: /assets/external/67ba14c332007415b4ae7635_screenshot202025-02-2220at2010.16.51.avif
-f_home-video-order: 2
-f_work-video-order: 99
+f_home-video-order: 12
+f_work-video-order: 12
 f_short-desc: A vibrant fusion of Chinese art and London’s modern energy.
 f_link-to-service: []
 layout: '[case-studies].html'
