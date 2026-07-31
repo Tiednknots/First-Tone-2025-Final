@@ -543,12 +543,14 @@
     
     // Static Fallback Data compiled from Eleventy Collections
     const STATIC_PROJECTS = {{ collections['case-studies'] | jsonCaseStudies | safe }} || [];
+    const STATIC_SERVICES = {{ collections['services'] | jsonServices | safe }} || [];
+    const STATIC_PARTNERSHIPS = {{ collections['partnerships'] | jsonPartnerships | safe }} || [];
 
     // Loaded CMS Data caches
     let messages = [];
     let projects = STATIC_PROJECTS;
-    let services = [];
-    let partnerships = [];
+    let services = STATIC_SERVICES;
+    let partnerships = STATIC_PARTNERSHIPS;
     let texts = {};
     let colors = {};
     let links = {};
@@ -1225,12 +1227,20 @@
       const grid = document.getElementById('projects-grid');
       
       if (!isDemo) {
-        const { data, error } = await supabaseClient.from('case_studies').select('*').order('home_video_order', { ascending: true });
-        if (error) {
-          grid.innerHTML = `<div class="text-red-500 text-sm">Failed to load projects: ${error.message}</div>`;
-          return;
+        try {
+          const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1500));
+          const queryPromise = supabaseClient.from('case_studies').select('*').order('home_video_order', { ascending: true });
+          const res = await Promise.race([queryPromise, timeoutPromise]);
+          if (res && res.data && !res.error && res.data.length > 0) {
+            projects = res.data;
+          } else {
+            console.warn("Supabase case_studies fetch issue, using STATIC_PROJECTS:", res?.error);
+            projects = STATIC_PROJECTS;
+          }
+        } catch (err) {
+          console.warn("Supabase case_studies fetch timeout or error, using STATIC_PROJECTS:", err);
+          projects = STATIC_PROJECTS;
         }
-        projects = data;
       }
       
       grid.innerHTML = projects.map(proj => {
@@ -1754,12 +1764,18 @@
       const list = document.getElementById('services-list');
       
       if (!isDemo) {
-        const { data, error } = await supabaseClient.from('services').select('*').order('title');
-        if (error) {
-          list.innerHTML = `<div class="text-red-500 text-sm">Failed to load services: ${error.message}</div>`;
-          return;
+        try {
+          const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1500));
+          const queryPromise = supabaseClient.from('services').select('*').order('title');
+          const res = await Promise.race([queryPromise, timeoutPromise]);
+          if (res && res.data && !res.error && res.data.length > 0) {
+            services = res.data;
+          } else {
+            services = STATIC_SERVICES;
+          }
+        } catch (err) {
+          services = STATIC_SERVICES;
         }
-        services = data;
       }
 
       list.innerHTML = services.map(ser => {
@@ -1883,8 +1899,19 @@
       const list = document.getElementById('partnerships-list');
       
       if (!isDemo) {
-        const { data, error } = await supabaseClient.from('partnerships').select('*').order('title');
-        if (error) {
+        try {
+          const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1500));
+          const queryPromise = supabaseClient.from('partnerships').select('*').order('title');
+          const res = await Promise.race([queryPromise, timeoutPromise]);
+          if (res && res.data && !res.error && res.data.length > 0) {
+            partnerships = res.data;
+          } else {
+            partnerships = STATIC_PARTNERSHIPS;
+          }
+        } catch (err) {
+          partnerships = STATIC_PARTNERSHIPS;
+        }
+      }
           list.innerHTML = `<div class="text-red-500 text-sm col-span-4">Failed: ${error.message}</div>`;
           return;
         }

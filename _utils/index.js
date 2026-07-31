@@ -51,6 +51,36 @@ module.exports = function (eleventyConfig) {
         return JSON.stringify(items);
     });
 
+    eleventyConfig.addNunjucksFilter("jsonServices", function(collection) {
+        if (!Array.isArray(collection)) return "[]";
+        const items = collection.map(item => {
+            const d = item.data || {};
+            return {
+                title: d.title || '',
+                slug: d.slug || '',
+                f_short_description: d.f_short_description || d['f_short-desc'] || '',
+                body: item.templateContent || d.body || '',
+                f_image: d.f_image || d['f_main-image'] || null
+            };
+        });
+        return JSON.stringify(items);
+    });
+
+    eleventyConfig.addNunjucksFilter("jsonPartnerships", function(collection) {
+        if (!Array.isArray(collection)) return "[]";
+        const items = collection.map(item => {
+            const d = item.data || {};
+            return {
+                title: d.title || '',
+                slug: d.slug || '',
+                f_short_description: d.f_short_description || d['f_short-desc'] || '',
+                body: item.templateContent || d.body || '',
+                f_image: d.f_image || d['f_main-image'] || null
+            };
+        });
+        return JSON.stringify(items);
+    });
+
     eleventyConfig.on('afterBuild', async () => {
         await addFilesToFunctions();
     });
