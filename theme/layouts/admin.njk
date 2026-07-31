@@ -1116,11 +1116,20 @@
       tbody.innerHTML = filtered.length > 0 
         ? filtered.map(msg => {
             const dateStr = new Date(msg.created_at || Date.now()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            const formTitle = (msg.form_type === 'contact_us_first_tone_production' || msg.form_type === 'contact' || !msg.form_type) ? 'Contact Form' : (msg.form_type === 'newsletter' ? 'Newsletter' : msg.form_type);
+            // Map raw form_type to a human-readable page source
+            const sourceMap = {
+              'contact_us_first_tone_production': 'Contact Form',
+              'contact': 'Contact Form',
+              'newsletter': 'Newsletter Signup',
+              'newsletter_signup': 'Newsletter Signup',
+              'work_with_us': 'Work With Us',
+              'work-with-us': 'Work With Us',
+            };
+            const formSource = sourceMap[msg.form_type] || (msg.form_type ? msg.form_type.replace(/_/g, ' ').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Contact Form');
             return `
               <tr class="hover:bg-zinc-950/20 transition cursor-pointer text-sm ${!msg.is_read ? 'font-bold text-white bg-brand-500/5' : 'text-zinc-300'}" onclick="openMessageModal('${msg.id}')">
                 <td class="p-4">${msg.name || 'Anonymous'} ${msg.surname || ''}<br><span class="text-xs text-zinc-500">${msg.email || '-'}</span></td>
-                <td class="p-4"><span class="px-2 py-0.5 rounded text-xs uppercase font-bold ${msg.form_type === 'newsletter' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' : 'bg-brand-500/10 text-brand-100 border border-brand-500/20'}">${formTitle}</span></td>
+                <td class="p-4 text-xs text-zinc-400">${formSource}</td>
                 <td class="p-4">${msg.company || '-'}</td>
                 <td class="p-4 text-xs text-zinc-500">${dateStr}</td>
                 <td class="p-4">
