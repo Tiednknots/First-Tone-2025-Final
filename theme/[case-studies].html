@@ -290,15 +290,19 @@ background:rgba(255, 255, 255, 0);
               }
             </style>
 
+            {%- assign coverImage = f_main-image.url -%}
+            {%- if coverImage == nil or coverImage == "" -%}
+              {%- assign coverImage = f_mobile-image.url -%}
+            {%- endif -%}
+
             <div class="video-container-sticky">
               {%- if f_link-to-video -%}
                 <iframe src="https://player.vimeo.com/video/{{ f_link-to-video }}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen=""></iframe>
               {%- elsif f_video-url -%}
-                <video src="{{ f_video-url }}" class="w-full h-full object-cover" autoplay loop muted playsinline></video>
-              {%- elsif f_main-image.url -%}
-                <img src="{{ f_main-image.url }}" alt="{{ title }}" loading="lazy">
-              {%- elsif f_mobile-image.url -%}
-                <img src="{{ f_mobile-image.url }}" alt="{{ title }}" loading="lazy">
+                <video src="{{ f_video-url }}" poster="{{ coverImage }}" class="w-full h-full object-cover" autoplay loop muted playsinline onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';"></video>
+                <img src="{{ coverImage }}" alt="{{ title }}" class="w-full h-full object-cover" style="display:none;" loading="lazy">
+              {%- elsif coverImage -%}
+                <img src="{{ coverImage }}" alt="{{ title }}" class="w-full h-full object-cover" loading="lazy">
               {%- else -%}
                 <div class="w-full h-full flex items-center justify-center bg-zinc-900 text-zinc-600 text-sm font-semibold">No Video or Image Preview</div>
               {%- endif -%}
@@ -361,12 +365,14 @@ background:rgba(255, 255, 255, 0);
       </div>
       {%- elsif f_video-url -%}
       <div class="custom-video-container" style="position:relative; width:200vw; height:100vh; margin:0 auto;">
-        <video src="{{ f_video-url }}" class="w-full h-full object-cover opacity-30" autoplay loop muted playsinline></video>
+        <video src="{{ f_video-url }}" poster="{{ coverImage }}" class="w-full h-full object-cover opacity-30" autoplay loop muted playsinline onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';"></video>
+        <img src="{{ coverImage }}" alt="" class="w-full h-full object-cover opacity-30" style="display:none;">
       </div>
-      {%- elsif f_main-image.url -%}
+      {%- elsif coverImage -%}
       <div class="custom-video-container" style="position:relative; width:200vw; height:100vh; margin:0 auto;">
-        <img src="{{ f_main-image.url }}" alt="" class="w-full h-full object-cover opacity-30">
+        <img src="{{ coverImage }}" alt="" class="w-full h-full object-cover opacity-30">
       </div>
+      {%- endif -%}
       {%- elsif f_mobile-image.url -%}
       <div class="custom-video-container" style="position:relative; width:200vw; height:100vh; margin:0 auto;">
         <img src="{{ f_mobile-image.url }}" alt="" class="w-full h-full object-cover opacity-30">
