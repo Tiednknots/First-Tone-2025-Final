@@ -535,14 +535,18 @@
     };
 
     // App State Configuration
-    let SUPABASE_URL = "";
-    let SUPABASE_ANON_KEY = "";
+    // App State Configuration
+    let SUPABASE_URL = "https://wcmuglfxfnvitulpdzst.supabase.co";
+    let SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndjbXVnbGZ4Zm52aXR1bHBkenN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQzMDQyODMsImV4cCI6MjA5OTg4MDI4M30.jLP2s4erD4BOIpPfdcsLMJ61I6EQnsSnBTtzXHaB7I0";
     let supabaseClient = null;
     let isDemo = false;
     
+    // Static Fallback Data compiled from Eleventy Collections
+    const STATIC_PROJECTS = {{ collections['case-studies'] | jsonCaseStudies | safe }} || [];
+
     // Loaded CMS Data caches
     let messages = [];
-    let projects = [];
+    let projects = STATIC_PROJECTS;
     let services = [];
     let partnerships = [];
     let texts = {};
@@ -563,18 +567,19 @@
     async function initConfig() {
       try {
         const res = await fetch('/api/config');
-        if (!res.ok) throw new Error("Could not fetch API configuration");
-        
-        const config = await res.json();
-        
-        if (config.error || !config.supabaseUrl || !config.supabaseAnonKey) {
-          throw new Error("No supabase settings defined.");
+        if (res.ok) {
+          const config = await res.json();
+          if (config.supabaseUrl && config.supabaseAnonKey) {
+            SUPABASE_URL = config.supabaseUrl;
+            SUPABASE_ANON_KEY = config.supabaseAnonKey;
+          }
         }
+      } catch (e) {
+        console.warn("Using default Supabase configuration.");
+      }
 
-        SUPABASE_URL = config.supabaseUrl;
-        SUPABASE_ANON_KEY = config.supabaseAnonKey;
-        
-        // Initialize Supabase Client using the window namespace with explicit session persistence config
+      try {
+        // Initialize Supabase Client
         supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
           auth: {
             persistSession: true,
@@ -594,13 +599,12 @@
           showAuthGate();
         }
       } catch (err) {
-        console.warn("API config missing or error. Falling back to Demo/Mock Mode:", err.message);
+        console.warn("Supabase auth check error:", err.message);
         isDemo = true;
-        document.getElementById('connection-status').innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span> Demo Mode';
+        document.getElementById('connection-status').innerHTML = '<span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span> Offline Mode';
         document.getElementById('connection-status').className = "text-xs text-amber-400 flex items-center gap-1 font-semibold";
         showAuthGate();
       } finally {
-        // Dismiss loading screen after routing is decided
         const loader = document.getElementById('loading-overlay');
         if (loader) loader.classList.add('hidden');
       }
@@ -1056,18 +1060,30 @@
 
     // ================= TAB: INBOX LOGIC =================
     async function renderInboxTab() {
-      if (!isDemo) {
+      if (!isDemo && supabaseClient) {
         try {
           const { data: { session } } = await supabaseClient.auth.getSession();
           const token = session ? session.access_token : "";
 
-          const res = await fetch('/api/get-messages', {
-            headers: { 'Authorization': `Bearer ${token}` }
-          });
-          if (!res.ok) throw new Error("Could not load messages.");
-          messages = await res.json();
+          const fetchPromise = fetch('/api/get-messages', { headers: { 'Authorization': `Bearer ${token}` } });
+          const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 1500));
+          const res = await Promise.race([fetchPromise, timeoutPromise]);
+          if (res.ok) {
+            messages = await res.json();
+          } else {
+            throw new Error("Serverless API endpoint get-messages returned status " + res.status);
+          }
         } catch (err) {
-          console.error("Inbox rendering failed:", err.message);
+          try {
+            const queryPromise = supabaseClient.from('messages').select('*').order('created_at', { ascending: false });
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 1500));
+            const { data, error } = await Promise.race([queryPromise, timeoutPromise]);
+            if (!error && data) {
+              messages = data;
+            }
+          } catch(e) {
+            console.warn("Direct Supabase messages query failed/timed out:", e);
+          }
         }
       }
       applyInboxFilter();
@@ -1077,9 +1093,10 @@
     document.getElementById('inbox-filter')?.addEventListener('change', applyInboxFilter);
 
     function applyInboxFilter() {
-      const searchVal = document.getElementById('inbox-search').value.toLowerCase();
-      const filterVal = document.getElementById('inbox-filter').value;
+      const searchVal = document.getElementById('inbox-search') ? document.getElementById('inbox-search').value.toLowerCase() : '';
+      const filterVal = document.getElementById('inbox-filter') ? document.getElementById('inbox-filter').value : 'all';
       const tbody = document.getElementById('messages-table-body');
+      if (!tbody) return;
       
       let filtered = messages.filter(msg => {
         const matchSearch = 
@@ -1090,7 +1107,7 @@
 
         let matchFilter = true;
         if (filterVal === 'unread') matchFilter = !msg.is_read;
-        else if (filterVal === 'contact') matchFilter = msg.form_type === 'contact';
+        else if (filterVal === 'contact') matchFilter = msg.form_type === 'contact' || msg.form_type === 'contact_us_first_tone_production';
         else if (filterVal === 'newsletter') matchFilter = msg.form_type === 'newsletter';
 
         return matchSearch && matchFilter;
@@ -1098,11 +1115,12 @@
 
       tbody.innerHTML = filtered.length > 0 
         ? filtered.map(msg => {
-            const dateStr = new Date(msg.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            const dateStr = new Date(msg.created_at || Date.now()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            const formTitle = (msg.form_type === 'contact_us_first_tone_production' || msg.form_type === 'contact' || !msg.form_type) ? 'Contact Form' : (msg.form_type === 'newsletter' ? 'Newsletter' : msg.form_type);
             return `
               <tr class="hover:bg-zinc-950/20 transition cursor-pointer text-sm ${!msg.is_read ? 'font-bold text-white bg-brand-500/5' : 'text-zinc-300'}" onclick="openMessageModal('${msg.id}')">
-                <td class="p-4">${msg.name} ${msg.surname || ''}<br><span class="text-xs text-zinc-500">${msg.email}</span></td>
-                <td class="p-4"><span class="px-2 py-0.5 rounded text-xs uppercase font-bold ${msg.form_type === 'newsletter' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' : 'bg-brand-500/10 text-brand-100 border border-brand-500/20'}">${msg.form_type}</span></td>
+                <td class="p-4">${msg.name || 'Anonymous'} ${msg.surname || ''}<br><span class="text-xs text-zinc-500">${msg.email || '-'}</span></td>
+                <td class="p-4"><span class="px-2 py-0.5 rounded text-xs uppercase font-bold ${msg.form_type === 'newsletter' ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' : 'bg-brand-500/10 text-brand-100 border border-brand-500/20'}">${formTitle}</span></td>
                 <td class="p-4">${msg.company || '-'}</td>
                 <td class="p-4 text-xs text-zinc-500">${dateStr}</td>
                 <td class="p-4">

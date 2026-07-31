@@ -10,10 +10,10 @@ f_project-overview: "To save her orphanage from demolition, Lila crashes a billi
 f_challenge: "A standout highlight of this project was its sheer location diversity. Across an intense six-day shoot, we coordinated contrasting settings to craft a rich visual narrative – spanning a classic red-brick Edwardian building, a bright glass-fronted modern office, a realistic hospital studio, a bespoke luxury care home set, an understated Victorian mansion, and a light-filled eco-chic studio."
 f_video-url: "/assets/website_bits/project_2_rumour_has_it/2.mp4"
 f_main-image:
-  url: "/assets/website_bits/project_2_rumour_has_it/Cover%20Photo.png"
+  url: "/assets/website_bits/project_2_rumour_has_it/Cover_Photo.png"
   alt: "Rumor Has It"
 f_mobile-image:
-  url: "/assets/website_bits/project_2_rumour_has_it/Cover%20Photo.png"
+  url: "/assets/website_bits/project_2_rumour_has_it/Cover_Photo.png"
   alt: "Rumor Has It"
 f_gallery-images:
   - url: "/assets/website_bits/project_2_rumour_has_it/RHI1.JPG"

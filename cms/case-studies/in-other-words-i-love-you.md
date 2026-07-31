@@ -10,10 +10,10 @@ f_project-overview: "When American student Alice Keaton wins a scholarship to Lo
 f_challenge: "Turned around in just three weeks of pre-production, this ambitious seven-day shoot delivered uncompromising cinematic quality.\n\nWe successfully tackled 20+ sets across three main locations, vintage vehicle logistics, large crowd scenes, and a dynamic story spanning two timelines seven years apart, all while delicately handling the beats of modern young adult romance. The Outcome: A history-making vertical series that sets a new industry standard."
 f_video-url: "/assets/website_bits/project_1_in_other_words/1.mp4"
 f_main-image:
-  url: "/assets/website_bits/project_1_in_other_words/Cover%20Photo.png"
+  url: "/assets/website_bits/project_1_in_other_words/Cover_Photo.png"
   alt: "In Other Words, I Love You"
 f_mobile-image:
-  url: "/assets/website_bits/project_1_in_other_words/Cover%20Photo.png"
+  url: "/assets/website_bits/project_1_in_other_words/Cover_Photo.png"
   alt: "In Other Words, I Love You"
 f_gallery-images:
   - url: "/assets/website_bits/project_1_in_other_words/IOW1.jpg"
