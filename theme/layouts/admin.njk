@@ -1912,11 +1912,6 @@
           partnerships = STATIC_PARTNERSHIPS;
         }
       }
-          list.innerHTML = `<div class="text-red-500 text-sm col-span-4">Failed: ${error.message}</div>`;
-          return;
-        }
-        partnerships = data;
-      }
 
       list.innerHTML = partnerships.map(part => {
         const imgUrl = part.f_image?.url || '/assets/images/inner-circle.svg';
