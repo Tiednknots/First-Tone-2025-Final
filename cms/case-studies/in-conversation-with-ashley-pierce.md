@@ -24,7 +24,9 @@ f_project-description: |-
 f_link-to-video: '997656630'
 f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a2d5444cb50ce92b3a73aa_Ashley%20Pierce-transcode.mp4'
 f_video-embed-rich-text: null
-f_main-image: null
+f_main-image:
+  url: /assets/external/67b421e72e4234c4bba6c4ee_screenshot202025-02-1720at2021.03.18.avif
+  alt: "In Conversation with Ashley Pierce ‒ Xiaomi Promo"
 f_gallery-images: []
 f_mobile-image:
   alt: null

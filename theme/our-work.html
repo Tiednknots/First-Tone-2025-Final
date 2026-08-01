@@ -152,9 +152,123 @@ background:rgba(255, 255, 255, 0);
   ]
 }
 </script>
-{{ settings.site.header_additional_content }}{%- include "partials/_site-css-variables" -%}<style>.w-video.w-embed {
+{{ settings.site.header_additional_content }}{%- include "partials/_site-css-variables" -%}<style>
+        .w-video.w-embed {
             aspect-ratio: 16 / 9;
-        }</style></head>
+        }
+        /* Hide category text spilling above cards */
+        .scroll-in-category.hhjj {
+            display: none !important;
+        }
+        /* Card Frame */
+        .vertical-card-2 {
+            display: block !important;
+            position: relative !important;
+            width: 100% !important;
+            aspect-ratio: 16 / 9 !important;
+            border-radius: 16px !important;
+            overflow: hidden !important;
+            background: #000000 !important;
+            text-decoration: none !important;
+            margin-bottom: 2rem !important;
+        }
+        .vertical-card-2 .hover_video_wrapper-2 {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            overflow: hidden !important;
+        }
+        /* Static Thumbnail Image */
+        .vertical-card-2 .image-11 {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            z-index: 1 !important;
+            transition: opacity 0.4s ease !important;
+        }
+        /* Hover Video Elements (Iframe & Native MP4) */
+        .vertical-card-2 .hover-iframe,
+        .vertical-card-2 .video-2,
+        .vertical-card-2 .video-m,
+        .vertical-card-2 video {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            border: none !important;
+            z-index: 5 !important;
+        }
+        .vertical-card-2 .hover-iframe {
+            opacity: 0 !important;
+            transition: opacity 0.4s ease !important;
+            pointer-events: none !important;
+        }
+        .vertical-card-2:hover .hover-iframe {
+            opacity: 1 !important;
+        }
+        .vertical-card-2:hover .image-11 {
+            opacity: 0 !important;
+        }
+
+        /* Card Text Overlay (Title & View Work Button Only - Matching Original Webflow Design) */
+        .vertical-card-2 .modern-card-text-overlay {
+            position: absolute !important;
+            inset: 0 !important;
+            z-index: 10 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: flex-end !important;
+            padding: 2.5rem 2rem !important;
+            background: transparent !important;
+            opacity: 0 !important;
+            transform: translateY(15px) !important;
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            pointer-events: none !important;
+        }
+        .vertical-card-2:hover .modern-card-text-overlay {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        /* Title Typography */
+        .vertical-card-2 .heading-4.jj {
+            color: #ffffff !important;
+            font-family: Oswald, sans-serif !important;
+            font-size: 2.2rem !important;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            margin: 0 0 1rem 0 !important;
+            line-height: 1.1 !important;
+            position: relative !important;
+            opacity: 1 !important;
+            transform: none !important;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6) !important;
+        }
+
+        /* View Work Button Styling */
+        .vertical-card-2 .button.main.sdf {
+            display: inline-block !important;
+            align-self: flex-start !important;
+            background: #ffffff !important;
+            color: #000000 !important;
+            border-radius: 8px !important;
+            padding: 0.75rem 1.5rem !important;
+            font-family: Oswald, sans-serif !important;
+            font-size: 0.9rem !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+            position: relative !important;
+            opacity: 1 !important;
+            transform: none !important;
+            margin: 0 !important;
+        }
+    </style></head>
 <body class="body-2">
   <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" class="navbar w-nav">
     <div class="container w-container">
@@ -259,7 +373,14 @@ background:rgba(255, 255, 255, 0);
             </div>
             <a href="{{ item.url }}" id="w-node-_38c89141-201f-3c8b-2ddb-c14378862346-e47c3180" data-w-id="38c89141-201f-3c8b-2ddb-c14378862346" style="opacity:0.25" class="vertical-card-2 w-inline-block">
               <div class="hover_video_wrapper-2">
-                {%- if item.data.f_video-url and item.data.f_video-url != "" -%}
+                {%- if item.data.f_link-to-video -%}
+                  {%- if item.data.f_link-to-video contains "youtube" or item.data.f_link-to-video contains "youtu.be" or item.data.f_link-to-video == "WDWCggFnr-A" -%}
+                    <iframe class="hover-iframe" src="https://www.youtube-nocookie.com/embed/{{ item.data.f_link-to-video | replace: 'https://youtu.be/', '' }}?autoplay=1&mute=1&loop=1&playlist={{ item.data.f_link-to-video | replace: 'https://youtu.be/', '' }}&controls=0" frameborder="0" allow="autoplay; fullscreen"></iframe>
+                  {%- else -%}
+                    <iframe class="hover-iframe" src="https://player.vimeo.com/video/{{ item.data.f_link-to-video }}?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen"></iframe>
+                  {%- endif -%}
+                  {%- if item.data.f_main-image.url -%}<img src="{{ item.data.f_main-image.url }}" loading="lazy" alt="{{ item.data.title }}" class="image-11">{%- endif -%}
+                {%- elsif item.data.f_video-url and item.data.f_video-url != "" -%}
                 <div class="video-2 w-embed"><div class="hover_video_wrapper">
 <video class="video" loop="" preload="metadata" muted="" width="100%" poster="{{ item.data.f_main-image.url }}">
 <source src="{{ item.data.f_video-url }}" type="video/mp4">
@@ -273,12 +394,11 @@ background:rgba(255, 255, 255, 0);
                 {%- else -%}
                 {%- if item.data.f_main-image.url -%}<img src="{{ item.data.f_main-image.url }}" loading="lazy" alt="{{ item.data.title }}" class="image-11">{%- endif -%}
                 {%- endif -%}
-                <h4 style="opacity:0;-webkit-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="heading-4 jj">{{ item.data.title }}</h4>
-                {%- if item.data.f_short-desc -%}
-                <div class="short-summary-desc" style="color: rgba(255,255,255,0.85); font-size: 0.85rem; margin-top: 0.25rem; font-family: sans-serif;">{{ item.data.f_short-desc }}</div>
-                {%- endif -%}
-                <div style="-webkit-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);opacity:0" class="button main sdf sd">
-                  <div data-edit-text="-61473034">{{ texts.-61473034 }}</div>
+                <div class="modern-card-text-overlay">
+                  <h4 class="heading-4 jj">{{ item.data.title }}</h4>
+                  <div class="button main sdf sd">
+                    <div data-edit-text="-61473034">{{ texts.-61473034 }}</div>
+                  </div>
                 </div>
               </div>
             </a>

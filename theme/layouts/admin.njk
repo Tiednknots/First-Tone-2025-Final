@@ -1243,6 +1243,12 @@
         }
       }
       
+      projects.sort((a, b) => {
+        const orderA = Number(a.home_video_order ?? a['f_home-video-order'] ?? 99);
+        const orderB = Number(b.home_video_order ?? b['f_home-video-order'] ?? 99);
+        return orderA - orderB;
+      });
+
       grid.innerHTML = projects.map(proj => {
         let imgUrl = proj.main_image?.url || proj.mobile_image?.url || '';
         const vimeoId = proj.link_to_video;
@@ -1699,20 +1705,13 @@
         link_to_video: linkVideo || null,
         video_url: finalVideoUrl,
         short_desc: shortDesc || null,
-        'f_short-desc': shortDesc || null,
         body: body || '',
         project_overview: body || '',
-        'f_project-overview': body || '',
-        'f_project-description': body || '',
+        project_description: body || '',
         client_details: clientDetails || null,
-        'f_client-details': clientDetails || null,
         challenge: challenge || null,
-        f_challenge: challenge || null,
-        highlights: challenge || null,
         main_image: (mainImageZone && mainImageZone.getAttribute('data-uploaded-url')) ? { url: mainImageZone.getAttribute('data-uploaded-url'), alt: "" } : null,
-        'f_main-image': (mainImageZone && mainImageZone.getAttribute('data-uploaded-url')) ? { url: mainImageZone.getAttribute('data-uploaded-url'), alt: "" } : null,
         gallery_images: currentProjectGallery,
-        'f_gallery-images': currentProjectGallery,
         updated_on: new Date().toISOString()
       };
 

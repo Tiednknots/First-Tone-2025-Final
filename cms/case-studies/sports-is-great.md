@@ -11,7 +11,9 @@ f_project-description: "**Client:** Ping Pong Digital\n\n**Production Countries:
 f_link-to-video: '998228779'
 f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67abe9f1aa707f0ee0197d9d_Sport%20is%20GREAT-transcode.mp4'
 f_video-embed-rich-text: null
-f_main-image: null
+f_main-image:
+  url: /assets/external/67ba15af1004321958f75994_screenshot202025-02-1720at2021.06.32.avif
+  alt: "Sport is GREAT"
 f_gallery-images: []
 f_mobile-image:
   alt: null

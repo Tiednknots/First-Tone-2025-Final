@@ -14,7 +14,9 @@ f_project-description: "**Client**: NotJustAgency\_\n\n**Production Country**: U
 f_link-to-video: '997679349'
 f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ed60abac29870f828bf1_Momcozy-transcode.mp4'
 f_video-embed-rich-text: null
-f_main-image: null
+f_main-image:
+  url: /assets/external/67b4223077b1a1486d2c0d01_screenshot202025-02-1720at2021.05.20.avif
+  alt: "Momcozy International Women"
 f_gallery-images: []
 f_mobile-image:
   alt: null

@@ -10,6 +10,9 @@ f_project-overview: "When Prince Xavier is forced to take piano lessons from wor
 f_challenge: "To bring this musical romance to life, we commissioned an original composer to craft bespoke piano pieces specifically for the soundtrack. Paired with custom-designed choreography for the leads, the production delivers an authentic, emotionally resonant atmosphere that elevates every scene."
 f_link-to-video: '997685582'
 f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ed4e1db799d19bfa32e5_Heart%20%26%20Strings-transcode.mp4'
+f_main-image:
+  url: /assets/external/67ba152084b37ae06028b592_screenshot202025-02-2220at2010.18.27.avif
+  alt: "Heart & Strings"
 f_mobile-image:
   alt: null
   url: /assets/external/67ba152084b37ae06028b592_screenshot202025-02-2220at2010.18.27.avif
@@ -22,7 +25,7 @@ f_gallery-images:
   - url: "/assets/website_bits/project_4_heart_and_strings/HS5.jpg"
 f_home-video-order: 4
 f_work-video-order: 4
-layout: '[case-studies].html'
+layout: '[case-studies-vertical].html'
 tags:
   - case-studies
 ---

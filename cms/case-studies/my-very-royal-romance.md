@@ -10,6 +10,9 @@ f_project-overview: "To save her sister, American college student Ari joins a my
 f_challenge: "Pioneering one of the UK’s first English vertical dramas meant stepping into uncharted territory. We took on the challenge of an untested market, building a world-class team from scratch and mastering a whole new visual format. Working closely with our screenwriting partners, we carefully tailored every scene for the vertical screen and executed a seamless end-to-end production, setting the benchmark for a brand-new genre."
 f_link-to-video: '997685344'
 f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ebf5bde49f8ae758d746_My%20Very%20Royal%20Romance-transcode.mp4'
+f_main-image:
+  url: /assets/external/67ba162ebf65d7c71002f808_screenshot202025-02-2220at2010.22.42.avif
+  alt: "My Very Royal Romance"
 f_mobile-image:
   alt: null
   url: /assets/external/67ba162ebf65d7c71002f808_screenshot202025-02-2220at2010.22.42.avif
@@ -22,7 +25,7 @@ f_gallery-images:
   - url: "/assets/website_bits/project_3_my_very_royal_romance/Gallery%206.jpg"
 f_home-video-order: 3
 f_work-video-order: 3
-layout: '[case-studies].html'
+layout: '[case-studies-vertical].html'
 tags:
   - case-studies
 ---

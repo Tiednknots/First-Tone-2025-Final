@@ -21,7 +21,7 @@ f_gallery-images:
   - url: "/assets/website_bits/project_6_second_life/SL4.png"
 f_home-video-order: 6
 f_work-video-order: 6
-layout: '[case-studies].html'
+layout: '[case-studies-vertical].html'
 tags:
   - case-studies
 ---

@@ -19,7 +19,9 @@ f_project-description: "**Client**: ECOMAAT (Beauty Product Brand)\_\n\n**Produc
 f_link-to-video: '1054981278'
 f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3c5c5efefa0a45620f130_ECOMAAT2024-transcode.mp4'
 f_video-embed-rich-text: null
-f_main-image: null
+f_main-image:
+  url: /assets/external/67b421b02e4234c4bba69973_screenshot202025-02-1720at2021.03.46.avif
+  alt: "ECOMAAT Brand Documentary 2024"
 f_gallery-images: []
 f_mobile-image:
   alt: ''

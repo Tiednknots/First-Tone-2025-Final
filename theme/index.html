@@ -395,6 +395,7 @@ a {
                   <p class="udesly-paragraph-large bnsd">{{ texts.-25eb5e8d }}<span class="text-span-13" data-edit-text="1e10dab7">{{ texts.1e10dab7 }}</span>{{ texts.58465041 }}<span class="text-span-14" data-edit-text="-db4aae7">{{ texts.-db4aae7 }}</span>{{ texts.574 }}<span class="text-span-15" data-edit-text="544cd608">{{ texts.544cd608 }}</span>{{ texts.1f0b149 }}<span class="text-span-16" data-edit-text="-1f6f2f48">{{ texts.-1f6f2f48 }}</span>{{ texts.2e }}</p>
                 </div>
               </div>
+
               <div class="div-block-68 mobile">
                 {%- assign collection = collections.case-studies | sort: "f_home-video-order" -%}<div class="collection-list-wrapper-5 w-dyn-list">
                   {%- unless collection.length == 0 -%}<div role="list" class="w-dyn-items">
@@ -470,7 +471,7 @@ a {
                   overflow: hidden;
                   scroll-snap-align: center;
                   cursor: pointer;
-                  background: #050505;
+                  background: transparent;
                   border: 1px solid rgba(255,255,255,0.1);
                   transition: transform 0.4s ease, border-color 0.4s ease;
                 }
@@ -484,16 +485,17 @@ a {
                   width: 100%;
                   height: 100%;
                   object-fit: cover;
-                  z-index: 10;
+                  z-index: 15;
                   transition: opacity 0.5s ease;
                 }
                 .modern-project-video {
-                  position: absolute;
-                  inset: 0;
-                  width: 100%;
-                  height: 100%;
-                  object-fit: cover;
-                  z-index: 5;
+                  position: absolute !important;
+                  inset: 0 !important;
+                  width: 100% !important;
+                  height: 100% !important;
+                  object-fit: cover !important;
+                  z-index: 5 !important;
+                  border: none !important;
                 }
                 .modern-project-overlay {
                   position: absolute;
@@ -513,6 +515,9 @@ a {
                 }
                 .modern-project-card:hover .modern-project-poster {
                   opacity: 0;
+                }
+                .modern-project-card:hover .hover-iframe {
+                  opacity: 1 !important;
                 }
                 .modern-project-card:hover .modern-project-overlay {
                   opacity: 1;
@@ -593,16 +598,27 @@ a {
                   .modern-project-title { font-size: 1.5rem; }
                   .modern-project-desc { font-size: 0.8rem; max-width: 100%; margin-bottom: 1rem; }
 
+                  @keyframes bounceHorizontal {
+                    0%, 100% { transform: translateX(0); }
+                    50% { transform: translateX(5px); }
+                  }
+
                   /* Mobile Case Studies Swiper for Home Page */
                   .mobile-case-studies {
                     display: block !important;
-                    width: 100% !important;
+                    width: 100vw !important;
                     max-width: 100vw !important;
+                    margin-left: calc(-50vw + 50%) !important;
+                    margin-right: calc(-50vw + 50%) !important;
                     overflow-x: hidden !important;
                     padding-bottom: 2rem !important;
                   }
+                  .mobile-case-studies .secondary-service-tab {
+                    padding: 0 1.25rem !important;
+                  }
                   .mobile-case-studies .div-block-68.mobile {
-                    width: 100% !important;
+                    width: 100vw !important;
+                    max-width: 100vw !important;
                     overflow: hidden !important;
                   }
                   .mobile-case-studies .w-dyn-items {
@@ -612,18 +628,18 @@ a {
                     overflow-x: auto !important;
                     scroll-snap-type: x mandatory !important;
                     -webkit-overflow-scrolling: touch !important;
-                    padding: 0 5vw 1.5rem 5vw !important;
-                    gap: 1.25rem !important;
+                    padding: 0 1.25rem 1.5rem 1.25rem !important;
+                    gap: 1rem !important;
                     scrollbar-width: none !important;
                   }
                   .mobile-case-studies .w-dyn-items::-webkit-scrollbar {
                     display: none !important;
                   }
                   .mobile-case-studies .collection-item-5.w-dyn-item {
-                    flex: 0 0 85vw !important;
-                    width: 85vw !important;
-                    max-width: 85vw !important;
-                    scroll-snap-align: center !important;
+                    flex: 0 0 82vw !important;
+                    width: 82vw !important;
+                    max-width: 82vw !important;
+                    scroll-snap-align: start !important;
                     margin: 0 !important;
                     display: block !important;
                   }
@@ -656,6 +672,52 @@ a {
                     justify-content: flex-end !important;
                     padding: 1.5rem !important;
                   }
+
+                  /* Edge-to-Edge Mobile Services Tabs */
+                  .section-5 {
+                    padding-left: 0 !important;
+                    padding-right: 0 !important;
+                    overflow-x: hidden !important;
+                  }
+                  .section-5 .div-block-22 {
+                    padding-left: 0 !important;
+                    padding-right: 0 !important;
+                    width: 100vw !important;
+                    max-width: 100vw !important;
+                  }
+                  .section-5 .udesly-title-wrapper-centered {
+                    padding: 0 1.25rem !important;
+                  }
+                  .original-service-tab {
+                    width: 100vw !important;
+                    max-width: 100vw !important;
+                    overflow: hidden !important;
+                  }
+                  .original-service-tab .tabs-menu.w-tab-menu {
+                    display: flex !important;
+                    flex-direction: row !important;
+                    flex-wrap: nowrap !important;
+                    overflow-x: auto !important;
+                    width: 100vw !important;
+                    max-width: 100vw !important;
+                    padding: 0.5rem 1.25rem 1.25rem 1.25rem !important;
+                    gap: 0.75rem !important;
+                    scroll-snap-type: x mandatory !important;
+                    -webkit-overflow-scrolling: touch !important;
+                    scrollbar-width: none !important;
+                  }
+                  .original-service-tab .tabs-menu.w-tab-menu::-webkit-scrollbar {
+                    display: none !important;
+                  }
+                  .original-service-tab .tab-link-tab-5,
+                  .original-service-tab .tab-link-tab-2,
+                  .original-service-tab .tab-link-tab-3 {
+                    flex: 0 0 auto !important;
+                    scroll-snap-align: start !important;
+                  }
+                  .original-service-tab .tabs-content.w-tab-content {
+                    padding: 0 1.25rem !important;
+                  }
                 }
               </style>
 
@@ -669,9 +731,17 @@ a {
                   {%- for item in collection -%}
                   <a href="{{ item.url }}" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
                     <img src="{{ item.data.f_main-image.url | default: item.data.f_mobile-image.url }}" class="modern-project-poster" alt="{{ item.data.title }}">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="{{ item.data.f_video-url }}" type="video/mp4">
-                    </video>
+                    {%- if item.data.f_link-to-video -%}
+                      {%- if item.data.f_link-to-video contains "youtube" or item.data.f_link-to-video contains "youtu.be" or item.data.f_link-to-video == "WDWCggFnr-A" -%}
+                        <iframe class="modern-project-video hover-iframe" src="https://www.youtube-nocookie.com/embed/{{ item.data.f_link-to-video | replace: 'https://youtu.be/', '' }}?autoplay=1&mute=1&loop=1&playlist={{ item.data.f_link-to-video | replace: 'https://youtu.be/', '' }}&controls=0" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe>
+                      {%- else -%}
+                        <iframe class="modern-project-video hover-iframe" src="https://player.vimeo.com/video/{{ item.data.f_link-to-video }}?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe>
+                      {%- endif -%}
+                    {%- elsif item.data.f_video-url -%}
+                      <video class="modern-project-video" muted loop playsinline preload="none" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+                        <source src="{{ item.data.f_video-url }}" type="video/mp4">
+                      </video>
+                    {%- endif -%}
                     <div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">{{ item.data.title }}</h4>
@@ -721,6 +791,52 @@ a {
                 <a href="{{ links.7f22fa2e }}" class="button main w-button" data-edit-text="21a740d2" data-edit-link="7f22fa2e">{{ texts.21a740d2 }}</a>
               </div>
             </div>
+            <style>
+              @media screen and (max-width: 767px) {
+                .original-service-tab .tabs-menu.w-tab-menu {
+                  display: flex !important;
+                  flex-wrap: nowrap !important;
+                  overflow-x: auto !important;
+                  scroll-snap-type: x mandatory;
+                  -webkit-overflow-scrolling: touch;
+                  gap: 8px !important;
+                  padding: 4px 2px 12px 2px !important;
+                  margin-bottom: 20px !important;
+                  justify-content: flex-start !important;
+                  align-items: center !important;
+                  scrollbar-width: none !important;
+                }
+                .original-service-tab .tabs-menu.w-tab-menu::-webkit-scrollbar {
+                  display: none !important;
+                }
+                .original-service-tab .tabs-menu.w-tab-menu .w-tab-link {
+                  flex: 0 0 auto !important;
+                  scroll-snap-align: start;
+                  white-space: nowrap !important;
+                  padding: 10px 18px !important;
+                  border-radius: 9999px !important;
+                  background: rgba(255, 255, 255, 0.06) !important;
+                  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+                  transition: all 0.25s ease !important;
+                  margin: 0 !important;
+                  text-align: center !important;
+                }
+                .original-service-tab .tabs-menu.w-tab-menu .w-tab-link.w--current {
+                  background: #cd0025 !important;
+                  border-color: #cd0025 !important;
+                  color: #ffffff !important;
+                  box-shadow: 0 4px 14px rgba(205, 0, 37, 0.4) !important;
+                }
+                .original-service-tab .tabs-menu.w-tab-menu .heading-12.tab,
+                .original-service-tab .tabs-menu.w-tab-menu .heading-12.tab strong {
+                  font-size: 13px !important;
+                  letter-spacing: 0.3px !important;
+                  margin: 0 !important;
+                  line-height: 1.2 !important;
+                  font-weight: 600 !important;
+                }
+              }
+            </style>
             <section class="section-5">
               <div class="div-block-22">
                 <div class="udesly-title-wrapper-centered udesly-margin-bottom sdff">

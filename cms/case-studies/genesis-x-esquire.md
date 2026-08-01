@@ -11,7 +11,9 @@ f_project-description: null
 f_link-to-video: '750912177'
 f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3c5d6b88e9fb9e8381d99_Genesis-transcode.mp4'
 f_video-embed-rich-text: null
-f_main-image: null
+f_main-image:
+  url: /assets/external/67b420eb0c5f464f896ccc57_screenshot202025-02-1720at2021.03.57.avif
+  alt: "Genesis × Esquire"
 f_gallery-images: []
 f_mobile-image:
   alt: null

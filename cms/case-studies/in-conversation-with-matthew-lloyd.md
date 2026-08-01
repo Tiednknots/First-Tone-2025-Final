@@ -18,7 +18,9 @@ f_project-description: "**Client:** Qi Jian Ji Hua Productions\n\n**Production C
 f_link-to-video: '997656731'
 f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ed6d024a1fe0f5d5650d_Matthew%20Lloyd%20Export-transcode.mp4'
 f_video-embed-rich-text: null
-f_main-image: null
+f_main-image:
+  url: /assets/external/67b42205bb26043450dfec1a_screenshot202025-02-1720at2021.05.39.avif
+  alt: "In conversation with Matthew Lloyd - Xiaomi Promo"
 f_gallery-images: []
 f_mobile-image:
   alt: null

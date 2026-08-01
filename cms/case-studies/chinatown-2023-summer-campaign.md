@@ -26,7 +26,9 @@ f_project-description: |-
 f_link-to-video: '997755019'
 f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a2e7d633509650a29124cc_Chinatown-transcode.mp4'
 f_video-embed-rich-text: '<div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/997755019?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="Chinatown Summer Campaign 2023"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>'
-f_main-image: null
+f_main-image:
+  url: /assets/external/67ba14c332007415b4ae7635_screenshot202025-02-2220at2010.16.51.avif
+  alt: "Chinatown 2023 Summer Campaign"
 f_gallery-images: []
 f_mobile-image:
   alt: null

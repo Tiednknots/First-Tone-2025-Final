@@ -83,7 +83,7 @@ async function fetchSettings() {
 
 async function fetchCaseStudies() {
   console.log("Fetching case-studies from Supabase...");
-  const { data, error } = await supabase.from('case_studies').select('*');
+  const { data, error } = await supabase.from('case_studies').select('*').order('home_video_order', { ascending: true });
   if (error) throw error;
 
   const dirPath = path.join(__dirname, '../../cms/case-studies');

@@ -22,7 +22,7 @@ f_gallery-images:
   - url: "/assets/website_bits/project_5_the_bride_from_the_wild/BFW5.png"
 f_home-video-order: 5
 f_work-video-order: 5
-layout: '[case-studies].html'
+layout: '[case-studies-vertical].html'
 tags:
   - case-studies
 ---
