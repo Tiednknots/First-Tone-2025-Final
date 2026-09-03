@@ -389,24 +389,18 @@ background:rgba(255, 255, 255, 0);
             </div>
             <a href="{{ item.url }}" id="w-node-_38c89141-201f-3c8b-2ddb-c14378862346-e47c3180" data-w-id="38c89141-201f-3c8b-2ddb-c14378862346" style="opacity:0.25" class="vertical-card-2 w-inline-block">
               <div class="hover_video_wrapper-2">
-                {%- if item.data.f_link-to-video -%}
+                {%- if item.data.f_video-url and item.data.f_video-url != "" -%}
+                  <video class="video" loop muted playsinline autoplay preload="auto" width="100%" poster="{{ item.data.f_main-image.url }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5;">
+                    <source src="{{ item.data.f_video-url }}" type="video/mp4">
+                  </video>
+                  {%- if item.data.f_main-image.url -%}<img src="{{ item.data.f_main-image.url }}" loading="lazy" alt="{{ item.data.title }}" class="image-11">{%- endif -%}
+                {%- elsif item.data.f_link-to-video -%}
                   {%- if item.data.f_link-to-video contains "youtube" or item.data.f_link-to-video contains "youtu.be" or item.data.f_link-to-video == "WDWCggFnr-A" -%}
                     <iframe class="hover-iframe" src="https://www.youtube-nocookie.com/embed/{{ item.data.f_link-to-video | replace: 'https://youtu.be/', '' }}?autoplay=1&mute=1&loop=1&playlist={{ item.data.f_link-to-video | replace: 'https://youtu.be/', '' }}&controls=0" frameborder="0" allow="autoplay; fullscreen"></iframe>
                   {%- else -%}
                     <iframe class="hover-iframe" src="https://player.vimeo.com/video/{{ item.data.f_link-to-video }}?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen"></iframe>
                   {%- endif -%}
                   {%- if item.data.f_main-image.url -%}<img src="{{ item.data.f_main-image.url }}" loading="lazy" alt="{{ item.data.title }}" class="image-11">{%- endif -%}
-                {%- elsif item.data.f_video-url and item.data.f_video-url != "" -%}
-                <div class="video-2 w-embed"><div class="hover_video_wrapper">
-<video class="video" loop="" preload="metadata" muted="" width="100%" poster="{{ item.data.f_main-image.url }}">
-<source src="{{ item.data.f_video-url }}" type="video/mp4">
-</video>       
-</div></div>
-                <div class="video-m w-embed"><div class="hover_video_wrapper">
-<video class="video-m" loop="" preload="metadata" muted="" width="100%" autoplay="" poster="{{ item.data.f_main-image.url }}">
-<source src="{{ item.data.f_video-url }}" type="video/mp4">
-</video>       
-</div></div>
                 {%- else -%}
                 {%- if item.data.f_main-image.url -%}<img src="{{ item.data.f_main-image.url }}" loading="lazy" alt="{{ item.data.title }}" class="image-11">{%- endif -%}
                 {%- endif -%}

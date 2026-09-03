@@ -731,16 +731,16 @@ a {
                   {%- for item in collection -%}
                   <a href="{{ item.url }}" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
                     <img src="{{ item.data.f_main-image.url | default: item.data.f_mobile-image.url }}" class="modern-project-poster" alt="{{ item.data.title }}">
-                    {%- if item.data.f_link-to-video -%}
+                    {%- if item.data.f_video-url and item.data.f_video-url != "" -%}
+                      <video class="modern-project-video" muted loop playsinline preload="auto" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1;">
+                        <source src="{{ item.data.f_video-url }}" type="video/mp4">
+                      </video>
+                    {%- elsif item.data.f_link-to-video -%}
                       {%- if item.data.f_link-to-video contains "youtube" or item.data.f_link-to-video contains "youtu.be" or item.data.f_link-to-video == "WDWCggFnr-A" -%}
                         <iframe class="modern-project-video hover-iframe" src="https://www.youtube-nocookie.com/embed/{{ item.data.f_link-to-video | replace: 'https://youtu.be/', '' }}?autoplay=1&mute=1&loop=1&playlist={{ item.data.f_link-to-video | replace: 'https://youtu.be/', '' }}&controls=0" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe>
                       {%- else -%}
                         <iframe class="modern-project-video hover-iframe" src="https://player.vimeo.com/video/{{ item.data.f_link-to-video }}?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe>
                       {%- endif -%}
-                    {%- elsif item.data.f_video-url -%}
-                      <video class="modern-project-video" muted loop playsinline preload="none" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1;">
-                        <source src="{{ item.data.f_video-url }}" type="video/mp4">
-                      </video>
                     {%- endif -%}
                     <div class="modern-project-overlay">
                       <div class="modern-project-content">

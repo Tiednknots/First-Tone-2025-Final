@@ -1,5 +1,6 @@
 ---
 f_link-to-video: '1214627517'
+f_video-url: "/assets/website_bits/project_2_rumour_has_it/2.mp4"
 title: "Rumor Has It"
 slug: rumor-has-it
 created-on: '2025-02-22T18:05:00.000+00:00'

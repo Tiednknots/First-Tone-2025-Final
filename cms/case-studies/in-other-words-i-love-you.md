@@ -1,5 +1,6 @@
 ---
 f_link-to-video: '1211642608'
+f_video-url: "/assets/website_bits/project_1_in_other_words/1.mp4"
 title: "In Other Words, I Love You"
 slug: in-other-words-i-love-you
 created-on: '2025-02-22T18:00:00.000+00:00'

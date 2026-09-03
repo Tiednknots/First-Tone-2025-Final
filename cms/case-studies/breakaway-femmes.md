@@ -1,5 +1,6 @@
 ---
 f_link-to-video: 'WDWCggFnr-A'
+f_video-url: "/assets/website_bits/project_14_breakaway_femmes/BF.mp4"
 title: "Breakaway Femmes"
 slug: breakaway-femmes
 created-on: '2025-02-22T18:25:00.000+00:00'
