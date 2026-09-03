@@ -163,7 +163,7 @@ background:rgba(255, 255, 255, 0);
   <style>
 .text-contain {pointer-events: none;}
 </style>
-<style>:root {--image-i63ad4c8e: url('https://firsttone.co.uk/assets/images/firsttonelogosquared-03_1.avif');--image-7b40fadb: url('');--image-34718693: url('https://firsttone.co.uk/assets/images/firsttonelogosquared-02_1.avif');--image-i35d2dc00: url('https://firsttone.co.uk/assets/images/0011group-photo-1_1.avif');--image-7bd1c037: url('https://firsttone.co.uk/assets/images/inner-circle.svg');}</style>
+<style>:root {--image-i63ad4c8e: url('/assets/images/firsttonelogosquared-03_1.avif');--image-7b40fadb: url('');--image-34718693: url('/assets/images/firsttonelogosquared-02_1.avif');--image-i35d2dc00: url('/assets/images/0011group-photo-1_1.avif');--image-7bd1c037: url('/assets/images/inner-circle.svg');}</style>
 <script>
   // Site Preview in-place visual editor script
   // Executes only when loaded inside the admin portal iframe.
@@ -408,7 +408,7 @@ a {
       </div>
     </div>
   </div>
-  <div data-animation="default" class="mobile-navbar mobile w-nav" data-easing2="ease" data-easing="ease" data-collapse="small" data-w-id="295362b1-21a8-9514-3903-7116290d5040" role="banner" data-no-scroll="1" data-duration="400" data-doc-height="1">
+  <div data-animation="default" class="mobile-navbar mobile w-nav" data-easing2="ease" data-easing="ease" data-collapse="all" data-w-id="295362b1-21a8-9514-3903-7116290d5040" role="banner" data-no-scroll="1" data-duration="400" data-doc-height="1">
     <div class="container-4 w-container">
       <a href="/" aria-current="page" class="brand-2 w-nav-brand w--current" data-edit-link="2f"><img src="/assets/images/firsttonelogos-01_1.avif" loading="lazy" alt="" class="image"></a>
       <nav role="navigation" class="nav-menu-2 w-nav-menu">
@@ -507,6 +507,7 @@ a {
                   <p class="udesly-paragraph-large bnsd">At First Tone, we offer <span class="text-span-13" data-edit-text="1e10dab7">tailored cross-border services</span> to meet diverse client needs. Big ideas or tight budgets, First Tone delivers with <span class="text-span-14" data-edit-text="-db4aae7">flexibility</span>, <span class="text-span-15" data-edit-text="544cd608">ingenuity,</span> and <span class="text-span-16" data-edit-text="-1f6f2f48">dedication</span>.</p>
                 </div>
               </div>
+
               <div class="div-block-68 mobile"><div class="collection-list-wrapper-5 w-dyn-list"><div role="list" class="w-dyn-items"><div role="listitem" class="collection-item-5 w-dyn-item">
                       <div class="div-block-73">
                         <div class="div-block-74"></div>
@@ -746,7 +747,7 @@ a {
                         <div class="div-block-74"></div>
                       </div>
                       <a href="/case-studies/breakaway-femmes/" class="link-block w-inline-block">
-                        <div class="background-image-mobile"><img src="/assets/images/services-documentaries-1_1.avif" loading="lazy" alt="" class="image-12"></div>
+                        <div class="background-image-mobile"><img src="https://img.youtube.com/vi/WDWCggFnr-A/maxresdefault.jpg" loading="lazy" alt="" class="image-12"></div>
                         <div class="gradiant-info-cover">
                           <div class="div-block-72">
                             <div>
@@ -880,7 +881,7 @@ a {
                   overflow: hidden;
                   scroll-snap-align: center;
                   cursor: pointer;
-                  background: #050505;
+                  background: transparent;
                   border: 1px solid rgba(255,255,255,0.1);
                   transition: transform 0.4s ease, border-color 0.4s ease;
                 }
@@ -894,16 +895,17 @@ a {
                   width: 100%;
                   height: 100%;
                   object-fit: cover;
-                  z-index: 10;
+                  z-index: 15;
                   transition: opacity 0.5s ease;
                 }
                 .modern-project-video {
-                  position: absolute;
-                  inset: 0;
-                  width: 100%;
-                  height: 100%;
-                  object-fit: cover;
-                  z-index: 5;
+                  position: absolute !important;
+                  inset: 0 !important;
+                  width: 100% !important;
+                  height: 100% !important;
+                  object-fit: cover !important;
+                  z-index: 5 !important;
+                  border: none !important;
                 }
                 .modern-project-overlay {
                   position: absolute;
@@ -923,6 +925,9 @@ a {
                 }
                 .modern-project-card:hover .modern-project-poster {
                   opacity: 0;
+                }
+                .modern-project-card:hover .hover-iframe {
+                  opacity: 1 !important;
                 }
                 .modern-project-card:hover .modern-project-overlay {
                   opacity: 1;
@@ -1003,16 +1008,27 @@ a {
                   .modern-project-title { font-size: 1.5rem; }
                   .modern-project-desc { font-size: 0.8rem; max-width: 100%; margin-bottom: 1rem; }
 
+                  @keyframes bounceHorizontal {
+                    0%, 100% { transform: translateX(0); }
+                    50% { transform: translateX(5px); }
+                  }
+
                   /* Mobile Case Studies Swiper for Home Page */
                   .mobile-case-studies {
                     display: block !important;
-                    width: 100% !important;
+                    width: 100vw !important;
                     max-width: 100vw !important;
+                    margin-left: calc(-50vw + 50%) !important;
+                    margin-right: calc(-50vw + 50%) !important;
                     overflow-x: hidden !important;
                     padding-bottom: 2rem !important;
                   }
+                  .mobile-case-studies .secondary-service-tab {
+                    padding: 0 1.25rem !important;
+                  }
                   .mobile-case-studies .div-block-68.mobile {
-                    width: 100% !important;
+                    width: 100vw !important;
+                    max-width: 100vw !important;
                     overflow: hidden !important;
                   }
                   .mobile-case-studies .w-dyn-items {
@@ -1022,18 +1038,18 @@ a {
                     overflow-x: auto !important;
                     scroll-snap-type: x mandatory !important;
                     -webkit-overflow-scrolling: touch !important;
-                    padding: 0 5vw 1.5rem 5vw !important;
-                    gap: 1.25rem !important;
+                    padding: 0 1.25rem 1.5rem 1.25rem !important;
+                    gap: 1rem !important;
                     scrollbar-width: none !important;
                   }
                   .mobile-case-studies .w-dyn-items::-webkit-scrollbar {
                     display: none !important;
                   }
                   .mobile-case-studies .collection-item-5.w-dyn-item {
-                    flex: 0 0 85vw !important;
-                    width: 85vw !important;
-                    max-width: 85vw !important;
-                    scroll-snap-align: center !important;
+                    flex: 0 0 82vw !important;
+                    width: 82vw !important;
+                    max-width: 82vw !important;
+                    scroll-snap-align: start !important;
                     margin: 0 !important;
                     display: block !important;
                   }
@@ -1066,6 +1082,52 @@ a {
                     justify-content: flex-end !important;
                     padding: 1.5rem !important;
                   }
+
+                  /* Edge-to-Edge Mobile Services Tabs */
+                  .section-5 {
+                    padding-left: 0 !important;
+                    padding-right: 0 !important;
+                    overflow-x: hidden !important;
+                  }
+                  .section-5 .div-block-22 {
+                    padding-left: 0 !important;
+                    padding-right: 0 !important;
+                    width: 100vw !important;
+                    max-width: 100vw !important;
+                  }
+                  .section-5 .udesly-title-wrapper-centered {
+                    padding: 0 1.25rem !important;
+                  }
+                  .original-service-tab {
+                    width: 100vw !important;
+                    max-width: 100vw !important;
+                    overflow: hidden !important;
+                  }
+                  .original-service-tab .tabs-menu.w-tab-menu {
+                    display: flex !important;
+                    flex-direction: row !important;
+                    flex-wrap: nowrap !important;
+                    overflow-x: auto !important;
+                    width: 100vw !important;
+                    max-width: 100vw !important;
+                    padding: 0.5rem 1.25rem 1.25rem 1.25rem !important;
+                    gap: 0.75rem !important;
+                    scroll-snap-type: x mandatory !important;
+                    -webkit-overflow-scrolling: touch !important;
+                    scrollbar-width: none !important;
+                  }
+                  .original-service-tab .tabs-menu.w-tab-menu::-webkit-scrollbar {
+                    display: none !important;
+                  }
+                  .original-service-tab .tab-link-tab-5,
+                  .original-service-tab .tab-link-tab-2,
+                  .original-service-tab .tab-link-tab-3 {
+                    flex: 0 0 auto !important;
+                    scroll-snap-align: start !important;
+                  }
+                  .original-service-tab .tabs-content.w-tab-content {
+                    padding: 0 1.25rem !important;
+                  }
                 }
               </style>
 
@@ -1075,11 +1137,7 @@ a {
                 </button>
                 
                 <div class="projects-scroll-track" id="projectsScrollTrack"><a href="/case-studies/in-other-words-i-love-you/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/website_bits/project_1_in_other_words/Cover_Photo.png" class="modern-project-poster" alt="In Other Words, I Love You">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="/assets/website_bits/project_1_in_other_words/1.mp4" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/website_bits/project_1_in_other_words/Cover_Photo.png" class="modern-project-poster" alt="In Other Words, I Love You"><iframe class="modern-project-video hover-iframe" src="https://player.vimeo.com/video/1211642608?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">In Other Words, I Love You</h4>
                         <p class="modern-project-desc">Winner of Best Vertical Series at the 2026 UK National Film Awards.</p>
@@ -1087,11 +1145,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/rumor-has-it/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/website_bits/project_2_rumour_has_it/Cover_Photo.png" class="modern-project-poster" alt="Rumor Has It">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="/assets/website_bits/project_2_rumour_has_it/2.mp4" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/website_bits/project_2_rumour_has_it/Cover_Photo.png" class="modern-project-poster" alt="Rumor Has It"><iframe class="modern-project-video hover-iframe" src="https://player.vimeo.com/video/1214627517?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">Rumor Has It</h4>
                         <p class="modern-project-desc">A tasteful, witty, sharp vertical fan favourite.</p>
@@ -1099,11 +1153,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/my-very-royal-romance/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/external/67ba162ebf65d7c71002f808_screenshot202025-02-2220at2010.22.42.avif" class="modern-project-poster" alt="My Very Royal Romance">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ebf5bde49f8ae758d746_My%20Very%20Royal%20Romance-transcode.mp4" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/external/67ba162ebf65d7c71002f808_screenshot202025-02-2220at2010.22.42.avif" class="modern-project-poster" alt="My Very Royal Romance"><iframe class="modern-project-video hover-iframe" src="https://player.vimeo.com/video/997685344?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">My Very Royal Romance</h4>
                         <p class="modern-project-desc">Pioneering one of the UK’s very first vertical series.</p>
@@ -1111,11 +1161,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/heart-strings/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/external/67ba152084b37ae06028b592_screenshot202025-02-2220at2010.18.27.avif" class="modern-project-poster" alt="Heart & Strings">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ed4e1db799d19bfa32e5_Heart%20%26%20Strings-transcode.mp4" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/external/67ba152084b37ae06028b592_screenshot202025-02-2220at2010.18.27.avif" class="modern-project-poster" alt="Heart & Strings"><iframe class="modern-project-video hover-iframe" src="https://player.vimeo.com/video/997685582?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">Heart & Strings</h4>
                         <p class="modern-project-desc">Classical music meets modern queer romance.</p>
@@ -1123,11 +1169,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/barefoot-meets-billionaire/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/website_bits/project_5_the_bride_from_the_wild/BFW1.png" class="modern-project-poster" alt="Barefoot Meets Billionaire">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/website_bits/project_5_the_bride_from_the_wild/BFW1.png" class="modern-project-poster" alt="Barefoot Meets Billionaire"><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">Barefoot Meets Billionaire</h4>
                         <p class="modern-project-desc">Wild, romantic, and completely unpredictable.</p>
@@ -1135,11 +1177,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/second-life-the-godfathers-wife/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/website_bits/project_6_second_life/SL1.png" class="modern-project-poster" alt="Second Life, The Godfather’s Wife">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/website_bits/project_6_second_life/SL1.png" class="modern-project-poster" alt="Second Life, The Godfather’s Wife"><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">Second Life, The Godfather’s Wife</h4>
                         <p class="modern-project-desc">Dark romance meets Peaky Blinders grit.</p>
@@ -1147,11 +1185,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/momcozy-international-womens-day-campaign/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/external/67b4223077b1a1486d2c0d01_screenshot202025-02-1720at2021.05.20.avif" class="modern-project-poster" alt="Momcozy International Women's Day Campaign">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ed60abac29870f828bf1_Momcozy-transcode.mp4" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/external/67b4223077b1a1486d2c0d01_screenshot202025-02-1720at2021.05.20.avif" class="modern-project-poster" alt="Momcozy International Women's Day Campaign"><iframe class="modern-project-video hover-iframe" src="https://player.vimeo.com/video/997679349?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">Momcozy International Women's Day Campaign</h4>
                         <p class="modern-project-desc">International Womens Day</p>
@@ -1159,11 +1193,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/hsbc-x-zhou-guanyu/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/external/67abf17b8a73686e0cf53ba0_cmhsbc-c397-zhou-guanyu-screengrab-1-no-video-so-has-to-be-images.avif" class="modern-project-poster" alt="HSBC × Zhou Guanyu">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/external/67abf17b8a73686e0cf53ba0_cmhsbc-c397-zhou-guanyu-screengrab-1-no-video-so-has-to-be-images.avif" class="modern-project-poster" alt="HSBC × Zhou Guanyu"><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">HSBC × Zhou Guanyu</h4>
                         <p class="modern-project-desc">Bilingual crew ensured a seamless, culturally rich branding video.</p>
@@ -1171,11 +1201,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/ecomaat-commercial/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/external/67ba2075e492bbc49f2b9bb8_screenshot202025-02-1720at2021.03.37.avif" class="modern-project-poster" alt="ECOMAAT Commercial">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3c5a82662bdd7093ab1f2_Ecomaat-transcode.mp4" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/external/67ba2075e492bbc49f2b9bb8_screenshot202025-02-1720at2021.03.37.avif" class="modern-project-poster" alt="ECOMAAT Commercial"><iframe class="modern-project-video hover-iframe" src="https://player.vimeo.com/video/997670994?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">ECOMAAT Commercial</h4>
                         <p class="modern-project-desc">First Tone produced a captivating video to help ECOMAAT expand into the Chinese market using its global network.</p>
@@ -1183,11 +1209,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/in-conversation-with-ashley-pierce/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/external/67b421e72e4234c4bba6c4ee_screenshot202025-02-1720at2021.03.18.avif" class="modern-project-poster" alt="In Conversation with Ashley Pierce ‒ Xiaomi Promo">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a2d5444cb50ce92b3a73aa_Ashley%20Pierce-transcode.mp4" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/external/67b421e72e4234c4bba6c4ee_screenshot202025-02-1720at2021.03.18.avif" class="modern-project-poster" alt="In Conversation with Ashley Pierce ‒ Xiaomi Promo"><iframe class="modern-project-video hover-iframe" src="https://player.vimeo.com/video/997656630?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">In Conversation with Ashley Pierce ‒ Xiaomi Promo</h4>
                         <p class="modern-project-desc">Mini Documentary for XIAOMI IMAGERY AWARDS 2022</p>
@@ -1195,11 +1217,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/in-conversation-with-matthew-lloyd/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/external/67b42205bb26043450dfec1a_screenshot202025-02-1720at2021.05.39.avif" class="modern-project-poster" alt="In conversation with Matthew Lloyd - Xiaomi Promo">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ed6d024a1fe0f5d5650d_Matthew%20Lloyd%20Export-transcode.mp4" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/external/67b42205bb26043450dfec1a_screenshot202025-02-1720at2021.05.39.avif" class="modern-project-poster" alt="In conversation with Matthew Lloyd - Xiaomi Promo"><iframe class="modern-project-video hover-iframe" src="https://player.vimeo.com/video/997656731?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">In conversation with Matthew Lloyd - Xiaomi Promo</h4>
                         <p class="modern-project-desc">Mini Documentary for XIAOMI IMAGERY AWARDS 2022</p>
@@ -1207,11 +1225,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/chinatown-2023-summer-campaign/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/external/67ba14c332007415b4ae7635_screenshot202025-02-2220at2010.16.51.avif" class="modern-project-poster" alt="Chinatown 2023 Summer Campaign">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a2e7d633509650a29124cc_Chinatown-transcode.mp4" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/external/67ba14c332007415b4ae7635_screenshot202025-02-2220at2010.16.51.avif" class="modern-project-poster" alt="Chinatown 2023 Summer Campaign"><iframe class="modern-project-video hover-iframe" src="https://player.vimeo.com/video/997755019?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">Chinatown 2023 Summer Campaign</h4>
                         <p class="modern-project-desc">A vibrant fusion of Chinese art and London’s modern energy.</p>
@@ -1219,11 +1233,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/fudan-x-lse/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/website_bits/project_13_fudan_x_lse/FD1.png" class="modern-project-poster" alt="Fudan × LSE: 20th anniversary of the dual-degree">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/website_bits/project_13_fudan_x_lse/FD1.png" class="modern-project-poster" alt="Fudan × LSE: 20th anniversary of the dual-degree"><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">Fudan × LSE: 20th anniversary of the dual-degree</h4>
                         <p class="modern-project-desc">Celebrating two decades of global academic partnership.</p>
@@ -1231,11 +1241,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/breakaway-femmes/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/images/services-documentaries-1_1.avif" class="modern-project-poster" alt="Breakaway Femmes">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="/assets/website_bits/project_14_breakaway_femmes/BF.mp4" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="https://img.youtube.com/vi/WDWCggFnr-A/maxresdefault.jpg" class="modern-project-poster" alt="Breakaway Femmes"><iframe class="modern-project-video hover-iframe" src="https://www.youtube-nocookie.com/embed/WDWCggFnr-A?autoplay=1&mute=1&loop=1&playlist=WDWCggFnr-A&controls=0" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">Breakaway Femmes</h4>
                         <p class="modern-project-desc">Uncovering the forgotten legends of women's professional cycling.</p>
@@ -1243,11 +1249,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/the-forbidden-city/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/website_bits/project_15_forbidden_palace/FP1.png" class="modern-project-poster" alt="The Forbidden City: 100 Years of the Palace Museum">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/website_bits/project_15_forbidden_palace/FP1.png" class="modern-project-poster" alt="The Forbidden City: 100 Years of the Palace Museum"><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">The Forbidden City: 100 Years of the Palace Museum</h4>
                         <p class="modern-project-desc">Bridging Sino-British history for CCTV’s flagship centennial doc.</p>
@@ -1255,11 +1257,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/ecomaat-brand-documentary-2024/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/external/67b421b02e4234c4bba69973_screenshot202025-02-1720at2021.03.46.avif" class="modern-project-poster" alt="ECOMAAT Brand Documentary 2024">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3c5c5efefa0a45620f130_ECOMAAT2024-transcode.mp4" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/external/67b421b02e4234c4bba69973_screenshot202025-02-1720at2021.03.46.avif" class="modern-project-poster" alt="ECOMAAT Brand Documentary 2024"><iframe class="modern-project-video hover-iframe" src="https://player.vimeo.com/video/1054981278?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">ECOMAAT Brand Documentary 2024</h4>
                         <p class="modern-project-desc">A stunning ECOMAAT campaign showcasing Bulgarian rose fields under a tight deadline.</p>
@@ -1267,11 +1265,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/genesis-x-esquire/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/external/67b420eb0c5f464f896ccc57_screenshot202025-02-1720at2021.03.57.avif" class="modern-project-poster" alt="Genesis × Esquire">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3c5d6b88e9fb9e8381d99_Genesis-transcode.mp4" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/external/67b420eb0c5f464f896ccc57_screenshot202025-02-1720at2021.03.57.avif" class="modern-project-poster" alt="Genesis × Esquire"><iframe class="modern-project-video hover-iframe" src="https://player.vimeo.com/video/750912177?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">Genesis × Esquire</h4>
                         <p class="modern-project-desc">Luxury cars meet fashion in a stunning, fast-tracked documentary.</p>
@@ -1279,11 +1273,7 @@ a {
                       </div>
                     </div>
                   </a><a href="/case-studies/sports-is-great/" class="modern-project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
-                    <img src="/assets/external/67ba15af1004321958f75994_screenshot202025-02-1720at2021.06.32.avif" class="modern-project-poster" alt="Sport is GREAT">
-                    <video class="modern-project-video" muted loop playsinline preload="none">
-                      <source src="https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67abe9f1aa707f0ee0197d9d_Sport%20is%20GREAT-transcode.mp4" type="video/mp4">
-                    </video>
-                    <div class="modern-project-overlay">
+                    <img src="/assets/external/67ba15af1004321958f75994_screenshot202025-02-1720at2021.06.32.avif" class="modern-project-poster" alt="Sport is GREAT"><iframe class="modern-project-video hover-iframe" src="https://player.vimeo.com/video/998228779?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease; pointer-events:none; border:none;"></iframe><div class="modern-project-overlay">
                       <div class="modern-project-content">
                         <h4 class="modern-project-title">Sport is GREAT</h4>
                         <p class="modern-project-desc">Remote production turned global footage into a cohesive, powerful film.</p>
@@ -1330,6 +1320,52 @@ a {
                 <a href="/our-work/" class="button main w-button" data-edit-text="21a740d2" data-edit-link="7f22fa2e">view case studies</a>
               </div>
             </div>
+            <style>
+              @media screen and (max-width: 767px) {
+                .original-service-tab .tabs-menu.w-tab-menu {
+                  display: flex !important;
+                  flex-wrap: nowrap !important;
+                  overflow-x: auto !important;
+                  scroll-snap-type: x mandatory;
+                  -webkit-overflow-scrolling: touch;
+                  gap: 8px !important;
+                  padding: 4px 2px 12px 2px !important;
+                  margin-bottom: 20px !important;
+                  justify-content: flex-start !important;
+                  align-items: center !important;
+                  scrollbar-width: none !important;
+                }
+                .original-service-tab .tabs-menu.w-tab-menu::-webkit-scrollbar {
+                  display: none !important;
+                }
+                .original-service-tab .tabs-menu.w-tab-menu .w-tab-link {
+                  flex: 0 0 auto !important;
+                  scroll-snap-align: start;
+                  white-space: nowrap !important;
+                  padding: 10px 18px !important;
+                  border-radius: 9999px !important;
+                  background: rgba(255, 255, 255, 0.06) !important;
+                  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+                  transition: all 0.25s ease !important;
+                  margin: 0 !important;
+                  text-align: center !important;
+                }
+                .original-service-tab .tabs-menu.w-tab-menu .w-tab-link.w--current {
+                  background: #cd0025 !important;
+                  border-color: #cd0025 !important;
+                  color: #ffffff !important;
+                  box-shadow: 0 4px 14px rgba(205, 0, 37, 0.4) !important;
+                }
+                .original-service-tab .tabs-menu.w-tab-menu .heading-12.tab,
+                .original-service-tab .tabs-menu.w-tab-menu .heading-12.tab strong {
+                  font-size: 13px !important;
+                  letter-spacing: 0.3px !important;
+                  margin: 0 !important;
+                  line-height: 1.2 !important;
+                  font-weight: 600 !important;
+                }
+              }
+            </style>
             <section class="section-5">
               <div class="div-block-22">
                 <div class="udesly-title-wrapper-centered udesly-margin-bottom sdff">
@@ -1341,7 +1377,7 @@ a {
                     <div data-w-id="6a85c4e6-5897-e328-870f-1bc9997ed47f" style="opacity:0" class="tabs-menu w-tab-menu">
                       <a data-w-tab="Tab 7" class="tab-link-tab-5 w-inline-block w-tab-link w--current">
                         <div class="top-level-text">
-                          <h3 class="heading-12 tab"><strong class="bold-text-2" data-edit-text="-4579809f">Vertical Series</strong></h3>
+                          <h3 class="heading-12 tab"><strong class="bold-text-2" data-edit-text="-4579809f">Vertical Shorts</strong></h3>
                         </div>
                       </a>
                       <a data-w-tab="Tab 2" class="tab-link-tab-2 w-inline-block w-tab-link">
@@ -1370,8 +1406,8 @@ a {
                         <div class="div-block-27"><img alt="Vertical Series" src="/assets/website_bits/1.jpg" loading="lazy" class="image-3">
                           <div class="div-block-52">
                             <div class="div-block-53">
-                              <h3 class="heading-12 label"><strong class="bold-text" data-edit-text="-129698db">Vertical Series</strong></h3>
-                              <div class="text-block-10" data-edit-text="15b57bd">We are the creators behind the history-making vertical series, winning the inaugural vertical series award at the UK's National Film Awards. We bring cinematic craft, high-volume efficiency, and cross-cultural flair to the mobile-first screen. Efficient, reliable, resourceful, we didn't just enter the vertical space – we defined it. </div>
+                              <h3 class="heading-12 label"><strong class="bold-text" data-edit-text="-129698db">Vertical Short Series</strong></h3>
+                              <div class="text-block-10" data-edit-text="15b57bd">The first company to ever deliver a vertical series in the UK. Efficient, reliable, and resourceful – we set the standard for seamless productions. Let the drama stay on screen, not in the production.</div>
                               <div class="div-block-54">
                                 <div class="div-block-55">
                                   <div data-edit-text="31997f7f">Read more</div>
@@ -1460,9 +1496,7 @@ a {
                     <div data-w-id="eafc849e-df86-2884-d0d3-64d225d44fb5" style="opacity:0" class="div-block-13">
                       <div class="text-block" data-edit-text="-70d4fbcf">ABOUT US</div>
                       <h2 class="heading-3 left-align" data-edit-text="30496645">Your China-UK and Global Creative Production Partner</h2>
-                      <p class="paragraph left-align sdf" data-edit-text="-1ae33c44">BAFTA-recognised craft, dual-market fluency, and the UK's first National Film Award-winning vertical series. 
-
-Whether it's a UK ad campaign with China shoots, a Chinese brand expanding globally, a documentary bridging cultures, or a vertical series for international streamers – we deliver on time, on budget, and without lost-in-translation moments.</p>
+                      <p class="paragraph left-align sdf" data-edit-text="-1ae33c44">We handle permits, casting, and cultural nuance so you don’t have to. Whether it’s a UK ad campaign requiring China shoots, a Chinese brand expanding to Europe, or a documentary bridging both markets – we deliver on time, on budget, and without lost-in-translation moments.</p>
                       <a href="#form-section" class="button main height w-button" data-edit-text="-311e78a9" data-edit-link="-2248b181">Let’s Talk</a>
                     </div>
                   </div>

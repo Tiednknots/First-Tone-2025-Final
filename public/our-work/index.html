@@ -314,6 +314,22 @@ background:rgba(255, 255, 255, 0);
             border: none !important;
             z-index: 5 !important;
         }
+        /* Ensure inner wrappers inside video-2 / video-m also fill */
+        .vertical-card-2 .video-2 .hover_video_wrapper,
+        .vertical-card-2 .video-m .hover_video_wrapper {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .vertical-card-2 .video-2 .hover_video_wrapper video,
+        .vertical-card-2 .video-m .hover_video_wrapper video {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+        }
         .vertical-card-2 .hover-iframe {
             opacity: 0 !important;
             transition: opacity 0.4s ease !important;
@@ -353,7 +369,7 @@ background:rgba(255, 255, 255, 0);
             font-size: 2.2rem !important;
             font-weight: 700 !important;
             text-transform: uppercase !important;
-            margin: 0 0 1rem 0 !important;
+            margin: 0 0 0.4rem 0 !important;
             line-height: 1.1 !important;
             position: relative !important;
             opacity: 1 !important;
@@ -1067,7 +1083,7 @@ background:rgba(255, 255, 255, 0);
       </div>
     </div>
   </section>
-  <div data-animation="default" class="mobile-navbar mobile w-nav" data-easing2="ease" data-easing="ease" data-collapse="small" data-w-id="295362b1-21a8-9514-3903-7116290d5040" role="banner" data-no-scroll="1" data-duration="400" data-doc-height="1">
+  <div data-animation="default" class="mobile-navbar mobile w-nav" data-easing2="ease" data-easing="ease" data-collapse="all" data-w-id="295362b1-21a8-9514-3903-7116290d5040" role="banner" data-no-scroll="1" data-duration="400" data-doc-height="1">
     <div class="container-4 w-container">
       <a href="/" class="brand-2 w-nav-brand" data-edit-link="2f"><img src="/assets/images/firsttonelogos-01_1.avif" loading="lazy" alt="" class="image"></a>
       <nav role="navigation" class="nav-menu-2 w-nav-menu">
