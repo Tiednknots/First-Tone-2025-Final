@@ -5139,13 +5139,14 @@ a {
   display: block !important;
 }
 
-/* Desktop Navbar (>=992px) */
-@media screen and (min-width: 992px) {
+/* Desktop (>=1201px): Standard Desktop Navbar across ALL pages */
+@media screen and (min-width: 1201px) {
   .navbar,
   .navbar.w-nav {
     display: flex !important;
     background: transparent !important;
     border: none !important;
+    z-index: 10000 !important;
   }
   .navbar .container,
   .navbar .w-container {
@@ -5170,8 +5171,8 @@ a {
   }
 }
 
-/* Smaller than Desktop (<=991px): Mobile & Portrait Tablet Navbar */
-@media screen and (max-width: 991px) {
+/* Tablet & Mobile Screens (<=1200px): Clean Transparent Header & 100% Full-Screen Nav Drawer */
+@media screen and (max-width: 1200px) {
   .navbar,
   .navbar.w-nav {
     display: none !important;
@@ -5184,7 +5185,7 @@ a {
     left: 0 !important;
     right: 0 !important;
     width: 100% !important;
-    z-index: 1000 !important;
+    z-index: 10000 !important;
     background-color: transparent !important;
     background: transparent !important;
     backdrop-filter: none !important;
@@ -5259,6 +5260,7 @@ a {
     border: none !important;
     color: #ffffff !important;
     float: none !important;
+    z-index: 10002 !important;
   }
   .mobile-navbar .menu-button svg,
   .mobile-navbar .w-nav-button svg {
@@ -5266,7 +5268,7 @@ a {
     height: 26px !important;
   }
 
-  /* Full-Screen Mobile Menu Drawer */
+  /* Full-Screen Nav Menu Drawer on Tablets & Mobile */
   .nav-menu-2,
   .mobile-navbar .w-nav-menu,
   .mobile-navbar.mobile .w-nav-menu {
@@ -5288,26 +5290,30 @@ a {
     bottom: 0 !important;
     height: 100vh !important;
     width: 100vw !important;
-    z-index: 999 !important;
-    padding: 80px 8% 40px !important;
+    min-height: 100vh !important;
+    min-width: 100vw !important;
+    max-width: none !important;
+    z-index: 10001 !important;
+    padding: 130px 10% 70px !important;
     box-sizing: border-box !important;
     overflow-y: auto !important;
   }
+  /* Increased inside padding for navigation links */
   .mobile-nav,
   .mobile-navbar .w-nav-link,
   .mobile-navbar.mobile .w-nav-link {
     color: #ffffff !important;
     text-transform: uppercase !important;
     font-family: Oswald, sans-serif !important;
-    font-size: 1.5rem !important;
+    font-size: 1.85rem !important;
     font-weight: 500 !important;
-    letter-spacing: 2px !important;
+    letter-spacing: 3px !important;
     width: 100% !important;
-    max-width: 400px !important;
-    padding: 16px 0 !important;
+    max-width: 520px !important;
+    padding: 24px 0 !important;
     text-align: center !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    transition: color 0.3s ease !important;
+    transition: color 0.3s ease, padding 0.3s ease !important;
     display: block !important;
   }
   .mobile-nav:last-of-type,
@@ -5322,7 +5328,7 @@ a {
 
   /* Social Icons Section inside Hamburger Menu Drawer — Horizontally Aligned */
   .mobile-navbar .links-sm {
-    margin-top: 35px !important;
+    margin-top: 45px !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
@@ -5334,10 +5340,10 @@ a {
   .mobile-navbar .links-sm .text-block-21,
   .mobile-navbar .text-block-21 {
     color: rgba(255, 255, 255, 0.5) !important;
-    font-size: 0.85rem !important;
+    font-size: 0.9rem !important;
     letter-spacing: 2px !important;
     text-transform: uppercase !important;
-    margin-bottom: 16px !important;
+    margin-bottom: 18px !important;
     text-align: center !important;
     display: block !important;
   }
@@ -5348,7 +5354,7 @@ a {
     flex-wrap: nowrap !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 20px !important;
+    gap: 24px !important;
     width: 100% !important;
     margin: 0 auto !important;
     padding: 0 !important;
@@ -5358,10 +5364,10 @@ a {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    width: 44px !important;
-    height: 44px !important;
-    min-width: 44px !important;
-    max-width: 44px !important;
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px !important;
+    max-width: 46px !important;
     padding: 0 !important;
     margin: 0 !important;
     border-radius: 50% !important;
@@ -5369,11 +5375,17 @@ a {
     color: #ffffff !important;
     text-decoration: none !important;
     flex-shrink: 0 !important;
+    transition: background-color 0.25s ease, transform 0.25s ease !important;
+  }
+  .mobile-navbar .links-sm .ikonik-fzqu2.mobile:hover,
+  .mobile-navbar .ikonik-fzqu2.mobile:hover {
+    background: rgba(255, 255, 255, 0.18) !important;
+    transform: scale(1.08) !important;
   }
   .mobile-navbar .links-sm .ikonik-fzqu2.mobile svg,
   .mobile-navbar .ikonik-fzqu2.mobile svg {
-    width: 22px !important;
-    height: 22px !important;
+    width: 24px !important;
+    height: 24px !important;
     display: block !important;
   }
 }
