@@ -390,7 +390,7 @@ background:rgba(255, 255, 255, 0);
             <a href="{{ item.url }}" id="w-node-_38c89141-201f-3c8b-2ddb-c14378862346-e47c3180" data-w-id="38c89141-201f-3c8b-2ddb-c14378862346" style="opacity:0.25" class="vertical-card-2 w-inline-block">
               <div class="hover_video_wrapper-2">
                 {%- if item.data.f_video-url and item.data.f_video-url != "" -%}
-                  <video class="video" loop muted playsinline autoplay preload="auto" width="100%" poster="{{ item.data.f_main-image.url }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5;">
+                  <video class="video" loop muted playsinline preload="auto" width="100%" poster="{{ item.data.f_main-image.url }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease;">
                     <source src="{{ item.data.f_video-url }}" type="video/mp4">
                   </video>
                   {%- if item.data.f_main-image.url -%}<img src="{{ item.data.f_main-image.url }}" loading="lazy" alt="{{ item.data.title }}" class="image-11">{%- endif -%}
@@ -550,20 +550,23 @@ background:rgba(255, 255, 255, 0);
   <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/neueworld/WebFlow-Tools@main/video-on-hover v1.0.0.0.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      document.querySelectorAll(".hover_video_wrapper, .hover_video_wrapper-2").forEach(wrapper => {
-        const video = wrapper.querySelector(".video, .video-m");
-        const fallback = wrapper.querySelector(".video-fallback");
-
+      document.querySelectorAll(".vertical-card-2, .hover_video_wrapper, .hover_video_wrapper-2").forEach(card => {
+        const video = card.querySelector("video");
         if (!video) return;
 
-        wrapper.addEventListener("mouseenter", function () {
-          video.play();
-          if (fallback) fallback.style.opacity = "0";
+        video.pause();
+        video.currentTime = 0;
+        video.style.opacity = "0";
+
+        card.addEventListener("mouseenter", function () {
+          video.play().catch(e => {});
+          video.style.opacity = "1";
         });
 
-        wrapper.addEventListener("mouseleave", function () {
+        card.addEventListener("mouseleave", function () {
           video.pause();
-          if (fallback) fallback.style.opacity = "1";
+          video.currentTime = 0;
+          video.style.opacity = "0";
         });
       });
     });

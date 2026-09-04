@@ -9,7 +9,7 @@ f_client-details: "**Streaming Platform**: KalosTV / Minishorts [Link](https://k
 f_project-overview: "When Prince Xavier is forced to take piano lessons from world-renowned prodigy Sebastian Kamir, sparks fly as their fingers dance over the keys. Soon, music, shared childhood memories, and royal secrets pull them into an undeniable romance.\n\nShot in early 2024, *Heart & Strings* is the vibrant queer spin-off to *My Very Royal Romance* – one of the UK's first-ever vertical short series."
 f_challenge: "To bring this musical romance to life, we commissioned an original composer to craft bespoke piano pieces specifically for the soundtrack. Paired with custom-designed choreography for the leads, the production delivers an authentic, emotionally resonant atmosphere that elevates every scene."
 f_link-to-video: '997685582'
-f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ed4e1db799d19bfa32e5_Heart%20%26%20Strings-transcode.mp4'
+f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac/67a3ed4e1db799d19bfa32e5_Heart%20%26%20Strings-transcode.mp4'
 f_main-image:
   url: /assets/external/67ba152084b37ae06028b592_screenshot202025-02-2220at2010.18.27.avif
   alt: "Heart & Strings"

@@ -9,7 +9,7 @@ f_client-details: "**Streaming Platform**: KalosTV / Minishorts [Link](https://k
 f_project-overview: "To save her sister, American college student Ari joins a mysterious matchmaking service and accidentally matches with Prince Edward, an Estrean royal seeking an escape from corporate and court schemes.\n\nCommissioned by KalosTV and Minishorts, this groundbreaking project stands as one of the UK’s first English vertical short series. First Tone managed the entire process from page to screen – adapting the novel *Bought By the Billionaire Prince* for vertical viewports and driving full production to hit over 3 million views in week one."
 f_challenge: "Pioneering one of the UK’s first English vertical dramas meant stepping into uncharted territory. We took on the challenge of an untested market, building a world-class team from scratch and mastering a whole new visual format. Working closely with our screenwriting partners, we carefully tailored every scene for the vertical screen and executed a seamless end-to-end production, setting the benchmark for a brand-new genre."
 f_link-to-video: '997685344'
-f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3ebf5bde49f8ae758d746_My%20Very%20Royal%20Romance-transcode.mp4'
+f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac/67a3ebf5bde49f8ae758d746_My%20Very%20Royal%20Romance-transcode.mp4'
 f_main-image:
   url: /assets/external/67ba162ebf65d7c71002f808_screenshot202025-02-2220at2010.22.42.avif
   alt: "My Very Royal Romance"

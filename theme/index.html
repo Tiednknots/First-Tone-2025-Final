@@ -516,7 +516,8 @@ a {
                 .modern-project-card:hover .modern-project-poster {
                   opacity: 0;
                 }
-                .modern-project-card:hover .hover-iframe {
+                .modern-project-card:hover .hover-iframe,
+                .modern-project-card:hover .modern-project-video {
                   opacity: 1 !important;
                 }
                 .modern-project-card:hover .modern-project-overlay {
@@ -766,23 +767,19 @@ a {
                 }
 
                 function playVideo(card) {
-                  if (window.innerWidth > 768) { // Only autoplay on hover for desktop
-                    const video = card.querySelector('video');
-                    if (video && video.readyState >= 3) {
-                      video.play().catch(e => console.log('Autoplay prevented', e));
-                    } else if (video) {
-                      video.load();
-                      video.play().catch(e => console.log('Autoplay prevented', e));
-                    }
+                  const video = card.querySelector('video');
+                  if (video) {
+                    video.style.opacity = '1';
+                    video.play().catch(e => console.log('Autoplay prevented', e));
                   }
                 }
 
                 function pauseVideo(card) {
-                  if (window.innerWidth > 768) {
-                    const video = card.querySelector('video');
-                    if (video) {
-                      video.pause();
-                    }
+                  const video = card.querySelector('video');
+                  if (video) {
+                    video.pause();
+                    video.currentTime = 0;
+                    video.style.opacity = '0';
                   }
                 }
               </script>

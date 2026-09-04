@@ -1,0 +1,298 @@
+/* ------------------------------------------------------------
+   GLOBAL CANVAS & BACKGROUND — ZERO WHITE BLEED
+   ------------------------------------------------------------ */
+html,
+body,
+body.body-3 {
+  background-color: #000000 !important;
+  background: #000000 !important;
+}
+
+/* ------------------------------------------------------------
+   MENU Z-INDEX ELEVATION — CASE STUDY PAGES ALWAYS ON TOP
+   ------------------------------------------------------------ */
+.navbar,
+.navbar.w-nav {
+  z-index: 10000 !important;
+}
+
+.mobile-navbar,
+.mobile-navbar.mobile {
+  z-index: 10000 !important;
+}
+
+.mobile-navbar .menu-button,
+.mobile-navbar .w-nav-button {
+  z-index: 10002 !important;
+}
+
+.mobile-navbar .nav-menu-2,
+.mobile-navbar .w-nav-menu {
+  z-index: 10001 !important;
+}
+
+/* ------------------------------------------------------------
+   1. KILL THE INVISIBLE CLICK-BLOCKING OVERLAY
+   ------------------------------------------------------------ */
+.div-block-35 {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+/* ------------------------------------------------------------
+   2. VIDEO PLAYER — unified, orientation-aware component
+   ------------------------------------------------------------ */
+.video-container-sticky {
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.95);
+  background: #050505;
+  z-index: 3;
+  aspect-ratio: 16 / 9;
+}
+.video-container-sticky[data-orientation="portrait"] {
+  aspect-ratio: 9 / 16;
+}
+.video-container-sticky video,
+.video-container-sticky img,
+.video-container-sticky iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+  pointer-events: auto;
+  filter: none !important;
+}
+.video-container-sticky video {
+  border-radius: inherit;
+}
+.video-empty-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+  color: #6b6b6b;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: Oswald, sans-serif;
+  text-align: center;
+  letter-spacing: 0.05em;
+  padding: 1rem;
+}
+
+/* ----- Desktop >= 1201px ----- */
+@media screen and (min-width: 1201px) {
+  .div-block-39.secondary {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 3.5rem !important;
+    max-width: 1440px !important;
+    margin: 0 auto !important;
+    padding: 0 3rem !important;
+  }
+  /* Left column: Video is centered with comfortable clearance from desktop menu */
+  .left-content {
+    flex: 0 0 54% !important;
+    width: 54% !important;
+    max-width: 54% !important;
+    height: 100vh !important;
+    position: sticky !important;
+    top: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-top: 40px !important;
+    box-sizing: border-box !important;
+  }
+  .div-block-30.secondary, .div-block-33 {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  /* Landscape video player */
+  .video-container-sticky {
+    width: 100% !important;
+    max-height: 76vh !important;
+    aspect-ratio: 16 / 9 !important;
+  }
+  /* Landscape right content starts flush at the top edge of the centered video */
+  .right-content {
+    flex: 0 0 42% !important;
+    width: 42% !important;
+    max-width: 42% !important;
+    padding-top: calc((100vh - (54vw * 9 / 16)) / 2 + 20px) !important;
+    padding-bottom: 15vh !important;
+  }
+  /* Portrait video player on desktop: 72vh with margin-top gives generous, elegant clearance below the menu */
+  .video-container-sticky[data-orientation="portrait"] {
+    width: auto !important;
+    height: 72vh !important;
+    max-height: 72vh !important;
+    max-width: 100% !important;
+    aspect-ratio: 9 / 16 !important;
+    margin-top: 30px !important;
+  }
+  /* Portrait right content starts flush at the top of the vertical video player */
+  .div-block-39.secondary:has([data-orientation="portrait"]) .right-content {
+    padding-top: calc((100vh - 72vh) / 2 + 30px) !important;
+  }
+}
+
+/* ----- Tablet 768 - 1200px: 25% padding from middle of page down ----- */
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+  .div-block-39.secondary {
+    display: flex !important;
+    flex-flow: row !important;
+    gap: 2.5rem !important;
+    max-width: 100% !important;
+    padding-top: 25% !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    box-sizing: border-box !important;
+  }
+  .left-content {
+    flex: 0 0 52% !important;
+    width: 52% !important;
+    max-width: 52% !important;
+    position: static !important;
+    height: auto !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding-top: 0 !important;
+  }
+  /* Right column contents start flush at the top of the video player */
+  .right-content {
+    flex: 0 0 44% !important;
+    width: 44% !important;
+    max-width: 44% !important;
+    padding-top: 0 !important;
+    padding-bottom: 12vh !important;
+  }
+  .div-block-30.secondary, .div-block-33 {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding-top: 0 !important;
+  }
+  .video-container-sticky {
+    width: 100% !important;
+    max-height: 65vh !important;
+    border-radius: 16px !important;
+    aspect-ratio: 16 / 9 !important;
+  }
+  .video-container-sticky[data-orientation="portrait"] {
+    width: auto !important;
+    height: 65vh !important;
+    max-height: 65vh !important;
+    max-width: 100% !important;
+    aspect-ratio: 9 / 16 !important;
+  }
+}
+
+/* ----- Mobile <= 767px ----- */
+@media screen and (max-width: 767px) {
+  .div-block-39.secondary {
+    flex-flow: column !important;
+    display: flex !important;
+  }
+  .left-content {
+    position: static !important;
+    height: auto !important;
+    width: 100% !important;
+    padding-top: 0 !important;
+    margin-bottom: 15px !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+  /* Reduce top-padding of div-block-33 to 10% for mobile browsing */
+  .div-block-30.secondary {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+  .div-block-33 {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding-top: 10% !important;
+    box-sizing: border-box !important;
+  }
+  .right-content {
+    width: 100% !important;
+    max-width: 560px !important;
+    margin: 0 auto !important;
+    padding: 20px 1.25rem 48px !important;
+  }
+  /* Landscape on mobile */
+  .video-container-sticky {
+    width: 100% !important;
+    max-width: 520px !important;
+    max-height: 80vh !important;
+    border-radius: 14px !important;
+    aspect-ratio: 16 / 9 !important;
+  }
+  /* Vertical video on mobile: Increased size by 15% (82vh) */
+  .video-container-sticky[data-orientation="portrait"] {
+    width: auto !important;
+    height: min(82vh, 650px) !important;
+    max-width: 92vw !important;
+    aspect-ratio: 9 / 16 !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   3. BACKGROUND AMBIENCE — PURE DARK, ZERO WHITE FILTER
+   ------------------------------------------------------------ */
+.video-back-ground {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+  opacity: 0.65 !important;
+  filter: blur(40px) !important;
+  background: #000000 !important;
+}
+.custom-video-container {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  transform: translate(-50%, -50%) !important;
+  overflow: hidden !important;
+  background: #000000 !important;
+}
+.custom-video-container iframe,
+.custom-video-container video,
+.custom-video-container img {
+  width: 100% !important;
+  height: 100% !important;
+  transform: scale(2.2) !important;
+  transform-origin: center center !important;
+  object-fit: cover !important;
+  filter: none !important;
+}
+.section-10.secondary,
+.div-block-39.secondary,
+.left-content,
+.right-content {
+  background: transparent !important;
+}
+
+
+

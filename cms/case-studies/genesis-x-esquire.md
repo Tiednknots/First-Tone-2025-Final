@@ -9,7 +9,7 @@ f_client-details: "**Client:** Esquire Magazine & Genesis China\_\n\n**Productio
 f_project-overview: "Commissioned by Genesis & Esquire to fuse fashion and automotive elegance in London, we leveraged bi-cultural expertise to solve the client's location uncertainty. Blending local insights with cross-industry creativity, we curated iconic yet niche settings ‒ Savile Row's bespoke ateliers juxtaposed with Genesis cars against London's dynamic backdrops. With rapid coordination, we secured permits, enlisted a last-minute drone operator for sweeping aerial shots, and orchestrated cinematic scenes. Live updates with the editor-in-chief ensured alignment, while agile problem-solving turned logistical chaos into a cohesive vision. The result? A visually arresting, culturally sharp film delivered in record time, proving how strategic local expertise transforms ambiguity into art.\_\n\n‍"
 f_project-description: null
 f_link-to-video: '750912177'
-f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac%2F67a3c5d6b88e9fb9e8381d99_Genesis-transcode.mp4'
+f_video-url: 'https://cdn.prod.website-files.com/66c4a134a354bbdf9cd9c3ac/67a3c5d6b88e9fb9e8381d99_Genesis-transcode.mp4'
 f_video-embed-rich-text: null
 f_main-image:
   url: /assets/external/67b420eb0c5f464f896ccc57_screenshot202025-02-1720at2021.03.57.avif
