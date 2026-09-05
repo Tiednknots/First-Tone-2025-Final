@@ -160,6 +160,20 @@ background:rgba(255, 255, 255, 0);
         .scroll-in-category.hhjj {
             display: none !important;
         }
+        /* Ensure no grey backgrounds anywhere on our-work for larger devices */
+        body.body-2,
+        .section-main.is--slider,
+        .section-main.is--slider.alls,
+        .section-main.is--slider.alls.black,
+        .slider_contain,
+        .slider_contain.auto,
+        .wrapper.all,
+        .list.all,
+        .item.all {
+            background-color: #000000 !important;
+            background: #000000 !important;
+        }
+
         /* Card Frame */
         .vertical-card-2 {
             display: block !important;
@@ -169,15 +183,20 @@ background:rgba(255, 255, 255, 0);
             border-radius: 16px !important;
             overflow: hidden !important;
             background: #000000 !important;
+            background-color: #000000 !important;
             text-decoration: none !important;
             margin-bottom: 2rem !important;
+            opacity: 1 !important;
         }
-        .vertical-card-2 .hover_video_wrapper-2 {
+        .vertical-card-2 .hover_video_wrapper-2,
+        .hover_video_wrapper-2 {
             position: absolute !important;
             inset: 0 !important;
             width: 100% !important;
             height: 100% !important;
             overflow: hidden !important;
+            background: #000000 !important;
+            background-color: #000000 !important;
         }
         /* Static Thumbnail Image */
         .vertical-card-2 .image-11 {
@@ -187,7 +206,8 @@ background:rgba(255, 255, 255, 0);
             height: 100% !important;
             object-fit: cover !important;
             z-index: 1 !important;
-            transition: opacity 0.4s ease !important;
+            opacity: 1 !important;
+            display: block !important;
         }
         /* Hover Video Elements (Iframe & Native MP4) */
         .vertical-card-2 .hover-iframe,
@@ -201,6 +221,7 @@ background:rgba(255, 255, 255, 0);
             object-fit: cover !important;
             border: none !important;
             z-index: 5 !important;
+            opacity: 1 !important;
         }
         /* Ensure inner wrappers inside video-2 / video-m also fill */
         .vertical-card-2 .video-2 .hover_video_wrapper,
@@ -217,6 +238,7 @@ background:rgba(255, 255, 255, 0);
             width: 100% !important;
             height: 100% !important;
             object-fit: cover !important;
+            opacity: 1 !important;
         }
         .vertical-card-2 .hover-iframe {
             opacity: 0 !important;
@@ -225,9 +247,6 @@ background:rgba(255, 255, 255, 0);
         }
         .vertical-card-2:hover .hover-iframe {
             opacity: 1 !important;
-        }
-        .vertical-card-2:hover .image-11 {
-            opacity: 0 !important;
         }
 
         /* Card Text Overlay (Title & View Work Button Only - Matching Original Webflow Design) */
@@ -387,22 +406,23 @@ background:rgba(255, 255, 255, 0);
                 </div>{%- endunless -%}
               </div>
             </div>
-            <a href="{{ item.url }}" id="w-node-_38c89141-201f-3c8b-2ddb-c14378862346-e47c3180" data-w-id="38c89141-201f-3c8b-2ddb-c14378862346" style="opacity:0.25" class="vertical-card-2 w-inline-block">
+            <a href="{{ item.url }}" id="w-node-_38c89141-201f-3c8b-2ddb-c14378862346-e47c3180" class="vertical-card-2 w-inline-block">
               <div class="hover_video_wrapper-2">
+                {%- assign cardImage = item.data.f_main-image.url | default: item.data.f_mobile-image.url -%}
                 {%- if item.data.f_video-url and item.data.f_video-url != "" -%}
-                  <video class="video" loop muted playsinline preload="auto" width="100%" poster="{{ item.data.f_main-image.url }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:0; transition:opacity 0.4s ease;">
+                  <video class="video" loop muted playsinline preload="auto" width="100%" poster="{{ cardImage }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:5; opacity:1;">
                     <source src="{{ item.data.f_video-url }}" type="video/mp4">
                   </video>
-                  {%- if item.data.f_main-image.url -%}<img src="{{ item.data.f_main-image.url }}" loading="lazy" alt="{{ item.data.title }}" class="image-11">{%- endif -%}
+                  {%- if cardImage -%}<img src="{{ cardImage }}" loading="lazy" alt="{{ item.data.title }}" class="image-11">{%- endif -%}
                 {%- elsif item.data.f_link-to-video -%}
                   {%- if item.data.f_link-to-video contains "youtube" or item.data.f_link-to-video contains "youtu.be" or item.data.f_link-to-video == "WDWCggFnr-A" -%}
                     <iframe class="hover-iframe" src="https://www.youtube-nocookie.com/embed/{{ item.data.f_link-to-video | replace: 'https://youtu.be/', '' }}?autoplay=1&mute=1&loop=1&playlist={{ item.data.f_link-to-video | replace: 'https://youtu.be/', '' }}&controls=0" frameborder="0" allow="autoplay; fullscreen"></iframe>
                   {%- else -%}
                     <iframe class="hover-iframe" src="https://player.vimeo.com/video/{{ item.data.f_link-to-video }}?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1" frameborder="0" allow="autoplay; fullscreen"></iframe>
                   {%- endif -%}
-                  {%- if item.data.f_main-image.url -%}<img src="{{ item.data.f_main-image.url }}" loading="lazy" alt="{{ item.data.title }}" class="image-11">{%- endif -%}
+                  {%- if cardImage -%}<img src="{{ cardImage }}" loading="lazy" alt="{{ item.data.title }}" class="image-11">{%- endif -%}
                 {%- else -%}
-                {%- if item.data.f_main-image.url -%}<img src="{{ item.data.f_main-image.url }}" loading="lazy" alt="{{ item.data.title }}" class="image-11">{%- endif -%}
+                  {%- if cardImage -%}<img src="{{ cardImage }}" loading="lazy" alt="{{ item.data.title }}" class="image-11">{%- endif -%}
                 {%- endif -%}
                 <div class="modern-card-text-overlay">
                   <h4 class="heading-4 jj">{{ item.data.title }}</h4>
@@ -547,26 +567,37 @@ background:rgba(255, 255, 255, 0);
   </div>
   <script src="/assets/external/jquery-3.5.1.min.dc5e7f18c8.js" type="text/javascript" crossorigin="anonymous"></script>
   <script src="/assets/js/webflow.js" type="text/javascript"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/neueworld/WebFlow-Tools@main/video-on-hover v1.0.0.0.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      document.querySelectorAll(".vertical-card-2, .hover_video_wrapper, .hover_video_wrapper-2").forEach(card => {
+      document.querySelectorAll(".vertical-card-2").forEach(card => {
         const video = card.querySelector("video");
         if (!video) return;
 
+        // Ensure video is visible and paused at initial frame
+        video.style.opacity = "1";
         video.pause();
-        video.currentTime = 0;
-        video.style.opacity = "0";
+        try {
+          video.currentTime = 0;
+        } catch (e) {}
+
+        video.addEventListener("loadedmetadata", function () {
+          if (video.paused) {
+            try { video.currentTime = 0; } catch (e) {}
+          }
+        });
 
         card.addEventListener("mouseenter", function () {
-          video.play().catch(e => {});
-          video.style.opacity = "1";
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(function () {});
+          }
         });
 
         card.addEventListener("mouseleave", function () {
           video.pause();
-          video.currentTime = 0;
-          video.style.opacity = "0";
+          try {
+            video.currentTime = 0;
+          } catch (e) {}
         });
       });
     });
